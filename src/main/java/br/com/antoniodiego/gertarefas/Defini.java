@@ -10,7 +10,7 @@ public class Defini {
      *
      */
     public static final String STRING_VER = "2.4.1-beta";
-    public static final Estado ESTADO = Estado.DESEN;
+    public static final Estado ESTADO = Estado.PRODUCAO;
 
     public enum Estado {
         DESEN, TESTE, DEBUG, PRODUCAO;
