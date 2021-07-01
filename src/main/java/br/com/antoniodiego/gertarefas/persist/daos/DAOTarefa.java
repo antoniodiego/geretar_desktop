@@ -27,8 +27,11 @@ public class DAOTarefa extends DAO {
 
         if (res.size() > 0) {
             LOG_DAO_T.debug("Maior: " + res.get(0));
+
+            return res.get(0);
+        } else {
+            return 0L;
         }
-        
-        return res.get(0);
+
     }
 }
