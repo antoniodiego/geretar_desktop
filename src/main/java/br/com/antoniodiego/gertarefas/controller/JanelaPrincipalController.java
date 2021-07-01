@@ -1670,6 +1670,7 @@ public class JanelaPrincipalController {
         DAOTarefa daoT = new DAOTarefa();
         Long maiorId
                 = daoT.getMaiorIDPers();
+        
         this.proximoId = maiorId ++;
         
         LOG_CONTR_PRINC.debug("Próx id: "+proximoId);
@@ -2937,6 +2938,9 @@ public class JanelaPrincipalController {
         }
     }
 
+    /**
+     * 
+     */
     private class TarefaInicia implements Runnable {
 
         @Override
@@ -2950,6 +2954,7 @@ public class JanelaPrincipalController {
                     baselineVersion("0").dataSource(HibernateUtil.determinaURIBanco(), "SA",
                     "").load();
 
+            
             try {
                 fw.migrate();
             } catch (FlywayException ex) {
@@ -3069,6 +3074,11 @@ public class JanelaPrincipalController {
         }
     }
 
+    private void fazMigraçãoBanco(){
+        
+    }
+    
+    
     private class AcaoDiminuiPrio extends AbstractAction {
 
         public AcaoDiminuiPrio() {
