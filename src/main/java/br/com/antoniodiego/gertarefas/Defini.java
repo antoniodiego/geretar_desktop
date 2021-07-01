@@ -9,7 +9,7 @@ public class Defini {
     /**
      *
      */
-    public static final String STRING_VER = "2.4-beta";
+    public static final String STRING_VER = "2.4.1-beta";
     public static final Estado ESTADO = Estado.DESEN;
 
     public enum Estado {
