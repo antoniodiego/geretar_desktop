@@ -9,7 +9,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <artifactId>Gertar_Ma_NB</artifactId>
     <version>2.4.1-beta</version>
     <packaging>jar</packaging>
-    <name>Gerenciador de tarefas - Lista - Git</name>
+    <name>Gerenciador de tarefas - Lista - J8 - Swing - Git</name>
     <profiles>
         <profile>
             <id>debug</id>
@@ -44,23 +44,50 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             </exclusions>
         </dependency>
         
-        <dependency>
+<!--        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId> 
             <version>2.2.2.RELEASE</version>
         </dependency>
-        
+        -->
         
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.4.25.Final</version>
         </dependency>
+        
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>6.5.1</version>
+            <version>7.3.1</version>
         </dependency>
+        
+         <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.8.2</version>
+        </dependency>
+        
+         <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.8.2</version>
+        </dependency>
+        
+<!--         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        -->
+        
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
@@ -76,11 +103,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <artifactId>hsqldb</artifactId>
             <version>2.5.1</version>
         </dependency>   
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.14.0</version>
-        </dependency>
+       
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -88,11 +111,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <scope>test</scope>
             <type>jar</type>
         </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.14.0</version>
-        </dependency>
+       
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
@@ -157,6 +176,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <scope>test</scope>
             <version>2.44.0</version>
         </dependency>
+        
+        
         
         <dependency>
             <groupId>com.opera</groupId>
