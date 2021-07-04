@@ -127,7 +127,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.FlywayException;
-import org.flywaydb.core.api.MigrationVersion;
 import org.hsqldb.HsqlException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -613,7 +612,7 @@ public class JanelaPrincipalController {
                     FileOutputStream saidaArquivo;
                     try {
                         saidaArquivo = new FileOutputStream(arquivoEscolhido);
-                        try (DataOutputStream saidaDados = new DataOutputStream(saidaArquivo)) {
+                        try ( DataOutputStream saidaDados = new DataOutputStream(saidaArquivo)) {
                             saidaDados.writeUTF("# Tarefas de usu?rio: "
                                     + usuario.getNome() + "\r\n");
                             List<GrupoTarefas> gruposL = usuario.getGrupoRaiz()
@@ -1478,10 +1477,10 @@ public class JanelaPrincipalController {
             }
 
             dialogoNovaTarefa.getContro().nova();
-
+            
             DAOTarefa daoT = new DAOTarefa();
             Long ultId = daoT.getMaiorIDPers();
-            dialogoNovaTarefa.getCampoId().setText(String.valueOf(ultId + 1));
+            dialogoNovaTarefa.getCampoId().setText(String.valueOf(ultId+1));
         }
     }
 
@@ -1668,11 +1667,11 @@ public class JanelaPrincipalController {
         DAOTarefa daoT = new DAOTarefa();
         Long maiorId
                 = daoT.getMaiorIDPers();
-
-        this.proximoId = maiorId++;
-
-        LOG_CONTR_PRINC.debug("Próx id: " + proximoId);
-
+        
+        this.proximoId = maiorId ++;
+        
+        LOG_CONTR_PRINC.debug("Próx id: "+proximoId);
+        
         LOG_CONTR_PRINC.traceExit();
     }
 
@@ -1703,7 +1702,7 @@ public class JanelaPrincipalController {
     }
 
     public void gravaProp() throws FileNotFoundException, IOException {
-        try (FileOutputStream sai = new FileOutputStream(arquiP)) {
+        try ( FileOutputStream sai = new FileOutputStream(arquiP)) {
             this.proprie.store(sai, "arqu conf");
         }
     }
@@ -2590,7 +2589,7 @@ public class JanelaPrincipalController {
         if (res == JFileChooser.APPROVE_OPTION) {
             File arquivoEs = getSeletorArquivos().getSelectedFile();
             try {
-                try (FileOutputStream s = new FileOutputStream(arquivoEs)) {
+                try ( FileOutputStream s = new FileOutputStream(arquivoEs)) {
                     exportaXMLParaS(s);
                 }
             } catch (FileNotFoundException ex) {
@@ -2937,7 +2936,7 @@ public class JanelaPrincipalController {
     }
 
     /**
-     *
+     * 
      */
     private class TarefaInicia implements Runnable {
 
@@ -2948,15 +2947,14 @@ public class JanelaPrincipalController {
             /*Faz migração do banco
         
              */
-            Flyway flyaway = new Flyway();
-            //flyaway.configure();
-            flyaway.setBaselineOnMigrate(true);
-            flyaway.setBaselineVersion(MigrationVersion.fromVersion("0"));
-            flyaway.setDataSource(HibernateUtil.determinaURIBanco(), "SA",
-                    "");
+            
+            Flyway fw = Flyway.configure().baselineOnMigrate(true).
+                    baselineVersion("0").dataSource(HibernateUtil.determinaURIBanco(), "SA",
+                    "").load();
 
+            
             try {
-                flyaway.migrate();
+                fw.migrate();
             } catch (FlywayException ex) {
                 if (ex.getCause() instanceof SQLException) {
                     SQLException excSQL = (SQLException) ex.getCause();
@@ -2971,9 +2969,9 @@ public class JanelaPrincipalController {
                 }
                 LOG_CONTR_PRINC.catching(ex);
                 try {
-                    flyaway.repair();
+                    fw.repair();
                 } catch (FlywayException ex2) {
-                    ex.printStackTrace();
+
                 }
             }
 
@@ -3074,10 +3072,11 @@ public class JanelaPrincipalController {
         }
     }
 
-    private void fazMigraçãoBanco() {
-
+    private void fazMigraçãoBanco(){
+        
     }
-
+    
+    
     private class AcaoDiminuiPrio extends AbstractAction {
 
         public AcaoDiminuiPrio() {
