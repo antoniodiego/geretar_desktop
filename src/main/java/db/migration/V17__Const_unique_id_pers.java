@@ -5,7 +5,6 @@
  */
 package db.migration;
 
-import br.com.antoniodiego.gertarefas.view.principal.JanelaPrincipal;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import org.apache.logging.log4j.LogManager;

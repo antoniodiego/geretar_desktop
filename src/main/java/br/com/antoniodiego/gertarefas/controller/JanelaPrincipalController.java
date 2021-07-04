@@ -59,7 +59,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -68,7 +67,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.ConnectException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -133,7 +131,6 @@ import org.hsqldb.HsqlException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import static org.springframework.http.converter.json.Jackson2ObjectMapperBuilder.xml;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
@@ -2950,6 +2947,7 @@ public class JanelaPrincipalController {
             /*Faz migração do banco
         
              */
+            
             Flyway fw = Flyway.configure().baselineOnMigrate(true).
                     baselineVersion("0").dataSource(HibernateUtil.determinaURIBanco(), "SA",
                     "").load();
