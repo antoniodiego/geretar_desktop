@@ -5,27 +5,27 @@
  */
 package db.migration;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.flywaydb.core.api.migration.jdbc.BaseJdbcMigration;
+import org.flywaydb.core.api.migration.BaseJavaMigration;
+import org.flywaydb.core.api.migration.Context;
 
 /**
  *
  * @author Antonio Diêgo <antoniodiegoluz at gmail.com>
  */
-public class V17__Const_unique_id_pers extends BaseJdbcMigration {
+public class V17__Const_unique_id_pers extends BaseJavaMigration {
 
     private static final Logger LOG_MIG_17 = LogManager.
             getLogger("mig_17");
 
     @Override
-    public void migrate(Connection cntxt) throws Exception {
+    public void migrate(Context cntxt) throws Exception {
         LOG_MIG_17.traceEntry();
 
-        Statement rejustaIds = cntxt.createStatement();
+        Statement rejustaIds = cntxt.getConnection().createStatement();
 
         //Pega todas as tarefa por ordem asc de ids
         ResultSet res = rejustaIds.executeQuery("SELECT * FROM tarefas ORDER BY id ASC");
