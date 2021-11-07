@@ -42,6 +42,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.awt.AWTException;
+import java.awt.Frame;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
@@ -228,17 +229,22 @@ public class JanelaPrincipalController {
         }
     };
 
+    /**
+     * 
+     */
     private WindowAdapter ouvJane = new WindowAdapter() {
         @Override
         public void windowIconified(WindowEvent e) {
+            LOG_CONTR_PRINC.trace("Evento: {}",e);
             //Janela deve ter sido min
-            view.setVisible(false);
+           // view.setVisible(false);
         }
 
         @Override
         public void windowStateChanged(WindowEvent e) {
             LOG_CONTR_PRINC.trace("Nov est: " + e.getNewState());
-
+            LOG_CONTR_PRINC.debug("Est {}",(e.getNewState() == Frame.ICONIFIED?"i":e.getNewState() == Frame.NORMAL?"N":"O"));
+         
         }
     };
     /**
@@ -751,12 +757,15 @@ public class JanelaPrincipalController {
             LOG_CONTR_PRINC.catching(ex);
         }
 
+        /*
+        Ícone
+        */
         if (SystemTray.isSupported()) {
             SystemTray st = SystemTray.getSystemTray();
             ImageIcon imageIcGer = new ImageIcon(JanelaPrincipal.class
                     .getResource("/imagens/icone lapis.png"));
 
-            iconeGeretar = new TrayIcon(imageIcGer.getImage(), "Gerenciador de tarefas");
+            iconeGeretar = new TrayIcon(imageIcGer.getImage(), "Gerenciador de tarefas "+Constantes.VERS);
 
             PopupMenu menuPopUp = new PopupMenu();
             MenuItem sair = new MenuItem("Sair");

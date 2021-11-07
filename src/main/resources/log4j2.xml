@@ -13,11 +13,12 @@ and open the template in the editor.
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="Controller_Principal" level="TRACE"/>
-        <Root level="debug">
+        <Root level="error">
             <AppenderRef ref="Console" />
         </Root>
+        <Logger name="Controller_Principal" level="TRACE"/>
         <Logger name="dao_tarefas" level="TRACE"/>
         <Logger name="mig_17" level="TRACE"/>
+        <Logger name="DesenhaData" level="INFO"/>
     </Loggers>
 </Configuration>
