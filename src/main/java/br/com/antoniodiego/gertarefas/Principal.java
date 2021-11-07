@@ -2,6 +2,7 @@
 package br.com.antoniodiego.gertarefas;
 
 import br.com.antoniodiego.gertarefas.view.principal.JanelaPrincipal;
+import br.com.antoniodiego.gertarefas.view.principal.JanelaPrincipalMatisse;
 import java.awt.EventQueue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +19,7 @@ public class Principal {
             getLogger(JanelaPrincipal.class);
 
     public static final void main(String[] args) {
-        JanelaPrincipal princ = new JanelaPrincipal();
+        JanelaPrincipalMatisse princ = new JanelaPrincipalMatisse();
         // Boas práticas
         EventQueue.invokeLater(() -> {
 
