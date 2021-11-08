@@ -52,11 +52,11 @@ public class PainelFuncoes extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(274, Short.MAX_VALUE)
+                .addGap(41, 41, 41)
                 .addComponent(btAumentPrio)
-                .addGap(26, 26, 26)
+                .addGap(27, 27, 27)
                 .addComponent(btDiminuiPrio)
-                .addContainerGap())
+                .addContainerGap(243, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
