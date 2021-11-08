@@ -36,7 +36,6 @@ public class Principal {
             princ.setVisible(true);
         });
 
-        princ.getControl().inicializa();
         
         if(DESENV == false){
            //TODO: Desativar debug
