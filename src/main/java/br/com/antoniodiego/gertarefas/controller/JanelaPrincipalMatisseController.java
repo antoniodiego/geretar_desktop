@@ -1,18 +1,14 @@
 package br.com.antoniodiego.gertarefas.controller;
 
 import br.com.antoniodiego.gertarefas.view.dialdet.DialogoVerTarefa;
-import br.com.antoniodiego.gertarefas.igu.EditorData;
 import br.com.antoniodiego.gertarefas.view.JanelaExibTabela;
 import br.com.antoniodiego.gertarefas.view.principal.JanelaPrincipal;
 import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.view.TelaLogin;
-import br.com.antoniodiego.gertarefas.view.TelaOpc;
-import br.com.antoniodiego.gertarefas.view.TelaSobre;
 import br.com.antoniodiego.gertarefas.igu.TransfXMLT;
 import br.com.antoniodiego.gertarefas.igu.modelos.ModeloArvore;
 import br.com.antoniodiego.gertarefas.igu.modelos.ModeloData;
 import br.com.antoniodiego.gertarefas.igu.modelos.ModeloTabelaTarefa;
-import br.com.antoniodiego.gertarefas.igu.renderers.DeseData;
 import br.com.antoniodiego.gertarefas.model.ModeloTabAgend;
 import br.com.antoniodiego.gertarefas.model.ModeloTabNotif;
 import br.com.antoniodiego.gertarefas.Constantes;
@@ -49,7 +45,6 @@ import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
@@ -59,7 +54,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.ByteArrayInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -95,16 +89,11 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.TransferHandler;
 import static javax.swing.TransferHandler.COPY_OR_MOVE;
 import static javax.swing.TransferHandler.MOVE;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeSelectionEvent;
@@ -112,7 +101,6 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.tree.TreePath;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -147,20 +135,16 @@ public class JanelaPrincipalMatisseController {
     private File arquiP;
     private Properties proprie;
     /**
-     * Grupo selecionado. Da tarefa atual. Essa váriável guarda o grupo selecionado
-     * na árvore se houver um. Se não tiver um grupo, mas houver uma tarefa
-     * selecionada o pai dela é guardado no campo. Se um nó ramo que não for grupo
-     * for selecionado ela deve guardar uma ref para o nó raiz
+     * Grupo selecionado. Da tarefa atual. Essa váriável guarda o grupo selecionado na árvore se houver um. Se não tiver
+     * um grupo, mas houver uma tarefa selecionada o pai dela é guardado no campo. Se um nó ramo que não for grupo for
+     * selecionado ela deve guardar uma ref para o nó raiz
      */
     private GrupoTarefas grupoDaAtu;
     private Tarefa tarefaExibida;
     private ModeloArvore modeloArv;
-    private AcaoNovaTarefa acaoNovaTar;
+
     private AcaoEditarTarefa acaoEditar;
-    /**
-     * Obs: Atualmente (26/07/18) persiste no banco mas deveria pesistir no objeto
-     */
-    private AcaoSalvarTarefa acaoSalvar;
+
     private JanelaPrincipalMatisse view;
     private JTree arvoreTarefas;
     public static final Logger LOG_CONTR_PRINC = LogManager.getLogger("Controller_Principal");
@@ -171,11 +155,11 @@ public class JanelaPrincipalMatisseController {
     private AcaoColar acaoColar;
 
     private AdicCam acaoAdic;
-    private RemovCam acaoRem;
+
     private JButton botaRem;
     private AcaoReiniciar acaoReiniciarBanco;
     private AcaoExcluirTudo acaoExT;
-    private AcaoNovoGr acaoNovG;
+
     private AcaoAtalho acaoCriAt;
 
     private SpinnerNumberModel modeloCampoPro;
@@ -183,7 +167,7 @@ public class JanelaPrincipalMatisseController {
     private ModeloTabelaTarefa modeloTabela;
     private TrayIcon iconeGeretar;
     private int totalFaz;
- 
+
     private ModeloTabNotif modTabNotif;
 
     private void configuraIconeBandeja() {
@@ -212,7 +196,6 @@ public class JanelaPrincipalMatisseController {
 
     }
 
-    
     /**
      *
      */
@@ -220,8 +203,6 @@ public class JanelaPrincipalMatisseController {
         confPainelAg();
         confPainNotif();
 
-
-        acaoVerDet.setEnabled(false);
     }
 
     private ActionListener acIconeBand = new ActionListener() {
@@ -240,7 +221,7 @@ public class JanelaPrincipalMatisseController {
                 // TODO: Corrigir exc aqui
                 List<Notificacao> notifPerd = nots.stream()
                         .filter(notif -> (notif.getHoraExibicao() != null
-                                && notif.getHoraExibicao().isBefore(LocalDateTime.now())))
+                        && notif.getHoraExibicao().isBefore(LocalDateTime.now())))
                         .filter(notif -> !notif.isFoiExibida()).collect(Collectors.toList());
 
                 modTabNotif.setNotif(notifPerd);
@@ -287,16 +268,10 @@ public class JanelaPrincipalMatisseController {
                 LOG_CONTR_PRINC.debug("Seleção nula");
                 grupoDaAtu = null;
                 tarefaExibida = null;
-                atualizaExibicaoTarefa(null);
+//                atualizaExibicaoTarefa(null);
                 acaoEditar.setEnabled(false);
                 return;
             }
-
-            /*
-             * Se chegou aqui algum nó da árvore foi selecionado
-             */
-            // XXX: Chece e salva. perde edições
-            checaESalva();
 
             // Verifica se o nó selecionado é folha ou não
             if (modeloArv.isLeaf(sel)) {
@@ -318,13 +293,13 @@ public class JanelaPrincipalMatisseController {
                     // }
                     // this.noGrupo = grupoPai;
                     tarefaExibida = t;
-                    atualizaExibicaoTarefa(t);
+//                    atualizaExibicaoTarefa(t);
                     acaoEditar.setEnabled(true);
                 } else if (sel instanceof GrupoTarefas) {
                     LOG_CONTR_PRINC.debug("Grupo folha!");
                     // noGrupo = sel;
                     grupoDaAtu = (GrupoTarefas) sel;
-                    atualizaExibicaoTarefa(null);
+//                    atualizaExibicaoTarefa(null);
                     LOG_CONTR_PRINC.debug("Nome: " + grupoDaAtu);
                 } else {
                     LOG_CONTR_PRINC.debug("N? folha n?o GrupoTarefas nem Tar");
@@ -338,7 +313,7 @@ public class JanelaPrincipalMatisseController {
                     // System.out.println("Sel grupo ramo: " + sel);
 
                     grupoDaAtu = (GrupoTarefas) sel;
-                    atualizaExibicaoTarefa(null);
+//                    atualizaExibicaoTarefa(null);
                 } else {
                     /*
                      * Neste ponto um nó ramo foi selecionado, mas que não foi um grupo
@@ -350,7 +325,7 @@ public class JanelaPrincipalMatisseController {
                 }
             }
 
-            atualizaEstadoDosMenusBotoes();
+//            atualizaEstadoDosMenusBotoes();
         }
     };
 
@@ -361,7 +336,7 @@ public class JanelaPrincipalMatisseController {
             Object fi1 = filAlt[0];
             if (fi1 == tarefaExibida) {
                 // Alterada aponta para a mesma que está send exib
-                atualizaExibicaoTarefa((Tarefa) fi1);
+//                atualizaExibicaoTarefa((Tarefa) fi1);
             }
         }
 
@@ -382,14 +357,12 @@ public class JanelaPrincipalMatisseController {
     };
     private ModeloData modeloCDataConc;
 
-    private AcaoVerDetDaTar acaoVerDet;
-   
     private Icon iconeAdicionarGrupo;
     private TableRowSorter ordenadorTabelaLista;
     private ModeloData modeloCData;
     private ModeloData modeloCDataFaz;
     private ModeloData modeloCDataAl;
-    private AcaoAgendar acaoAg;
+
     private ModeloTabAgend modAg;
     private List<Notificacao> nots;
     private String arquivoEs;
@@ -398,8 +371,6 @@ public class JanelaPrincipalMatisseController {
      * O id da próxima tarefa a ser registrada
      */
     private Long proximoId;
-
-
 
     public AcaoReiniciar getAcaoReiniciarBanco() {
         if (acaoReiniciarBanco == null) {
@@ -426,14 +397,14 @@ public class JanelaPrincipalMatisseController {
         /*
          * Modelo da tabela para exib tarefas em form de lista
          */
-      
+
     }
 
     private PainelAgController contrPA;
 
     private void confPainelAg() {
         modAg = new ModeloTabAgend();
-      
+
     }
 
     private void confPainNotif() {
@@ -443,7 +414,6 @@ public class JanelaPrincipalMatisseController {
 
     private TableColumn colunaHora;
     private TableColumn colD;
-
 
     private class AcaoVotProc extends AbstractAction {
 
@@ -521,7 +491,6 @@ public class JanelaPrincipalMatisseController {
         return modeloTab;
     }
 
-
     private class AcaoEditarTarefa extends AbstractAction {
 
         public AcaoEditarTarefa() {
@@ -537,116 +506,7 @@ public class JanelaPrincipalMatisseController {
             // TODO: Btch estdo campos
             modeloTabela.setEditando(true);
             // PENDING: Desabilitar outros se for nec
-            
-        }
-    }
 
-    private class AcaoSalvarTarefa extends AbstractAction {
-
-        public AcaoSalvarTarefa() {
-            super("Salvar");
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            LOG_CONTR_PRINC.traceEntry("Salvando: quant co: " + modeloTabela.getCoords().size());
-            // tarefaAEditar.setConteudo(conteudoTarefa.getText());
-            tarefaAEditar.setTitulo(view.getCampoTituloTarefa().getText());
-
-            LocalDate l = (LocalDate) view.getPainelFunLadoDire().getCampoData().getModel()
-                    .getValue();/*
-                                 * insC. atZone(ZoneId.systemDefault()).toLocalDate();
-                                 */
-
-            tarefaAEditar.setDataCriacao(l);
-            LOG_CONTR_PRINC.trace("Conf data fazer");
-            tarefaAEditar.setDataFazer((LocalDate) view.getPainelFunLadoDire().getCampoDataFazer().getModel()
-                    .getValue());/*
-                                  * ins.atZone(ZoneId.systemDefault()).toLocalDate());
-                                  */
-            LOG_CONTR_PRINC.trace("Config");
-            tarefaAEditar.setPrioridade(modeloCampoPro.getNumber().intValue());
-
-            boolean estavaCon = tarefaAEditar.isConcluida();
-            tarefaAEditar.setConcluida(view.getCaixaMarcarF().isSelected());
-            // if (caixaMarcarF.isSelected()) {
-            if (tarefaAEditar.isConcluida()) {
-                // TODO: Melhor
-                LocalDate dac = (LocalDate) view.getCampoDataConc().getModel().getValue();
-                LocalTime hc = (LocalTime) view.getCampoHoraCon().getValue();
-
-                tarefaAEditar.setDataConclusao(
-                        dac == null ? null : LocalDateTime.of(dac, hc == null ? LocalTime.now() : hc));
-                /*
-                 * FIXME: Est? contando mesmo sem haver altera??o em caixaMarcarF
-                 */
-
-                if (!estavaCon) {
-                    totalFaz--;
-                }
-                view.getLbQTF().setText(String.valueOf(totalFaz));
-            } else {
-                tarefaAEditar.setDataConclusao(null);
-                if (estavaCon) {
-                    totalFaz++;
-                }
-                view.getLbQTF().setText(String.valueOf(totalFaz));
-            }
-
-            // Salva edições da tabela
-            if (tarefaAEditar instanceof TarefaComposta) {
-                TarefaComposta ic = (TarefaComposta) tarefaAEditar;
-                // Apenas ad para não ter ref mesma lista pois outra sofre alt
-                /*
-                 * Obs: depois disso as tar coo da tabela serao mesmas da tare comp. [Talvez
-                 * seja bom] chamada de atualizaExib parece mudar isso
-                 */
-                ic.getTarefasFilhas().clear();
-                ic.getTarefasFilhas().addAll(modeloTabela.getCoords());
-            }
-
-            LocalDate dataAl = (LocalDate) view.getPainelFunLadoDire().getCampoDataAl().getModel().getValue();
-
-            LocalTime horaAl = (LocalTime) view.getPainelFunLadoDire().getCampoHoraAl().getValue();
-
-            if (dataAl != null && horaAl != null) {
-                LOG_CONTR_PRINC.debug("Data pega do campo data al: " + dataAl.getDayOfMonth());
-
-                LocalDateTime instAl = LocalDateTime.of(dataAl, horaAl);
-                tarefaAEditar.setDataHoraLembrete(instAl);
-
-                Notificacao notif = new Notificacao(instAl, tarefaAEditar);
-                /**
-                 * Penso que talvez fosse bom já gravar a notificação aqui usando um dao dela
-                 * para evitar muito proces- samento com flush
-                 */
-                tarefaAEditar.setNotificacao(notif);
-
-                // TODO: Reconfi lembrete
-            } else {
-                System.out.println(
-                        "br.com.antoniodiego.gertarefas.igu.DialogoNovaTarefa.AcaoSalvaTarefa.actionPerformed()" + " da"
-                                + dataAl + " ha " + horaAl);
-            }
-            alteraEditLote(false);
-            // Cancela edição em andamento [edição em tabela]
-            TableCellEditor ediT = view.getTabelaExibT().getCellEditor();
-            if (ediT != null) {
-                System.out.println("Estava editando ao salvar!");
-                ediT.cancelCellEditing();
-            }
-            view.getPainelFunLadoDire().getBotaoEditarTarefa().setAction(acaoEditar);
-            acaoEditar.setEnabled(true);
-            atualizaEstadoDosMenusBotoes();
-            // Persistir tarefa especifica.
-            // gerg.atuG(grupoDaAtu);
-            // Obs: Funciona -pers tarefa especifica-03/07/18 ~09;45 a
-
-            daoUsuario.flush();
-            // daoUsuario.atualiza((TarefaComposta) tarefaExibida);
-            // Notific muda ao mod para mud ico
-            modeloArv.notifAt(tarefaAEditar.getPai(), tarefaAEditar);
-            atualizaExibicaoTarefa(tarefaExibida);
         }
     }
 
@@ -767,39 +627,14 @@ public class JanelaPrincipalMatisseController {
         modAg.setAg(agen);
     }
 
-    /**
-     * Pode ser criada sem grupo
-     */
-    private class AcaoNovaTarefa extends AbstractAction {
-
-        public AcaoNovaTarefa(Icon icone) {
-            super("Nova tarefa", icone);
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // TODO Aqui deveria ser bom passar o grupo de destino
-            int idxSel = view.getPainelLadoEsq().getSelectedIndex();
-            if (idxSel == 0) {
-                // List
-            }
-
-            dialogoNovaTarefa.getContro().nova();
-
-            DAOTarefa daoT = new DAOTarefa();
-            Long ultId = daoT.getMaiorIDPers();
-            dialogoNovaTarefa.getCampoId().setText(String.valueOf(ultId + 1));
-        }
-    }
-
-    /**
-     * Faz a conexao e carregamento dos dados do banco
-     */
-    public void inicializa() {
-        LOG_CONTR_PRINC.traceEntry("Inicando Thread de inic");
-        Thread th = new Thread(new TarefaInicia());
-        th.start();
-    }
+//    /**
+//     * Faz a conexao e carregamento dos dados do banco
+//     */
+//    public void inicializa() {
+//        LOG_CONTR_PRINC.traceEntry("Inicando Thread de inic");
+//        Thread th = new Thread(new TarefaInicia());
+//       th.start();
+//    }
 
     /**
      * Sincroniza com backend
@@ -836,34 +671,8 @@ public class JanelaPrincipalMatisseController {
     }
     // ====== Fim das acões====== //
 
-    private void alteraEditLote(boolean ed) {
-
-        view.getCampoTituloTarefa().setEditable(ed);
-        view.getPainelFunLadoDire().getCampoData().setTextEditable(ed);
-        view.getPainelFunLadoDire().getCampoDataFazer().setTextEditable(ed);
-        view.getCampoDataConc().setTextEditable(ed);
-        view.getCampoHoraCon().setEditable(ed);
-        // XXX: Parece ser importante salvar edi??es
-        modeloTabela.setEditando(ed);
-        acaoAdic.setEnabled(ed);
-        acaoRem.setEnabled(ed);
-        view.getPainelFunLadoDire().getBotaoCancelarEditar().setEnabled(ed);
-        view.getPainelFunLadoDire().getCampoPrioridade().setEnabled(ed);
-        view.getPainelFunLadoDire().getCampoDataAl().setTextEditable(ed);
-        view.getPainelFunLadoDire().getCampoHoraAl().setEditable(ed);
-        view.getPainelFunLadoDire().getCampoHoraAl().setEnabled(ed);
-    }
-
     public Properties getProp() {
         return this.proprie;
-    }
-
-    public JFileChooser getSeletorArquivos() {
-        return seletorArquivos;
-    }
-
-    public FileNameExtensionFilter getFiltroNome() {
-        return filtroNome;
     }
 
     public DAOUsuario getDaoUsuario() {
@@ -934,13 +743,11 @@ public class JanelaPrincipalMatisseController {
     }
 
     /**
-     * Atualiza conte\u00eddo da janela de acordo com os grupos e tarefas existentes
-     * no banco.
+     * Atualiza conte\u00eddo da janela de acordo com os grupos e tarefas existentes no banco.
      */
     public void exibeGrupos() {
         iniciaGrupoRaiz();
-        atualizaBarraDeStatus();
-        atualizaEstadoDosMenusBotoes();
+
     }
 
     public void ordenaTarefas() {
@@ -959,8 +766,7 @@ public class JanelaPrincipalMatisseController {
     }
 
     /**
-     * Aqui o usuário que fez login é definido no sistema. Nesse momento os grupos e
-     * tarefas dele são exi na árvore
+     * Aqui o usuário que fez login é definido no sistema. Nesse momento os grupos e tarefas dele são exi na árvore
      *
      * @param usuario
      */
@@ -1066,9 +872,9 @@ public class JanelaPrincipalMatisseController {
                 grupInserir = (GrupoTarefas) sel;
                 // noGrin = noIn;
             } // else if (noIn.equals(noPrinc)) {
-              // System.out.println("Soltando em raiz");
-              // grupInserir = null;
-              // }
+            // System.out.println("Soltando em raiz");
+            // grupInserir = null;
+            // }
             else {
                 System.out.println("Não esta soltand em grupo");
                 return false;
@@ -1179,7 +985,7 @@ public class JanelaPrincipalMatisseController {
                     Tarefa.TAREFA_FLAVOR) /*
                                            * || support.isDataFlavorSupported(br.diego.gertarefas.core.Tarefa.
                                            * SABOR_TAREFA_AN)
-                                           */) {
+                     */) {
                 podeIm = true;
             } else if (support.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                 podeIm = true;
@@ -1299,7 +1105,7 @@ public class JanelaPrincipalMatisseController {
              * ainda mais eficiente se os gupos cujas tarefas mais prio tive mesmo valor,
              * ficasse no topo os que tivesse mais de uma dela.
              */
-            /*
+ /*
              * Os itens considerados maiores ficam no fim da lista e os menores no início,
              * por isso deve ser bom que os de maiores prioridades devem ser considerados
              * menores
@@ -1323,7 +1129,7 @@ public class JanelaPrincipalMatisseController {
                  * valor dele seria corr à tarefa de maior prio que fosse encontrada.
                  */
 
-                /*
+ /*
                  * Aqui parece que, se os subgrupos tivessem ordenados esse algo funcionaria
                  * melhor, pois as de maior pri est nos prim grupos
                  */
@@ -1466,56 +1272,6 @@ public class JanelaPrincipalMatisseController {
         }
     }
 
-    private class AcaoNovoGr extends AbstractAction {
-
-        public AcaoNovoGr(Icon icone) {
-            super("Novo grupo", icone);
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // XXX: Anot: Funcionou
-            // Anot: 21/06/18 - Est? salvando um grupo no gripo filho rai e outro em raiz
-            // o subgrupo com tarefa vai para a raiz e o sem continua no lugar
-            String titulo = JOptionPane.showInputDialog(view, "T\u00edtulo do grupo:", "Novo grupo",
-                    JOptionPane.QUESTION_MESSAGE);
-            if (titulo != null & !"".equals(titulo)) {
-                GrupoTarefas novoGrupo = new GrupoTarefas(titulo);
-                if (grupoDaAtu != null) {
-                    // [Grupo nao raiz]
-                    // grupoDaAtu.add(novoGrupo);
-                    modeloArv.insere(grupoDaAtu, novoGrupo);
-                    // TODO: Fazer com model para atu arv
-                    System.out.println("Novo grupo ad em: " + grupoDaAtu);
-                    // noGrupo.add(new DefaultMutableTreeNode(novoGrupo));
-                    // No modelo para atualizar!
-                    // modeloArv.insertNodeInto(new DefaultMutableTreeNode(novoGrupo), noGrupo, 0);
-                    // Atualiza o grupo pai
-                    // Obs; quando era salvar dava err
-                    // 04/07/18 ~8:35 a
-                    // Apenas salva o novo jÃ¡ o pai deve estar s
-                    // gerg.salva(novoGrupo);
-                    // daoUsuario.salvaG(novoGrupo);
-                    // gerg.atuG(grupoDaAtu);//salvaG(grupoDaAtu);
-                    daoUsuario.flush();
-                } else {
-                    // Cert raiz
-                    // Grupos da raiz apenas precisam de dono
-                    // novoGrupo.setDono(usuario);
-                    modeloArv.insere(usuario.getGrupoRaiz(), novoGrupo);
-                    // usuario.getGrupoRaiz().add(novoGrupo);
-                    daoUsuario.flush();// atu(usuario);
-                    // gerg.salvaG(novoGrupo);
-                    // modeloArv.insertNodeInto(new DefaultMutableTreeNode(novoGrupo), noPrinc, 0);
-                }
-                // Obs: salvar Tarefa estÃ¡ alterando o grupo pai
-                System.out.println("Salva g...");
-                // daoUsuario.salvaG(novoGrupo);
-                atualizaEstadoDosMenusBotoes();
-            }
-        }
-    }
-
     private class AcaoAtalho extends AbstractAction {
 
         public AcaoAtalho() {
@@ -1553,9 +1309,7 @@ public class JanelaPrincipalMatisseController {
                         daoUsuario.fazBackupB();
                     }
                     modeloArv.removeTudo();
-                    daoUsuario.flush();
-                    atualizaEstadoDosMenusBotoes();
-                    atualizaBarraDeStatus();
+
                 }
             }
 
@@ -1604,20 +1358,6 @@ public class JanelaPrincipalMatisseController {
 
     }
 
-    private class AcaoAgendar extends AbstractAction {
-
-        public AcaoAgendar() {
-            super("Agendar");
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            DialogoAgend dA = new DialogoAgend(view, tarefaExibida);
-            dA.setVisible(true);
-        }
-
-    }
-
     private class AdicCam extends AbstractAction {
 
         public AdicCam() {
@@ -1627,19 +1367,6 @@ public class JanelaPrincipalMatisseController {
         @Override
         public void actionPerformed(ActionEvent e) {
             modeloTabela.novaCoordenada();
-        }
-    }
-
-    private class RemovCam extends AbstractAction {
-
-        public RemovCam() {
-            super("Remover");
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int idx = view.getTabelaExibT().getSelectedRow();
-            modeloTabela.remove(idx);
         }
     }
 
@@ -1660,53 +1387,7 @@ public class JanelaPrincipalMatisseController {
 
     }
 
-    /**
-     *
-     */
-    private class AcaoExibirPorPrioridade extends AbstractAction {
-
-        public AcaoExibirPorPrioridade() {
-            super("Tarefas prioritárias");
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // TODO: Executar sql bakup com execupdate
-            JanelaExibTabela exibT = new JanelaExibTabela(view);
-            exibT.setVisible(true);
-
-            // Aqui deve ser bom dar com de preench tab
-            List<Tarefa> todasAsTarefas = new ArrayList<>();
-            GrupoTarefas gRaiz = usuario.getGrupoRaiz();
-            copiaTarefas(gRaiz, todasAsTarefas);
-            LOG_CONTR_PRINC.info("Qaunt de tarefas ob: " + todasAsTarefas.size());
-
-            exibT.preenche(todasAsTarefas);
-        }
-
-    }
-
-    private class AcaoVerDetDaTar extends AbstractAction {
-
-        public AcaoVerDetDaTar() {
-            super("Ver detalhes");
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (tarefaExibida != null) {
-                /*
-                 * TODO: Talvez fosse bom desab a ação caso não houvesse uma tar sel
-                 *
-                 */
-                DialogoVerTarefa diaVerTar = new DialogoVerTarefa(tarefaExibida, view);
-                diaVerTar.setVisible(true);
-            }
-        }
-
-    }
     // Fim ações//
-
     /**
      *
      * @param grupo
@@ -1723,65 +1404,6 @@ public class JanelaPrincipalMatisseController {
         });
     }
 
-    // ID: Procurar saber mais se ? melhor fazer class anonima ou aninhada
-    private class AdaptadorArvore extends MouseAdapter {
-
-        @Override
-        public void mouseClicked(MouseEvent me) {
-            // Verificando se o bot?o direito do mouse foi clicado
-            if (me.getButton() == MouseEvent.BUTTON3) {
-                // listaGrupos.setSelectedIndex(listaGrupos.locationToIndex(me.getPoint()));
-                // Verifica a area de transfer?ncia
-                Clipboard clp = view.getToolkit().getSystemClipboard();
-
-                boolean podeIm = false;
-                if (clp.isDataFlavorAvailable(Tarefa.TAREFA_FLAVOR)
-                        || clp.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
-                    podeIm = true;
-                    LOG_CONTR_PRINC.debug("Pode importar area tran");
-                }
-                // XXX: EstÃ¡ sempre ativ
-                // TODO: Analisar. Est? estanho. Parece dev ser me cola
-                acaoColar.setEnabled(podeIm);// clp.isDataFlavorAvailable(Tarefa.TAREFA_FLAVOR));
-                view.getMenuContextoArvore().show(arvoreTarefas, me.getX(), me.getY());
-            }
-        }
-    }
-
-    private class AdaptadorMouseLista extends MouseAdapter {
-
-        @Override
-        public void mouseClicked(MouseEvent me) {
-            // LOG_CONTR_PRINC.trace("Clique mouse");
-            // Verificando se o bot?o direito do mouse foi clicado
-            if ((me.getModifiers() & MouseEvent.BUTTON3_MASK) != 0) {
-                // listaGrupos.setSelectedIndex(listaGrupos.locationToIndex(me.getPoint()));
-                // Verifica a area de transfer?ncia
-                Clipboard clp = view.getToolkit().getSystemClipboard();
-
-                boolean podeIm = false;
-                if (clp.isDataFlavorAvailable(Tarefa.TAREFA_FLAVOR)
-                        || clp.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
-                    podeIm = true;
-                    System.out.println("Pode importar area tran");
-                }
-                // XXX: EstÃ¡ sempre ativ
-                // TODO: Analisar. Est? estanho. Parece dev ser me cola
-                acaoColar.setEnabled(podeIm);// clp.isDataFlavorAvailable(Tarefa.TAREFA_FLAVOR));
-                view.getMenuContextoArvore().show(view.getPainelLista().getTabelaTarefas(), me.getX(), me.getY());
-            }
-        }
-    }
-
-    /**
-     * Ceca se estava editando e salva
-     */
-    private void checaESalva() {
-        if (view.getPainelFunLadoDire().getBotaoEditarTarefa().getAction().equals(acaoSalvar)) {
-            view.getPainelFunLadoDire().getBotaoEditarTarefa().doClick();
-        }
-    }
-
     private boolean mostraConfirma\u00e7\u00e3o(String titulo, String mensagem) {
         return JOptionPane.showConfirmDialog(view, mensagem, titulo, JOptionPane.YES_NO_OPTION) == 0;
     }
@@ -1795,87 +1417,6 @@ public class JanelaPrincipalMatisseController {
 
     public Usuario getUsuario() {
         return usuario;
-    }
-
-    /**
-     *
-     * @param novaTarefa
-     */
-    public void adicTarefa(Tarefa novaTarefa) {
-
-        LOG_CONTR_PRINC.traceEntry();
-
-        /**
-         * Obs que esse método está bloq
-         */
-        /*
-         * Obtem o grupo selecionado
-         */
-        GrupoTarefas selec = grupoDaAtu;
-
-        LOG_CONTR_PRINC.debug("Grupo sel det: " + selec);
-
-        int idxAbaSel = view.getPainelLadoEsq().getSelectedIndex();
-        if (selec == null || idxAbaSel == 0) {
-            LOG_CONTR_PRINC.debug("Nao tem grupo sel ou primeira aba esc");
-
-            modeloArv.insere(usuario.getGrupoRaiz(), novaTarefa);
-
-            // Obs.
-            // XXX: 05/07/18 ~13:11 - funcionou
-            // XXX: Parece ser bom ter como marcar todo como feito
-        } else {
-            modeloArv.insere(selec, novaTarefa);
-
-            // atualizaExibi\u00e7\u00e3oTarefas();
-            // listaTarefas.setSelectedIndex(selec.recebeConte\u00fado().size() - 1);
-            // FIXME: quant linha exp 1 retorna 0
-        }
-
-        modeloTab.adicionaTarefa(novaTarefa);
-
-        totalFaz++;
-        view.getLbQTF().setText(String.valueOf(totalFaz));
-        // XXX: 05/07/18 ~13:11 - funcionou
-        // OBS: 281218 12:59 - Apenas seleciona, não exibe
-        arvoreTarefas.addSelectionPath(modeloArv.geraCam(novaTarefa));
-
-        this.tarefaExibida = novaTarefa;
-
-        acaoEditar.setEnabled(true);
-
-        if (novaTarefa.getDataHoraLembrete() != null) {
-            confDespNot(novaTarefa.getNotificacao());
-
-            // LocalDateTime dataHL = novaTarefa.getDataHoraLembrete();
-            // Instant ins = dataHL.toInstant(ZoneOffset.of("-3"));
-            //
-            // Date dataNot = Date.from(ins);
-            //
-            // TimerTask tarefaAl = new TimerTask() {
-            // @Override
-            // public void run() {
-            // iconeGeretar.displayMessage("Tarefa", novaTarefa.getTitulo(),
-            // TrayIcon.MessageType.WARNING);
-            //
-            // JOptionPane.showMessageDialog(view, novaTarefa.getTitulo(), "Tarefa",
-            // JOptionPane.INFORMATION_MESSAGE);
-            // }
-            // };
-            //
-            // SimpleDateFormat formData = new SimpleDateFormat("dd/MM/yy kk:mm:ss");
-            // System.out.println(formData.format(dataNot));
-            // timerAlarme.schedule(tarefaAl, dataNot);
-            // LOG_CONTR_PRINC.debug("Da c: " + dataNot);
-            // LOG_CONTR_PRINC.debug("Da conf: " + dataHL);
-            // LOG_CONTR_PRINC.trace("Tar age! ");
-        }
-
-        atualizaExibicaoTarefa(novaTarefa);
-        // 13:03
-        daoUsuario.flush();
-
-        LOG_CONTR_PRINC.traceExit();
     }
 
     private void agendaAl(Tarefa t) {
@@ -1901,27 +1442,8 @@ public class JanelaPrincipalMatisseController {
         LOG_CONTR_PRINC.trace("Tar age! ");
     }
 
-    private void exportaXml() {
-        getSeletorArquivos().setFileFilter(new FileNameExtensionFilter("XML", "xml"));
-        getSeletorArquivos().setSelectedFile(new File("ExportTarefas" + Constantes.VERS + recebeStringData() + ".xml"));
-        int res = getSeletorArquivos().showSaveDialog(view);
-        if (res == JFileChooser.APPROVE_OPTION) {
-            File arquivoEs = getSeletorArquivos().getSelectedFile();
-            try {
-                try (FileOutputStream s = new FileOutputStream(arquivoEs)) {
-                    exportaXMLParaS(s);
-                }
-            } catch (FileNotFoundException ex) {
-                LOG_CONTR_PRINC.catching(ex);
-            } catch (IOException ex) {
-                LOG_CONTR_PRINC.catching(ex);
-            }
-        }
-    }
-
     /**
-     * Gera dados XML contendo todos os grupos e tarefas e o envia para o c?rrego
-     * especificado.
+     * Gera dados XML contendo todos os grupos e tarefas e o envia para o c?rrego especificado.
      *
      * @param saida
      */
@@ -1951,46 +1473,6 @@ public class JanelaPrincipalMatisseController {
         String xml = c.geraXML(usuario.getGrupoRaiz().getSubgrupos(), usuario.getGrupoRaiz().getTarefas());
 
         return xml;
-    }
-
-    /**
-     * Importa grupos tarefas de um InputStrem com arquivo XML (Do formato Geretar).
-     * Salva e exibe
-     *
-     * @param in
-     */
-    // FIXME: N?o atualiza contador tarefas fazer
-    private void importaXML() {
-        getSeletorArquivos().setFileFilter(new FileNameExtensionFilter("XML", "xml"));
-        int res = getSeletorArquivos().showOpenDialog(view);
-        if (res == JFileChooser.APPROVE_OPTION) {
-            File arquivoEs = getSeletorArquivos().getSelectedFile();
-
-            GrupoTarefas grupoLido = importaGrupoRaiz(arquivoEs);
-
-            if (grupoLido == null) {
-                LOG_CONTR_PRINC.warn("Grupo lido nulo");
-                return;
-            }
-
-            grupoLido.getSubgrupos().forEach((GrupoTarefas gl) -> {
-                modeloArv.insere(usuario.getGrupoRaiz(), gl);
-            });
-
-            grupoLido.getTarefas().forEach((t) -> {
-                LOG_CONTR_PRINC.debug("Taref enc im");
-                // Add de GrupT para alterar pai
-                modeloArv.insere(usuario.getGrupoRaiz(), t);
-            });
-
-            atualizaBarraDeStatus();
-            // Expande raiz
-            arvoreTarefas.expandPath(new TreePath(usuario.getGrupoRaiz()));
-            // Obs: NÃ£o exibiu
-            System.out.println("Persistindo...");
-            daoUsuario.flush();
-
-        }
     }
 
     private GrupoTarefas importaGrupoRaiz(File f) {
@@ -2100,67 +1582,6 @@ public class JanelaPrincipalMatisseController {
         LOG_CONTR_PRINC.traceExit();
     }
 
-    /**
-     * Atualiza estado(habilitado) dos menus e bot?es de acordo com a interface.
-     */
-    public void atualizaEstadoDosMenusBotoes() {
-        // TreePath selec = tarefaExibida;//arvoreTarefas.getSelectionPath();
-        Object sel = tarefaExibida;// selec.getLastPathComponent();
-
-        final boolean haGrupoSelecionado = sel instanceof GrupoTarefas;
-        // (grupoDaAtu != null);// listaGrupos.getSelectedIndex() > -1;
-        final boolean h\u00e1TarefaSelecionada = sel instanceof Tarefa;
-        // tarefaExibida != null;//listaTarefas.getSelectedIndex() > -1;
-
-        if (usuario != null) {
-            GrupoTarefas gr = usuario.getGrupoRaiz();
-            final boolean temGruposOuTars = !gr.getSubgrupos().isEmpty() || !gr.isEmpty();
-
-            view.getBotaoExcluirTudo().setEnabled(temGruposOuTars);
-            view.getMenuExcluirTudo().setEnabled(temGruposOuTars);
-        } else {
-            LOG_CONTR_PRINC.warn("Usuario não def ainda");
-        }
-
-        // grupos != null && grupos.size() > 0;//modGt.getSize() > 0;
-        // System.out.println("Grupo sel: " + haGrupoSelecionado);
-        // System.out.println("Grupo se: " + listaGrupos.getSelectedIndex());
-        // System.out.println("Grupo sel: " + haGrupoSelecionado);
-        // System.out.println("Grupo se: " + listaGrupos.getSelectedIndex());
-        view.getPainelFunLadoDire().getBotaoEditarTarefa().setEnabled(h\u00e1TarefaSelecionada);
-        // botaoCancelarEditar.setEnabled(botaoEditarTarefa.getActionCommand().
-        // equals("save"));
-        view.getPainelFunLadoDire().getBotaoCopiaConteudo().setEnabled(h\u00e1TarefaSelecionada);
-        view.getPainelFunLadoDire().getBotaoExcluirTarefa2().setEnabled(h\u00e1TarefaSelecionada);
-
-        // acaoNovaTar.setEnabled(haGrupoSelecionado);
-        // botaoNovaTarefa.setEnabled(haGrupoSelecionado);
-        view.getBotaoExcluirTarefa().setEnabled(h\u00e1TarefaSelecionada);
-        view.getBotaoExcluirGrupo().setEnabled(haGrupoSelecionado);
-        // && !padraoSelecionado);
-
-        view.getMenuExcluirGrupo().setEnabled(haGrupoSelecionado);
-        // && !padraoSelecionado);
-        // menuNovaTarefa.setEnabled(haGrupoSelecionado);
-        view.getItemMenuExcluirTarefa().setEnabled(h\u00e1TarefaSelecionada);
-
-        // TODO: Melhorar. Editando.
-        view.getCaixaMarcarF()
-                .setEnabled(view.getPainelFunLadoDire().getBotaoEditarTarefa().getActionCommand().equals("save"));
-
-    }
-
-    /**
-     * Atualiza a barra de estado
-     */
-    public void atualizaBarraDeStatus() {
-        // Ler apenas o raiz - Feito
-        GrupoTarefas gr = usuario.getGrupoRaiz();
-        int totFaz = contaTotalFazer(gr);
-        view.getLbQTF().setText(String.valueOf(totFaz));
-        totalFaz = totFaz;
-    }
-
     private int contaTotalFazer(GrupoTarefas gr) {
         List<GrupoTarefas> subg = gr.getSubgrupos();
         List<Tarefa> grupTars = gr.getTarefas();
@@ -2182,210 +1603,6 @@ public class JanelaPrincipalMatisseController {
         return totF;
     }
 
-    /**
-     * Atualiza a janela de acordo com a tarefa selecionada.
-     */
-    // TODO: Cncelr ediçao
-    private void atualizaExibicaoTarefa(Tarefa tselec) {
-        // System.out.println("Atua exib tar: " + tselec.getClass());
-        // Se existir tarefa selecionada.
-        // final Tarefa tselec = null;//; = (Tarefa) listaTarefas.getSelectedValue();
-        if (tselec != null) {
-            if (tselec instanceof TarefaComposta) {
-                // TODO: Adapat para taref simp
-                // Exibir clones
-                List<TarefaCoordenada> clones = new ArrayList<>();
-
-                List<TarefaCoordenada> orig = ((TarefaComposta) tselec).getTarefasFilhas();
-                System.out.println("Exib. Quant orig: " + orig.size());
-                orig.forEach((TarefaCoordenada tco) -> {
-                    clones.add(tco.recebeClone());
-                });
-                modeloTabela.setCoords(clones);// Tarefa((TarefaComposta) tselec);
-            }
-
-            // //Atualiza o t?tulo
-            view.getCampoTituloTarefa().setText(tselec.getTitulo());
-            view.getCaixaMarcarF().setSelected(tselec.isConcluida());
-            LocalDateTime dc = tselec.getDataConclusao();
-            modeloCDataConc.setValue(dc == null ? null : dc.toLocalDate());
-            // view.getCampoDataConc().setValue(dc == null ? dc : dc.toLocalDate());
-            view.getCampoHoraCon().setValue(dc == null ? dc : dc.toLocalTime());
-            modeloCData.setValue(tselec.getDataCriacao());
-            // view.getPainelFunLadoDire().getCampoData().getModel().setValue(tselec.getDataCriacao());
-            modeloCDataFaz.setValue(tselec.getDataFazer());
-            // view.getPainelFunLadoDire().getCampoDataFazer().setValue(tselec.getDataFazer());
-            view.getPainelFunLadoDire().getCampoPrioridade().setValue(tselec.getPrioridade());
-            if (tselec.getNotificacao() != null) {
-                modeloCDataAl.setValue(tselec.getNotificacao().getHoraExibicao().toLocalDate());
-                // view.getPainelFunLadoDire().getCampoDataAl().setValue(tselec.getNotificacao().getHoraExibicao().toLocalDate());
-                view.getPainelFunLadoDire().getCampoHoraAl()
-                        .setValue(tselec.getNotificacao().getHoraExibicao().toLocalTime());
-            } else {
-                modeloCDataAl.setValue(null);
-                // view.getPainelFunLadoDire().getCampoDataAl().setValue(tselec.getNotificacao().getHoraExibicao().toLocalDate());
-                view.getPainelFunLadoDire().getCampoHoraAl().setValue(null);
-            }
-            // adiciCampoDes();
-            // filhas.forEach((TarefaSimples t) -> {
-            // System.out.println(t.getConteudo());
-            // });
-            // adiciCampoDes();
-            // filhas.forEach((TarefaSimples t) -> {
-            // System.out.println(t.getConteudo());
-            // });
-            // 21/06/18 20:33 - Persiste e rec funcionou!
-        } else {
-            // TODO: Limpar campos
-            view.getCampoTituloTarefa().setText("");
-            view.getCaixaMarcarF().setSelected(false);
-            view.getCampoDataConc().getModel().setValue(null);
-            view.getCampoHoraCon().setValue(null);
-            view.getPainelFunLadoDire().getCampoData().getModel().setValue(null);
-            view.getPainelFunLadoDire().getCampoDataFazer().getModel().setValue(null);
-            view.getPainelFunLadoDire().getCampoDataAl().getModel().setValue(null);
-            view.getPainelFunLadoDire().getCampoHoraAl().setValue(null);
-            modeloTabela.limpa();// set//Tarefa(null);
-            view.getPainelFunLadoDire().getCampoPrioridade().setValue(0);
-
-        }
-    }
-
-    /**
-     * 
-     */
-    private class TarefaInicia implements Runnable {
-
-        @Override
-        public void run() {
-            LOG_CONTR_PRINC.traceEntry();
-
-            /*
-             * Faz migração do banco
-             * 
-             */
-
-            Flyway fw = Flyway.configure().baselineOnMigrate(true).baselineVersion("0")
-                    .dataSource(HibernateUtil.determinaURIBanco(), "SA", "").load();
-
-            try {
-                fw.migrate();
-            } catch (FlywayException ex) {
-                if (ex.getCause() instanceof SQLException) {
-                    SQLException excSQL = (SQLException) ex.getCause();
-                    if (excSQL.getCause() instanceof HsqlException) {
-                        HsqlException excHSQL = (HsqlException) excSQL.getCause();
-                        LOG_CONTR_PRINC.trace(excHSQL.getErrorCode());
-                        LOG_CONTR_PRINC.trace(excHSQL.getLevel());
-                        LOG_CONTR_PRINC.trace(excHSQL.getMessage());
-                        LOG_CONTR_PRINC.trace(excHSQL.getStatementCode());
-                        LOG_CONTR_PRINC.trace(excHSQL.info);
-                    }
-                }
-                LOG_CONTR_PRINC.catching(ex);
-                try {
-                    fw.repair();
-                } catch (FlywayException ex2) {
-
-                }
-            }
-
-            /*
-             * Faz o bootstrap do Hibernate
-             *
-             */
-            HibernateUtil.getInstance().inicia();
-
-            dialogoLogin = new TelaLogin(view, true);
-            gerg = new DAOGrupos(HibernateUtil.getInstance());
-            daoUsuario = new DAOUsuario(HibernateUtil.getInstance());
-            modeloArv.iniciaGer(daoUsuario);
-            daoUsuario.abresSS();
-
-            carregaUsuarioEDados();
-
-            // Nesse ponto o sist já dev estar inc
-            /*
-             * Aqui deve ser bom se com com o serv de sinc
-             */
-            LOG_CONTR_PRINC.trace("Inici pro de sincro...");
-
-            RestTemplate templ = new RestTemplate();
-
-            URI uriInfo = null;
-
-            try {
-                uriInfo = new URI("http://localhost:8015/sinc/info");
-            } catch (URISyntaxException ex) {
-                java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            LocalDateTime dataUlSincServ = null;
-            try {
-                dataUlSincServ = templ.getForObject(uriInfo, LocalDateTime.class);
-            } catch (ResourceAccessException ex) {
-
-                Throwable cause = ex.getCause();
-                if (cause instanceof ConnectException) {
-                    // Provavelmente o serv está offline
-                    // Obs: talvez fosse bom apenas igonorar
-                    // JOptionPane.showMessageDialog(view, "Houve uma falha de comunicão com o
-                    // servidor");
-                    LOG_CONTR_PRINC.info("Houve uma falha de comunicão com o servidor");
-                    return;
-                }
-            }
-
-            LOG_CONTR_PRINC.debug("Data ul atu rec " + dataUlSincServ);
-
-            if (dataUlSincServ == null) {
-                // Primeiro cl a se con. Enviar dados
-
-                HttpHeaders head = new HttpHeaders();
-                head.add("Accept", MediaType.APPLICATION_XML_VALUE);
-                head.setContentType(MediaType.APPLICATION_XML);
-
-                RestTemplate reT = new RestTemplate();
-                GrupoTarefas gr = usuario.getGrupoRaiz();
-
-                List<GrupoTarefas> subG = gr.getSubgrupos();
-                LOG_CONTR_PRINC.trace("Qaunt g: " + subG.size());
-                GrupoTarefas g1 = subG.get(0);
-                LOG_CONTR_PRINC.debug("Envi: " + g1);
-                Tarefa tar1 = g1.get(0);
-                LocalDate data = tar1.getDataCriacao();
-
-                HttpEntity<GrupoTarefas> reB = new HttpEntity<>(g1, head);
-
-                URI uriEnviaGrupo = null;
-
-                try {
-                    uriEnviaGrupo = new URI("http://localhost:8015/grupo/");
-                } catch (URISyntaxException ex) {
-                    java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                try {
-                    LOG_CONTR_PRINC.trace("Fazendo requi...");
-                    GrupoTarefas gt = reT.postForObject(uriEnviaGrupo, reB, GrupoTarefas.class);
-
-                    if (gt != null) {
-                        LOG_CONTR_PRINC.info("Grupo enviado +");
-                    } else {
-                        LOG_CONTR_PRINC.error("Falha no envio");
-                    }
-                } catch (RestClientException ex) {
-                    ex.printStackTrace();
-
-                    if (ex instanceof HttpClientErrorException) {
-                        HttpClientErrorException hce = (HttpClientErrorException) ex;
-                        LOG_CONTR_PRINC.error("Corpo resp: " + hce.getResponseBodyAsString());
-                    }
-                }
-            }
-        }
-    }
-
     private void fazMigraçãoBanco() {
 
     }
@@ -2398,14 +1615,14 @@ public class JanelaPrincipalMatisseController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            int linhaSel = view.getPainelLista().getTabelaTarefas().getSelectedRow();
-            if (linhaSel == -1) {
-                return;
-            }
-            int idxMod = view.getPainelLista().getTabelaTarefas().convertRowIndexToModel(linhaSel);
-            Tarefa tarSel = modeloTab.getTarefas().get(idxMod);
-            tarSel.setPrioridade(tarSel.getPrioridade() - 1);
-            ordenadorTabelaLista.sort();
+//            int linhaSel = view.getPainelLista().getTabelaTarefas().getSelectedRow();
+//            if (linhaSel == -1) {
+//                return;
+//            }
+//            int idxMod = view.getPainelLista().getTabelaTarefas().convertRowIndexToModel(linhaSel);
+//            Tarefa tarSel = modeloTab.getTarefas().get(idxMod);
+//            tarSel.setPrioridade(tarSel.getPrioridade() - 1);
+//            ordenadorTabelaLista.sort();
         }
     }
 
@@ -2417,15 +1634,15 @@ public class JanelaPrincipalMatisseController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            int linhaSel = view.getPainelLista().getTabelaTarefas().getSelectedRow();
-            if (linhaSel == -1) {
-                return;
-            }
-            int idxMod = view.getPainelLista().getTabelaTarefas().convertRowIndexToModel(linhaSel);
-            Tarefa tarSel = modeloTab.getTarefas().get(idxMod);
-            tarSel.setPrioridade(tarSel.getPrioridade() + 1);
-            tarSel.setDataModif(LocalDateTime.now());
-            ordenadorTabelaLista.sort();
+//            int linhaSel = view.getPainelLista().getTabelaTarefas().getSelectedRow();
+//            if (linhaSel == -1) {
+//                return;
+//            }
+//            int idxMod = view.getPainelLista().getTabelaTarefas().convertRowIndexToModel(linhaSel);
+//            Tarefa tarSel = modeloTab.getTarefas().get(idxMod);
+//            tarSel.setPrioridade(tarSel.getPrioridade() + 1);
+//            tarSel.setDataModif(LocalDateTime.now());
+//            ordenadorTabelaLista.sort();
         }
     }
 
@@ -2437,9 +1654,9 @@ public class JanelaPrincipalMatisseController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            PainelListaTarefas painelLista = view.getPainelLista();
-            String termo = painelLista.getCampoTextoBusca().getText();
-            filtraTarefasLPorTit(termo, false);
+//            PainelListaTarefas painelLista = view.getPainelLista();
+//            String termo = painelLista.getCampoTextoBusca().getText();
+//            filtraTarefasLPorTit(termo, false);
         }
     }
 
@@ -2451,7 +1668,7 @@ public class JanelaPrincipalMatisseController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            PainelListaTarefas painLT = view.getPainelLista();
+            PainelListaTarefas painLT = null;// = view.getPainelLista();
 
             LocalDate dataAg = null;
             if (painLT.getCheckDataAgend().isSelected()) {
