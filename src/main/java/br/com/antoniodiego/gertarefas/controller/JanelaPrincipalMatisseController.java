@@ -1,7 +1,5 @@
 package br.com.antoniodiego.gertarefas.controller;
 
-import br.com.antoniodiego.gertarefas.view.dialdet.DialogoVerTarefa;
-import br.com.antoniodiego.gertarefas.view.JanelaExibTabela;
 import br.com.antoniodiego.gertarefas.view.principal.JanelaPrincipal;
 import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.view.TelaLogin;
@@ -12,6 +10,7 @@ import br.com.antoniodiego.gertarefas.igu.modelos.ModeloTabelaTarefa;
 import br.com.antoniodiego.gertarefas.model.ModeloTabAgend;
 import br.com.antoniodiego.gertarefas.model.ModeloTabNotif;
 import br.com.antoniodiego.gertarefas.Constantes;
+import static br.com.antoniodiego.gertarefas.controller.JanelaPrincipalController.LOG_CONTR_PRINC;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOAgendamentos;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOGrupos;
 import br.com.antoniodiego.gertarefas.persist.daos.DAONotifcacao;
@@ -22,7 +21,6 @@ import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
 import br.com.antoniodiego.gertarefas.pojo.Notificacao;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
-import br.com.antoniodiego.gertarefas.pojo.TarefaCoordenada;
 import br.com.antoniodiego.gertarefas.pojo.TipoVoto;
 import br.com.antoniodiego.gertarefas.pojo.Usuario;
 import br.com.antoniodiego.gertarefas.pojo.Voto;
@@ -31,7 +29,6 @@ import br.com.antoniodiego.gertarefas.util.ConversXMLD;
 import br.com.antoniodiego.gertarefas.util.HibernateUtil;
 import br.com.antoniodiego.gertarefas.view.DialogoConfirmarExcTudo;
 import br.com.antoniodiego.gertarefas.view.DialogoNovaTarView;
-import br.com.antoniodiego.gertarefas.view.principal.DialogoAgend;
 import br.com.antoniodiego.gertarefas.view.principal.JanelaPrincipalMatisse;
 import br.com.antoniodiego.gertarefas.view.principal.PainelListaTarefas;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,18 +36,16 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.awt.AWTException;
+import java.awt.EventQueue;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
-import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.ByteArrayInputStream;
@@ -60,7 +55,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.ConnectException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
@@ -68,7 +62,6 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -87,7 +80,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.SpinnerNumberModel;
@@ -98,8 +90,6 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import javax.swing.tree.TreePath;
@@ -110,12 +100,6 @@ import org.apache.logging.log4j.Logger;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.FlywayException;
 import org.hsqldb.HsqlException;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.ResourceAccessException;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.w3c.dom.DOMException;
 
@@ -169,6 +153,165 @@ public class JanelaPrincipalMatisseController {
     private int totalFaz;
 
     private ModeloTabNotif modTabNotif;
+    JanelaPrincipalMatisse princ;
+
+    public void instanciaJanelaPrincipal() {
+        princ = new JanelaPrincipalMatisse();
+    }
+
+    public void exibeJanelaPrincipal() {
+
+        EventQueue.invokeLater(() -> {
+            // Boas práticas
+            /*Exibe a janela na EDT
+             */
+
+            LOG_CONTR_PRINC.traceEntry();
+            LOG_CONTR_PRINC.trace("Em run invoke later");
+            LOG_CONTR_PRINC.trace("Antes setVisible");
+
+            princ.setVisible(true);
+        });
+    }
+
+    public void inicializaSistema() {
+        //Excuta tarefa de inicialização em Thread
+        new Thread(new TarefaInicia()).start();
+    }
+
+    /**
+     * Deve fazer a inicialização do programa
+     */
+    private class TarefaInicia implements Runnable {
+
+        @Override
+        public void run() {
+            LOG_CONTR_PRINC.traceEntry();
+
+            /*
+             * Faz migração do banco
+             * 
+             */
+            Flyway fw = Flyway.configure().baselineOnMigrate(true).baselineVersion("0")
+                    .dataSource(HibernateUtil.determinaURIBanco(), "SA", "").load();
+
+            try {
+                fw.migrate();
+            } catch (FlywayException ex) {
+                if (ex.getCause() instanceof SQLException) {
+                    SQLException excSQL = (SQLException) ex.getCause();
+                    if (excSQL.getCause() instanceof HsqlException) {
+                        HsqlException excHSQL = (HsqlException) excSQL.getCause();
+                        LOG_CONTR_PRINC.trace(excHSQL.getErrorCode());
+                        LOG_CONTR_PRINC.trace(excHSQL.getLevel());
+                        LOG_CONTR_PRINC.trace(excHSQL.getMessage());
+                        LOG_CONTR_PRINC.trace(excHSQL.getStatementCode());
+                        LOG_CONTR_PRINC.trace(excHSQL.info);
+                    }
+                }
+                LOG_CONTR_PRINC.catching(ex);
+                try {
+                    fw.repair();
+                } catch (FlywayException ex2) {
+
+                }
+            }
+
+            /*
+             * Faz o bootstrap do Hibernate
+             *
+             */
+            HibernateUtil.getInstance().inicia();
+
+            /* Nesse ponto o sist já dev estar inc
+           * A partir daqui já deve ser possível fazer consulta do banco de dados.
+            Seria interessante poder fazer isso mexendo apenas nos models.
+             */
+            DAOTarefa daoTarefa = new DAOTarefa();
+            List<Tarefa> tarefas = daoTarefa.listaTodas();
+            princ.getPainelTarefas().getModeloTabela().setTarefas(tarefas);
+
+            LOG_CONTR_PRINC.trace("Tarefas carregadas no modelo da tabela");
+
+            /*
+             * Aqui deve ser bom se com com o serv de sinc
+             */ //            LOG_CONTR_PRINC.trace("Inici pro de sincro...");
+            //
+            //            RestTemplate templ = new RestTemplate();
+            //
+            //            URI uriInfo = null;
+            //
+            //            try {
+            //                uriInfo = new URI("http://localhost:8015/sinc/info");
+            //            } catch (URISyntaxException ex) {
+            //                java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            //            }
+            //
+            //            LocalDateTime dataUlSincServ = null;
+            //            try {
+            //                dataUlSincServ = templ.getForObject(uriInfo, LocalDateTime.class);
+            //            } catch (ResourceAccessException ex) {
+            //
+            //                Throwable cause = ex.getCause();
+            //                if (cause instanceof ConnectException) {
+            //                    // Provavelmente o serv está offline
+            //                    // Obs: talvez fosse bom apenas igonorar
+            //                    // JOptionPane.showMessageDialog(view, "Houve uma falha de comunicão com o
+            //                    // servidor");
+            //                    LOG_CONTR_PRINC.info("Houve uma falha de comunicão com o servidor");
+            //                    return;
+            //                }
+            //            }
+            //
+            //            LOG_CONTR_PRINC.debug("Data ul atu rec " + dataUlSincServ);
+            //
+            //            if (dataUlSincServ == null) {
+            //                // Primeiro cl a se con. Enviar dados
+            //
+            //                HttpHeaders head = new HttpHeaders();
+            //                head.add("Accept", MediaType.APPLICATION_XML_VALUE);
+            //                head.setContentType(MediaType.APPLICATION_XML);
+            //
+            //                RestTemplate reT = new RestTemplate();
+            //                //    GrupoTarefas gr = usuario.getGrupoRaiz();
+            //
+            //                List<GrupoTarefas> subG = gr.getSubgrupos();
+            //                LOG_CONTR_PRINC.trace("Qaunt g: " + subG.size());
+            //                GrupoTarefas g1 = subG.get(0);
+            //                LOG_CONTR_PRINC.debug("Envi: " + g1);
+            //                br.com.antoniodiego.gertarefas.pojo.Tarefa tar1 = g1.get(0);
+            //                LocalDate data = tar1.getDataCriacao();
+            //
+            //                HttpEntity<GrupoTarefas> reB = new HttpEntity<>(g1, head);
+            //
+            //                URI uriEnviaGrupo = null;
+            //
+            //                try {
+            //                    uriEnviaGrupo = new URI("http://localhost:8015/grupo/");
+            //                } catch (URISyntaxException ex) {
+            //                    java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            //                }
+            //
+            //                try {
+            //                    LOG_CONTR_PRINC.trace("Fazendo requi...");
+            //                    GrupoTarefas gt = reT.postForObject(uriEnviaGrupo, reB, GrupoTarefas.class);
+            //
+            //                    if (gt != null) {
+            //                        LOG_CONTR_PRINC.info("Grupo enviado +");
+            //                    } else {
+            //                        LOG_CONTR_PRINC.error("Falha no envio");
+            //                    }
+            //                } catch (RestClientException ex) {
+            //                    ex.printStackTrace();
+            //
+            //                    if (ex instanceof HttpClientErrorException) {
+            //                        HttpClientErrorException hce = (HttpClientErrorException) ex;
+            //                        LOG_CONTR_PRINC.error("Corpo resp: " + hce.getResponseBodyAsString());
+            //                    }
+            //                }
+            //            }
+        }
+    }
 
     private void configuraIconeBandeja() {
         if (SystemTray.isSupported()) {
@@ -635,7 +778,6 @@ public class JanelaPrincipalMatisseController {
 //        Thread th = new Thread(new TarefaInicia());
 //       th.start();
 //    }
-
     /**
      * Sincroniza com backend
      */
@@ -819,7 +961,7 @@ public class JanelaPrincipalMatisseController {
     }
 
     public void gravaProp() throws FileNotFoundException, IOException {
-        try (FileOutputStream sai = new FileOutputStream(arquiP)) {
+        try ( FileOutputStream sai = new FileOutputStream(arquiP)) {
             this.proprie.store(sai, "arqu conf");
         }
     }
