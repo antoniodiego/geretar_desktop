@@ -1,6 +1,5 @@
 package br.com.antoniodiego.gertarefas.model;
 
-import br.com.antoniodiego.gertarefas.controller.JanelaPrincipalController;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,14 +27,18 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
         String.class,
         LocalDate.class, Integer.class, LocalDate.class, LocalDateTime.class, Boolean.class};
     private List<Tarefa> tarefas;
-    private final JanelaPrincipalController contr;
+    //  private final JanelaPrincipalController contr;
     public static final Boolean[] EDITAVEL = new Boolean[]{false, true, true,
         false,
         true, true, false, true};
 
-    public ModeloTabelaTarefasLista(JanelaPrincipalController controller) {
+    /**
+     *
+     * @param controller
+     */
+    public ModeloTabelaTarefasLista() {
         tarefas = new ArrayList<>();
-        this.contr = controller;
+//        //  this.contr = controller;
     }
 
     @Override
@@ -124,10 +127,10 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 break;
         }
 
-        /*Nessa chamada de método a alteração do id pode falhar.
-        
-         */
-        contr.getDaoUsuario().flush();
+//        /*Nessa chamada de método a alteração do id pode falhar.
+//        
+//         */
+//        contr.getDaoUsuario().flush();
     }
 
     public void adicionaTarefa(Tarefa tar) {
