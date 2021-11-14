@@ -6,7 +6,7 @@
 package br.com.antoniodiego.gertarefas.util;
 
 import br.com.antoniodiego.gertarefas.Defini;
-import br.com.antoniodiego.gertarefas.Principal;
+import br.com.antoniodiego.gertarefas.controller.Principal;
 import br.com.antoniodiego.gertarefas.pojo.Agendamento;
 import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
 import br.com.antoniodiego.gertarefas.pojo.Notificacao;
@@ -32,7 +32,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 public class HibernateUtil {
 
     private final static HibernateUtil INSTANCIA = new HibernateUtil();
-    public static final String PASTA_GERETAR = "gerente_tarefas";
+    public static final String PASTA_GERETAR = "gerente_tarefas_si";
     public static final String PASTA_BANCO = "banco";
     public static final String NOME_BANCO = "bancotarefas";
 
