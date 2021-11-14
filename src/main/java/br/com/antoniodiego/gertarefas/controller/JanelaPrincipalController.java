@@ -97,7 +97,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
@@ -153,10 +152,9 @@ public class JanelaPrincipalController {
     private File arquiP;
     private Properties proprie;
     /**
-     * Grupo selecionado. Da tarefa atual. Essa váriável guarda o grupo selecionado
-     * na árvore se houver um. Se não tiver um grupo, mas houver uma tarefa
-     * selecionada o pai dela é guardado no campo. Se um nó ramo que não for grupo
-     * for selecionado ela deve guardar uma ref para o nó raiz
+     * Grupo selecionado. Da tarefa atual. Essa váriável guarda o grupo selecionado na árvore se houver um. Se não tiver
+     * um grupo, mas houver uma tarefa selecionada o pai dela é guardado no campo. Se um nó ramo que não for grupo for
+     * selecionado ela deve guardar uma ref para o nó raiz
      */
     private GrupoTarefas grupoDaAtu;
     private Tarefa tarefaExibida;
@@ -234,7 +232,7 @@ public class JanelaPrincipalController {
         modeloArv.addTreeModelListener(listMod);
         view.getArvoreTarefas().setModel(modeloArv);
         view.getArvoreTarefas().addMouseListener(new AdaptadorArvore());
-/* 
+        /* 
         menuContArv = view.getMenuContextoArvore(); */
 
         this.arquiP = new File("conf.properties");
@@ -464,7 +462,7 @@ public class JanelaPrincipalController {
                 // TODO: Corrigir exc aqui
                 List<Notificacao> notifPerd = nots.stream()
                         .filter(notif -> (notif.getHoraExibicao() != null
-                                && notif.getHoraExibicao().isBefore(LocalDateTime.now())))
+                        && notif.getHoraExibicao().isBefore(LocalDateTime.now())))
                         .filter(notif -> !notif.isFoiExibida()).collect(Collectors.toList());
 
                 modTabNotif.setNotif(notifPerd);
@@ -610,38 +608,38 @@ public class JanelaPrincipalController {
         @Override
         public void tableChanged(TableModelEvent e) {
             switch (e.getType()) {
-            case TableModelEvent.INSERT:
-                acaoAdic.setEnabled(modeloTabela.getRowCount() < 5 && modeloTabela.isEditando());
-                break;
-            case TableModelEvent.DELETE:
-                acaoRem.setEnabled(modeloTabela.getRowCount() > 1 && modeloTabela.isEditando());
-                break;
-            case TableModelEvent.UPDATE:
-                if (e.getColumn() == 0) {
-                    Boolean mudouFeita = (Boolean) modeloTabela.getValueAt(e.getFirstRow(), 0);
-                    System.out.println("mud col 0. Val: " + mudouFeita);
-                    if (mudouFeita) {
-                        modeloTabela.setValueAt(LocalDate.now(), e.getFirstRow(), 1);
-                        modeloTabela.setValueAt(LocalTime.now(), e.getFirstRow(), 2);
-                        int numL = modeloTabela.getRowCount();
-                        boolean todasCooCon = false;
-                        for (int i = 0; i < numL; i++) {
-                            Boolean vC = (Boolean) modeloTabela.getValueAt(i, 0);
-                            todasCooCon = vC;
+                case TableModelEvent.INSERT:
+                    acaoAdic.setEnabled(modeloTabela.getRowCount() < 5 && modeloTabela.isEditando());
+                    break;
+                case TableModelEvent.DELETE:
+                    acaoRem.setEnabled(modeloTabela.getRowCount() > 1 && modeloTabela.isEditando());
+                    break;
+                case TableModelEvent.UPDATE:
+                    if (e.getColumn() == 0) {
+                        Boolean mudouFeita = (Boolean) modeloTabela.getValueAt(e.getFirstRow(), 0);
+                        System.out.println("mud col 0. Val: " + mudouFeita);
+                        if (mudouFeita) {
+                            modeloTabela.setValueAt(LocalDate.now(), e.getFirstRow(), 1);
+                            modeloTabela.setValueAt(LocalTime.now(), e.getFirstRow(), 2);
+                            int numL = modeloTabela.getRowCount();
+                            boolean todasCooCon = false;
+                            for (int i = 0; i < numL; i++) {
+                                Boolean vC = (Boolean) modeloTabela.getValueAt(i, 0);
+                                todasCooCon = vC;
+                            }
+                            if (todasCooCon) {
+                                view.getCaixaMarcarF().setSelected(true);
+                                modeloCDataConc.setValue(LocalDate.now());
+                                // view.getCampoDataConc().getModel().setValue(LocalDate.now());
+                                view.getCampoHoraCon().setValue(LocalTime.now());
+                            }
+                        } else {
+                            modeloTabela.setValueAt(null, e.getFirstRow(), 1);
                         }
-                        if (todasCooCon) {
-                            view.getCaixaMarcarF().setSelected(true);
-                            modeloCDataConc.setValue(LocalDate.now());
-                            // view.getCampoDataConc().getModel().setValue(LocalDate.now());
-                            view.getCampoHoraCon().setValue(LocalTime.now());
-                        }
-                    } else {
-                        modeloTabela.setValueAt(null, e.getFirstRow(), 1);
                     }
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
             }
         }
     };
@@ -730,7 +728,7 @@ public class JanelaPrincipalController {
                     /*
                      * Atualiza [[pai ]pois ofphanRemov não dispara. 9;15 a corri pai nõ
                      */
-                    /*
+ /*
                      * Obs: 09:23 - funcionou mas tive que consertar erro de não mudar pai da tarefa
                      * pra null antes. Isso //que causa o orphan removal
                      */
@@ -831,7 +829,7 @@ public class JanelaPrincipalController {
                     FileOutputStream saidaArquivo;
                     try {
                         saidaArquivo = new FileOutputStream(arquivoEscolhido);
-                        try (DataOutputStream saidaDados = new DataOutputStream(saidaArquivo)) {
+                        try ( DataOutputStream saidaDados = new DataOutputStream(saidaArquivo)) {
                             saidaDados.writeUTF("# Tarefas de usu?rio: " + usuario.getNome() + "\r\n");
                             List<GrupoTarefas> gruposL = usuario.getGrupoRaiz().getSubgrupos();// gerg.receG();
                             // db.getGrupos();
@@ -940,7 +938,7 @@ public class JanelaPrincipalController {
         /*
          * Modelo da tabela para exib tarefas em form de lista
          */
-        modeloTab = new ModeloTabelaTarefasLista(this);
+        modeloTab = new ModeloTabelaTarefasLista();
         view.getPainelLista().getTabelaTarefas().setModel(modeloTab);
         view.getPainelLista().getTabelaTarefas().getSelectionModel().addListSelectionListener(ouviModeloTabList);
 
@@ -1201,14 +1199,14 @@ public class JanelaPrincipalController {
             LocalDate l = (LocalDate) view.getPainelFunLadoDire().getCampoData().getModel()
                     .getValue();/*
                                  * insC. atZone(ZoneId.systemDefault()).toLocalDate();
-                                 */
+             */
 
             tarefaAEditar.setDataCriacao(l);
             LOG_CONTR_PRINC.trace("Conf data fazer");
             tarefaAEditar.setDataFazer((LocalDate) view.getPainelFunLadoDire().getCampoDataFazer().getModel()
                     .getValue());/*
                                   * ins.atZone(ZoneId.systemDefault()).toLocalDate());
-                                  */
+             */
             LOG_CONTR_PRINC.trace("Config");
             tarefaAEditar.setPrioridade(modeloCampoPro.getNumber().intValue());
 
@@ -1262,8 +1260,8 @@ public class JanelaPrincipalController {
 
                 Notificacao notif = new Notificacao(instAl, tarefaAEditar);
                 /**
-                 * Penso que talvez fosse bom já gravar a notificação aqui usando um dao dela
-                 * para evitar muito proces- samento com flush
+                 * Penso que talvez fosse bom já gravar a notificação aqui usando um dao dela para evitar muito proces-
+                 * samento com flush
                  */
                 tarefaAEditar.setNotificacao(notif);
 
@@ -1271,7 +1269,7 @@ public class JanelaPrincipalController {
             } else {
                 System.out.println(
                         "br.com.antoniodiego.gertarefas.igu.DialogoNovaTarefa.AcaoSalvaTarefa.actionPerformed()" + " da"
-                                + dataAl + " ha " + horaAl);
+                        + dataAl + " ha " + horaAl);
             }
             alteraEditLote(false);
             // Cancela edição em andamento [edição em tabela]
@@ -1579,8 +1577,7 @@ public class JanelaPrincipalController {
     }
 
     /**
-     * Atualiza conte\u00eddo da janela de acordo com os grupos e tarefas existentes
-     * no banco.
+     * Atualiza conte\u00eddo da janela de acordo com os grupos e tarefas existentes no banco.
      */
     public void exibeGrupos() {
         iniciaGrupoRaiz();
@@ -1604,8 +1601,7 @@ public class JanelaPrincipalController {
     }
 
     /**
-     * Aqui o usuário que fez login é definido no sistema. Nesse momento os grupos e
-     * tarefas dele são exi na árvore
+     * Aqui o usuário que fez login é definido no sistema. Nesse momento os grupos e tarefas dele são exi na árvore
      *
      * @param usuario
      */
@@ -1658,7 +1654,7 @@ public class JanelaPrincipalController {
     }
 
     public void gravaProp() throws FileNotFoundException, IOException {
-        try (FileOutputStream sai = new FileOutputStream(arquiP)) {
+        try ( FileOutputStream sai = new FileOutputStream(arquiP)) {
             this.proprie.store(sai, "arqu conf");
         }
     }
@@ -1711,9 +1707,9 @@ public class JanelaPrincipalController {
                 grupInserir = (GrupoTarefas) sel;
                 // noGrin = noIn;
             } // else if (noIn.equals(noPrinc)) {
-              // System.out.println("Soltando em raiz");
-              // grupInserir = null;
-              // }
+            // System.out.println("Soltando em raiz");
+            // grupInserir = null;
+            // }
             else {
                 System.out.println("Não esta soltand em grupo");
                 return false;
@@ -1824,7 +1820,7 @@ public class JanelaPrincipalController {
                     Tarefa.TAREFA_FLAVOR) /*
                                            * || support.isDataFlavorSupported(br.diego.gertarefas.core.Tarefa.
                                            * SABOR_TAREFA_AN)
-                                           */) {
+                     */) {
                 podeIm = true;
             } else if (support.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                 podeIm = true;
@@ -1944,7 +1940,7 @@ public class JanelaPrincipalController {
              * ainda mais eficiente se os gupos cujas tarefas mais prio tive mesmo valor,
              * ficasse no topo os que tivesse mais de uma dela.
              */
-            /*
+ /*
              * Os itens considerados maiores ficam no fim da lista e os menores no início,
              * por isso deve ser bom que os de maiores prioridades devem ser considerados
              * menores
@@ -1968,7 +1964,7 @@ public class JanelaPrincipalController {
                  * valor dele seria corr à tarefa de maior prio que fosse encontrada.
                  */
 
-                /*
+ /*
                  * Aqui parece que, se os subgrupos tivessem ordenados esse algo funcionaria
                  * melhor, pois as de maior pri est nos prim grupos
                  */
@@ -2553,7 +2549,7 @@ public class JanelaPrincipalController {
         if (res == JFileChooser.APPROVE_OPTION) {
             File arquivoEs = getSeletorArquivos().getSelectedFile();
             try {
-                try (FileOutputStream s = new FileOutputStream(arquivoEs)) {
+                try ( FileOutputStream s = new FileOutputStream(arquivoEs)) {
                     exportaXMLParaS(s);
                 }
             } catch (FileNotFoundException ex) {
@@ -2565,8 +2561,7 @@ public class JanelaPrincipalController {
     }
 
     /**
-     * Gera dados XML contendo todos os grupos e tarefas e o envia para o c?rrego
-     * especificado.
+     * Gera dados XML contendo todos os grupos e tarefas e o envia para o c?rrego especificado.
      *
      * @param saida
      */
@@ -2599,8 +2594,7 @@ public class JanelaPrincipalController {
     }
 
     /**
-     * Importa grupos tarefas de um InputStrem com arquivo XML (Do formato Geretar).
-     * Salva e exibe
+     * Importa grupos tarefas de um InputStrem com arquivo XML (Do formato Geretar). Salva e exibe
      *
      * @param in
      */
@@ -2897,7 +2891,7 @@ public class JanelaPrincipalController {
     }
 
     /**
-     * 
+     *
      */
     private class TarefaInicia implements Runnable {
 
@@ -2909,7 +2903,6 @@ public class JanelaPrincipalController {
              * Faz migração do banco
              * 
              */
-
             Flyway fw = Flyway.configure().baselineOnMigrate(true).baselineVersion("0")
                     .dataSource(HibernateUtil.determinaURIBanco(), "SA", "").load();
 
