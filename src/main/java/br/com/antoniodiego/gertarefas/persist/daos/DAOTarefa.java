@@ -5,6 +5,7 @@
  */
 package br.com.antoniodiego.gertarefas.persist.daos;
 
+import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import java.util.List;
 import javax.persistence.TypedQuery;
 import org.apache.logging.log4j.LogManager;
@@ -33,5 +34,14 @@ public class DAOTarefa extends DAO {
             return 0L;
         }
 
+    }
+
+    public List<Tarefa> listaTodas() {
+        TypedQuery<Tarefa> queryTarefas = getSession().
+                createQuery("SELECT t FROM TarefaComposta t");
+
+        List<Tarefa> tarefas = queryTarefas.getResultList();
+
+        return tarefas;
     }
 }
