@@ -1,21 +1,27 @@
 package br.com.antoniodiego.gertarefas.view.principal;
 
+import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
+ * O painel expõe o modelo da tabela de tarefas para que os da
  *
  * @author Antônio Diego <antoniodiegoluz at gmail.com>
  */
 public class PainelTabelaTarefas extends javax.swing.JPanel {
+
+    private ModeloTabelaTarefasLista modeloTabela;
 
     /**
      * Creates new form PainelListaTarefas2
      */
     public PainelTabelaTarefas() {
         initComponents();
+        modeloTabela = new ModeloTabelaTarefasLista();
+        tabelaTarefas.setModel(modeloTabela);
     }
 
     /**
@@ -85,15 +91,30 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
         tabelaTarefas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "ID Universal", "Tarefa", "Prazo", "Comentários", "Status"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tabelaTarefas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         scrollPaneTabela.setViewportView(tabelaTarefas);
 
@@ -101,7 +122,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btBuscarActionPerformed
 
     public JTable getTabelaTarefas() {
@@ -126,6 +147,10 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
     public void setCampoTextoBusca(JTextField campoTextoBusca) {
         this.campoTextoBusca = campoTextoBusca;
+    }
+
+    public ModeloTabelaTarefasLista getModeloTabela() {
+        return modeloTabela;
     }
 
 
