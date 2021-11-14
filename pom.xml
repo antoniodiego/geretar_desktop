@@ -213,7 +213,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>br.com.antoniodiego.gertarefas.Principal</mainClass>
+                            <mainClass>br.com.antoniodiego.gertarefas.controller.Principal</mainClass>
                             <addClasspath>true</addClasspath>
                         </manifest>
                     </archive>
