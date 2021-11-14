@@ -12,12 +12,16 @@ and open the template in the editor.
             <PatternLayout pattern="%d{dd-MM-yyyy HH:mm:ss} %-5level %logger{36} %class{36} %L %M %m%n" />
         </Console>
     </Appenders>
+    
     <Loggers>
         <Logger name="Controller_Principal" level="TRACE"/>
-        <Root level="debug">
+        
+        <Root level="error">
             <AppenderRef ref="Console" />
         </Root>
+        
         <Logger name="dao_tarefas" level="TRACE"/>
         <Logger name="mig_17" level="TRACE"/>
     </Loggers>
+    
 </Configuration>
