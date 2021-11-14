@@ -231,7 +231,7 @@ public class JanelaPrincipalMatisseController {
             List<Tarefa> tarefas = daoTarefa.listaTodas();
             princ.getPainelTarefas().getModeloTabela().setTarefas(tarefas);
 
-            LOG_CONTR_PRINC.trace("Tarefas carregadas no modelo da tabela");
+            LOG_CONTR_PRINC.trace(tarefas.size() + " Tarefas carregadas no modelo da tabela");
 
             /*
              * Aqui deve ser bom se com com o serv de sinc
