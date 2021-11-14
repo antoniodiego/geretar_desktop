@@ -11,92 +11,95 @@ import java.sql.Date;
 
 /**
  * Classe que representa uma tarefa.
- * 
+ *
  * @author Ant?nio Diego
  *
  */
 public class Tarefa implements Serializable, Transferable, ClipboardOwner {
-	private static final long serialVersionUID = -7609111725547109443L;
-	public static final DataFlavor SABOR_TAREFA_AN = new DataFlavor(Tarefa.class, null);
-	private String conteudo;
-	private String titulo;
-	private boolean concluida;
-	private Date data;
-	private Date dataFazer;
 
-	public Tarefa() {
-		this("","");
-	}
-	
-	public Tarefa(String titulo, String conteudo) {
-		this.titulo = titulo;
-		this.conteudo = conteudo;
-		this.concluida = false;
-	}
+    private static final long serialVersionUID = -7609111725547109443L;
+    public static final DataFlavor SABOR_TAREFA_AN = new DataFlavor(Tarefa.class, null);
+    private String conteudo;
+    private String titulo;
+    private boolean concluida;
+    private Date data;
+    private Date dataFazer;
+  
 
-	public String getConteudo() {
-		return conteudo;
-	}
+    public Tarefa() {
+        this("", "");
+    }
 
-	public String getTitulo() {
-		return titulo;
-	}
+    public Tarefa(String titulo, String conteudo) {
+        this.titulo = titulo;
+        this.conteudo = conteudo;
+        this.concluida = false;
+    }
 
-	public void setConteudo(String conteudo) {
-		this.conteudo = conteudo;
-	}
+    public String getConteudo() {
+        return conteudo;
+    }
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
+    public String getTitulo() {
+        return titulo;
+    }
 
-	public boolean isConcluida() {
-		return concluida;
-	}
+    public void setConteudo(String conteudo) {
+        this.conteudo = conteudo;
+    }
 
-	public void setConcluida(boolean concluida) {
-		this.concluida = concluida;
-	}
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
 
-	@Override
-	public String toString() {
-		return titulo;
-	}
+    public boolean isConcluida() {
+        return concluida;
+    }
 
-	@Override
-	public DataFlavor[] getTransferDataFlavors() {
-		return new DataFlavor[] { new DataFlavor(this.getClass(), titulo) };
-	}
+    public void setConcluida(boolean concluida) {
+        this.concluida = concluida;
+    }
 
-	@Override
-	public boolean isDataFlavorSupported(DataFlavor flavor) {
-		return flavor.isFlavorSerializedObjectType();
-	}
+    @Override
+    public String toString() {
+        return titulo;
+    }
 
-	@Override
-	public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-		return this;
-	}
+    @Override
+    public DataFlavor[] getTransferDataFlavors() {
+        return new DataFlavor[]{new DataFlavor(this.getClass(), titulo)};
+    }
 
-	@Override
-	public void lostOwnership(Clipboard clipboard, Transferable contents) {
+    @Override
+    public boolean isDataFlavorSupported(DataFlavor flavor) {
+        return flavor.isFlavorSerializedObjectType();
+    }
 
-	}
+    @Override
+    public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+        return this;
+    }
 
-	public Date getData() {
-		return data;
-	}
+    @Override
+    public void lostOwnership(Clipboard clipboard, Transferable contents) {
 
-	public void setData(Date data) {
-		this.data = data;
-	}
+    }
 
-	public Date getDataFazer() {
-		return dataFazer;
-	}
+    public Date getData() {
+        return data;
+    }
 
-	public void setDataFazer(Date dataFazer) {
-		this.dataFazer = dataFazer;
-	}
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public Date getDataFazer() {
+        return dataFazer;
+    }
+
+    public void setDataFazer(Date dataFazer) {
+        this.dataFazer = dataFazer;
+    }
+
 
 }
