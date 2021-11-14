@@ -66,7 +66,7 @@ public class JanelaExibTabela extends JDialog {
         add(btOrdenar, consBtOrd);
 
         tabelaTarefas = new JTable();
-        modeloTab = new ModeloTabelaTarefasLista(janelaMae.getControl());
+        modeloTab = new ModeloTabelaTarefasLista();
         tabelaTarefas.setModel(modeloTab);
 
         JScrollPane painelRol = new JScrollPane(tabelaTarefas);
