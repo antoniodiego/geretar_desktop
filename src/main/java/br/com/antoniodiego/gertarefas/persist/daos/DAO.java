@@ -5,6 +5,7 @@
  */
 package br.com.antoniodiego.gertarefas.persist.daos;
 
+import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.util.HibernateUtil;
 import org.hibernate.Session;
 
@@ -23,10 +24,16 @@ public class DAO {
     public static Session getSession() {
         return ses;
     }
-    
-    public void salva(Object o){
+
+    public void salva(Object o) {
         ses.beginTransaction();
         ses.save(o);
+        ses.getTransaction().commit();
+    }
+
+    public void atualiza(Tarefa o) {
+        ses.beginTransaction();
+        ses.update(o);
         ses.getTransaction().commit();
     }
 }
