@@ -219,7 +219,19 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     }//GEN-LAST:event_btSubirActionPerformed
 
     private void btDescerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDescerActionPerformed
-        // TODO add your handling code here:
+        Tarefa t
+                = modeloTabela.getTarefas().get(tabelaTarefas.convertRowIndexToModel(tabelaTarefas.getSelectedRow()));
+
+        if (t.getPosicao() <modeloTabela.getTarefas().size()-1) {
+            t.setPosicao(t.getPosicao() + 1);
+        }
+
+        DAOTarefa daoT = new DAOTarefa();
+        daoT.atualiza(t);
+
+        //TODO: Trocar posição da de baixo com a dela
+        
+        modeloTabela.ordena();
     }//GEN-LAST:event_btDescerActionPerformed
 
     public JTable getTabelaTarefas() {
