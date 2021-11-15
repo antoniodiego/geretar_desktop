@@ -134,6 +134,16 @@ public abstract class Tarefa implements Externalizable, Transferable,
      *
      */
     private Integer posicao;
+    /**
+     *
+     */
+
+    private String comentario;
+    /**
+     *
+     */
+
+    private String status;
 
     public Tarefa() {
         this("");
@@ -309,6 +319,22 @@ public abstract class Tarefa implements Externalizable, Transferable,
 
     public void setPosicao(Integer posicao) {
         this.posicao = posicao;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
