@@ -80,19 +80,23 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     private void initComponents() {
 
         grupoDataAgFiltr = new javax.swing.ButtonGroup();
-        painelDeAcoes = new javax.swing.JPanel();
         painelDeBusca = new javax.swing.JPanel();
         btBuscar = new javax.swing.JButton();
         campoTextoBusca = new javax.swing.JTextField();
+        painelTabela = new javax.swing.JPanel();
         scrollPaneTabela = new javax.swing.JScrollPane();
         tabelaTarefas = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
         btSubir = new javax.swing.JButton();
         btDescer = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(500, 65534));
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
+        setPreferredSize(new java.awt.Dimension(600, 400));
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
         painelDeBusca.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
+        painelDeBusca.setMaximumSize(new java.awt.Dimension(32767, 100));
+        painelDeBusca.setPreferredSize(new java.awt.Dimension(420, 100));
 
         btBuscar.setText("Buscar");
         btBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -106,21 +110,25 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         painelDeBuscaLayout.setHorizontalGroup(
             painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDeBuscaLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(33, 33, 33)
                 .addComponent(btBuscar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(367, Short.MAX_VALUE))
         );
         painelDeBuscaLayout.setVerticalGroup(
             painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDeBuscaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(15, 15, 15)
                 .addGroup(painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscar))
-                .addContainerGap())
+                .addContainerGap(17, Short.MAX_VALUE))
         );
+
+        add(painelDeBusca);
+
+        painelTabela.setLayout(new javax.swing.BoxLayout(painelTabela, javax.swing.BoxLayout.LINE_AXIS));
 
         tabelaTarefas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -151,6 +159,8 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         tabelaTarefas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         scrollPaneTabela.setViewportView(tabelaTarefas);
 
+        painelTabela.add(scrollPaneTabela);
+
         btSubir.setText("Subir Posição");
         btSubir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,36 +175,29 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout painelDeAcoesLayout = new javax.swing.GroupLayout(painelDeAcoes);
-        painelDeAcoes.setLayout(painelDeAcoesLayout);
-        painelDeAcoesLayout.setHorizontalGroup(
-            painelDeAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelDeBusca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(painelDeAcoesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollPaneTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(painelDeAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btSubir)
-                    .addComponent(btDescer))
-                .addContainerGap(19, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btDescer)
+                    .addComponent(btSubir))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
-        painelDeAcoesLayout.setVerticalGroup(
-            painelDeAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelDeAcoesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(painelDeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(painelDeAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollPaneTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(painelDeAcoesLayout.createSequentialGroup()
-                        .addComponent(btSubir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btDescer)))
-                .addContainerGap())
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(btSubir)
+                .addGap(18, 18, 18)
+                .addComponent(btDescer)
+                .addContainerGap(239, Short.MAX_VALUE))
         );
 
-        add(painelDeAcoes);
+        painelTabela.add(jPanel1);
+
+        add(painelTabela);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
@@ -254,8 +257,9 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     private javax.swing.JButton btSubir;
     private javax.swing.JTextField campoTextoBusca;
     private javax.swing.ButtonGroup grupoDataAgFiltr;
-    private javax.swing.JPanel painelDeAcoes;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel painelDeBusca;
+    private javax.swing.JPanel painelTabela;
     private javax.swing.JScrollPane scrollPaneTabela;
     private javax.swing.JTable tabelaTarefas;
     // End of variables declaration//GEN-END:variables
