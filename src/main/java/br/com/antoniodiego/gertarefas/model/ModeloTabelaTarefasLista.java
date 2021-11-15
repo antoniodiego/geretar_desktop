@@ -1,5 +1,6 @@
 package br.com.antoniodiego.gertarefas.model;
 
+import static br.com.antoniodiego.gertarefas.controller.JanelaPrincipalMatisseController.LOG_CONTR_PRINC;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,17 +21,18 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
     private static final String[] COLUNAS = new String[]{"ID", "ID Pers",
         "Título",
         "Data de criação", "Prioridade", "Data fazer", "Data modif",
-        "Concluída"};
+        "Concluída",
+        "Posição"};
 
     public static final Class[] CLASSES_COLUNAS = new Class[]{Long.class,
         Long.class,
         String.class,
-        LocalDate.class, Integer.class, LocalDate.class, LocalDateTime.class, Boolean.class};
+        LocalDate.class, Integer.class, LocalDate.class, LocalDateTime.class, Boolean.class, Integer.class};
     private List<Tarefa> tarefas;
     //  private final JanelaPrincipalController contr;
     public static final Boolean[] EDITAVEL = new Boolean[]{false, true, true,
         false,
-        true, true, false, true};
+        true, true, false, true, true};
 
     /**
      *
@@ -88,6 +90,8 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 return tarefaLinha.getDataModif();
             case 7:
                 return tarefaLinha.isConcluida();
+            case 8:
+                return tarefaLinha.getPosicao();
             default:
                 //TODO: poderia ser lan uma excessão
                 return null;
@@ -125,6 +129,9 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 tarefaLinha.setConcluida((boolean) aValue);
                 tarefaLinha.setDataModif(LocalDateTime.now());
                 break;
+            case 8:
+                tarefaLinha.setPosicao((Integer) aValue);
+                break;
         }
 
 //        /*Nessa chamada de método a alteração do id pode falhar.
@@ -152,4 +159,28 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
         return tarefas;
     }
 
+    public void ordena() {
+        Comparator<Tarefa> comp = new Comparator<Tarefa>() {
+            @Override
+            public int compare(Tarefa o1, Tarefa o2) {
+
+                if (o1.getPosicao() != null && o2.getPosicao() != null) {
+
+                    return LOG_CONTR_PRINC.traceExit("Compare n n", o1.getPosicao().compareTo(o2.getPosicao()));
+                }
+
+                if (o1.getPosicao() == null && o2.getPosicao() == null) {
+                    return LOG_CONTR_PRINC.traceExit("2 n", 1);
+                } else if (o1.getPosicao() == null) {
+                    return LOG_CONTR_PRINC.traceExit("1 n", 1);
+                } else if (o2.getPosicao() == null) {
+                    return LOG_CONTR_PRINC.traceExit("2 n", -1);
+                }
+
+                return 0;
+            }
+        };
+        this.tarefas.sort(comp);
+        fireTableDataChanged();
+    }
 }
