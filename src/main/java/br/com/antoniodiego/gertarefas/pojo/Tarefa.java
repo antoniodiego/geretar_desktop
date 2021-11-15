@@ -74,9 +74,9 @@ public abstract class Tarefa implements Externalizable, Transferable,
     @JsonIgnore
     private Long id;
     @NaturalId(mutable = true)
-    @Column(unique = true,name = "id_pers")
-   private Long idPers;
-    
+    @Column(unique = true, name = "id_pers")
+    private Long idPers;
+
     private String titulo;
     private boolean concluida;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
@@ -130,7 +130,11 @@ public abstract class Tarefa implements Externalizable, Transferable,
 
     @Column(name = "data_modif")
     private LocalDateTime dataModif;
-    
+    /**
+     *
+     */
+    private Integer posicao;
+
     public Tarefa() {
         this("");
     }
@@ -163,7 +167,6 @@ public abstract class Tarefa implements Externalizable, Transferable,
         this.idPers = idPers;
     }
 
-    
     public String getTitulo() {
         return titulo;
     }
@@ -298,6 +301,14 @@ public abstract class Tarefa implements Externalizable, Transferable,
 
     public void setDataModif(LocalDateTime dataModif) {
         this.dataModif = dataModif;
+    }
+
+    public Integer getPosicao() {
+        return posicao;
+    }
+
+    public void setPosicao(Integer posicao) {
+        this.posicao = posicao;
     }
 
     @Override
