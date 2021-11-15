@@ -229,7 +229,10 @@ public class JanelaPrincipalMatisseController {
              */
             DAOTarefa daoTarefa = new DAOTarefa();
             List<Tarefa> tarefas = daoTarefa.listaTodas();
+
             princ.getPainelTarefas().getModeloTabela().setTarefas(tarefas);
+            princ.getPainelTarefas().getModeloTabela().ordena();
+            //  princ.getPainelTarefas().getRs().sort();
 
             LOG_CONTR_PRINC.trace(tarefas.size() + " Tarefas carregadas no modelo da tabela");
 
