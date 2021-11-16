@@ -391,7 +391,7 @@ public class JanelaPrincipalController {
         acaoVerDet = new AcaoVerDetDaTar();
         view.getBtVerDetTarefa().setAction(acaoVerDet);
 
-        dialogoNovaTarefa = new DialogoNovaTarView(view);
+        dialogoNovaTarefa = new DialogoNovaTarView(view, null);
 
         confPainelTarefasLista();
 
@@ -1427,8 +1427,7 @@ public class JanelaPrincipalController {
                 // List
             }
 
-            dialogoNovaTarefa.getContro().nova();
-
+            //    dialogoNovaTarefa.getContro().nova();
             DAOTarefa daoT = new DAOTarefa();
             Long ultId = daoT.getMaiorIDPers();
             dialogoNovaTarefa.getCampoId().setText(String.valueOf(ultId + 1));
