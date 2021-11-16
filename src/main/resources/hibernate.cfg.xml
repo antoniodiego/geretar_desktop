@@ -16,6 +16,10 @@
         <property name="hibernate.dialect">
             org.hibernate.dialect.HSQLDialect
         </property>
+        
+        <property name="hibernate.current_session_context_class">
+            thread
+        </property>
         <!--MARK Aqui está a propriedade hbm2ddl que gera tabelas 
         automaticamente -->
         <!--property name="hibernate.hbm2ddl.auto">update</property-->
