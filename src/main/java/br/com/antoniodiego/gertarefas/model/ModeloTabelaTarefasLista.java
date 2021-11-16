@@ -138,6 +138,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 break;
             case 8:
                 tarefaLinha.setPosicao((Integer) aValue);
+                ordena();
                 break;
             case 9:
                 tarefaLinha.setComentario((String) aValue);
