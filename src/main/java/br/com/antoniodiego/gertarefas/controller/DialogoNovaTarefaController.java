@@ -91,12 +91,12 @@ public class DialogoNovaTarefaController {
         getView().getBotAdic().setEnabled(modeloTab.getRowCount() < 5);
     };
 
-    private final JanelaPrincipal princ;
+    private JanelaPrincipalMatisseController princ;
 
-    public DialogoNovaTarefaController(DialogoNovaTarView view,
-            JanelaPrincipal princ) {
+    public DialogoNovaTarefaController(DialogoNovaTarView view
+    ) {
         this.view = view;
-        this.princ = princ;
+        // this.princ = princ;
 
         modeloCDataFz = (ModeloData) view.getCampoDataFazer().getModel();
         modeloCDataAl = (ModeloData) view.getCampoDataFazer().getModel();
@@ -120,8 +120,8 @@ public class DialogoNovaTarefaController {
 
         modeloCampoPro = new SpinnerNumberModel(5, 1, 100, 2);
 
-        view.getBotaoCancelar().addActionListener(princ.getControl().
-                getAcGere());
+//        view.getBotaoCancelar().addActionListener(princ.
+//                getAcGere());
         view.getBotaoCancelar().setActionCommand("cancel_new_task");
 
         view.getBtDig().addChangeListener(clBtDig);
@@ -160,8 +160,7 @@ public class DialogoNovaTarefaController {
     }
 
     /**
-     * Gera uma instânica de TarefaComposta contendo tarefas coordenadas obtidas
-     * da tabela de descrições
+     * Gera uma instânica de TarefaComposta contendo tarefas coordenadas obtidas da tabela de descrições
      *
      * @return
      */
@@ -226,9 +225,8 @@ public class DialogoNovaTarefaController {
 
                 Notificacao notif = new Notificacao(instAl, novaTarefa);
                 /**
-                 * Penso que talvez fosse bom já gravar a notificação aqui
-                 * usando um dao dela para evitar muito proces- samento com
-                 * flush
+                 * Penso que talvez fosse bom já gravar a notificação aqui usando um dao dela para evitar muito proces-
+                 * samento com flush
                  */
                 novaTarefa.setNotificacao(notif);
 
@@ -260,8 +258,7 @@ public class DialogoNovaTarefaController {
 
             logDNT.trace("Adic tar na janela principal");
 
-            princ.getControl().adicTarefa(novaTarefa);
-
+            // princ.adicTarefa(novaTarefa);
             logDNT.trace("Após adic tar na janela principal");
         }
     }
