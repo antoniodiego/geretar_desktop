@@ -156,7 +156,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tabelaTarefas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabelaTarefas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
         scrollPaneTabela.setViewportView(tabelaTarefas);
 
         painelTabela.add(scrollPaneTabela);
