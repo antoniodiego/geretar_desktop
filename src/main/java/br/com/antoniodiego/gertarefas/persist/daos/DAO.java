@@ -8,6 +8,7 @@ package br.com.antoniodiego.gertarefas.persist.daos;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -15,23 +16,25 @@ import org.hibernate.Session;
  */
 public class DAO {
 
-    private static Session ses;
+    private static SessionFactory sesF;
 
     static {
-        ses = HibernateUtil.getInstance().getSessionFactory().openSession();
+        sesF = HibernateUtil.getInstance().getSessionFactory();
     }
 
     public static Session getSession() {
-        return ses;
+        return HibernateUtil.getInstance().getSessionFactory().getCurrentSession();
     }
 
     public void salva(Object o) {
+        Session ses = sesF.getCurrentSession();
         ses.beginTransaction();
         ses.save(o);
         ses.getTransaction().commit();
     }
 
     public void atualiza(Tarefa o) {
+        Session ses = sesF.getCurrentSession();
         ses.beginTransaction();
         ses.update(o);
         ses.getTransaction().commit();
