@@ -114,7 +114,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(btBuscar)
-                .addContainerGap(367, Short.MAX_VALUE))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         painelDeBuscaLayout.setVerticalGroup(
             painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,7 +184,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btDescer)
                     .addComponent(btSubir))
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
