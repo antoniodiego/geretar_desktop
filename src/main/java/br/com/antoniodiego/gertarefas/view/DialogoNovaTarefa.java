@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -48,7 +49,7 @@ public class DialogoNovaTarefa extends JDialog {
     public static final int LARGURA_PREF = 400;
     public static final int ALTURA_PREF = 400;
     private JTextField campoTitulo;
-    private final JanelaPrincipal pai;
+    private final JFrame pai;
 
     private JDatePickerImpl campoDataFz;
     private JButton botAdic;
@@ -57,8 +58,8 @@ public class DialogoNovaTarefa extends JDialog {
     private JRadioButton rbEscolh;
     private JRadioButton btDig;
     private GrupoTarefas grupoDest;
-     private ButtonGroup grupoBotDataFazer;
-    
+    private ButtonGroup grupoBotDataFazer;
+
     private JButton botaoConcluido;
     private JSpinner campoPrioridade;
     private JDatePickerImpl campoDataAl;
@@ -68,9 +69,8 @@ public class DialogoNovaTarefa extends JDialog {
     private JDatePanel painelData;
     private JDatePanelImpl painelDataAl;
     private JComboBox comboDataFaz;
-   
 
-    public DialogoNovaTarefa(JanelaPrincipal pai) {
+    public DialogoNovaTarefa(JFrame pai) {
         super(pai, "Nova tarefa", false);
         this.pai = pai;
         constJan();
