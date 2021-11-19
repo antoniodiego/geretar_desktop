@@ -32,6 +32,7 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
 
     /**
      * Creates new form DialogoNovaTarView
+     *
      * @param princ
      * @param modelTab
      */
@@ -72,11 +73,10 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         campoStatus = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        campoPosicao = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Editar tarefa");
-        setLocationByPlatform(true);
 
         jLabel1.setText("Prazo:");
 
@@ -138,8 +138,6 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
 
         jLabel7.setText("Posição:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -182,7 +180,7 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
                                                     .addComponent(jLabel3)))
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(campoPosicao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(layout.createSequentialGroup()
                                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addComponent(campoPrioridade, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,7 +216,7 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoPosicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rotuloPriori)
@@ -262,6 +260,11 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
 
         String tit = campoTitulo.getText();
         tarefa.setTitulo(tit);
+        tarefa.setDataFazer(campoPrazo.getModeloDef().getValue());
+        tarefa.setComentario(campoComentários.getText());
+        tarefa.setStatus(campoStatus.getText());
+        // tarefa.setPosicao(campoPosicao.getSelectedIndex());
+
         //obs: redund
         tarefa.setDataCriacao(LocalDate.now());
 
@@ -291,16 +294,12 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
             tarefa.setIdPers(idNum);
         }
 
-        Integer maiorP = daoT.getMaiorPosicao();
-        tarefa.setPosicao(maiorP + 1);
-
         daoT.atualiza(tarefa);
 
         dispose();
 
         logDNT.trace("Adic tar na janela principal");
 
-        modelo.adicionaTarefa(tarefa);
         modelo.ordena();
 
         logDNT.trace("Após adic tar na janela principal");
@@ -316,6 +315,12 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
         if (prazo != null) {
             campoPrazo.getModeloDef().setDate(prazo.getDayOfMonth(), prazo.getMonthValue(), prazo.getYear());
         }
+
+        campoComentários.setText(t.getComentario());
+        campoStatus.setText(t.getStatus());
+        campoPosicao.setSelectedItem(t);
+        campoPrioridade.setValue(t.getPrioridade());
+        campoId.setValue(t.getIdPers());
     }
 
     private void campoIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoIdActionPerformed
@@ -427,12 +432,12 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
     private br.com.antoniodiego.gertarefas.view.BeanDatePick campoDataAl;
     private javax.swing.JFormattedTextField campoHoraAl;
     private javax.swing.JFormattedTextField campoId;
+    private javax.swing.JComboBox<Tarefa> campoPosicao;
     private br.com.antoniodiego.gertarefas.view.BeanDatePick campoPrazo;
     private javax.swing.JSpinner campoPrioridade;
     private javax.swing.JTextField campoStatus;
     private javax.swing.JTextField campoTitulo;
     private javax.swing.ButtonGroup grupoDataFazer;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
