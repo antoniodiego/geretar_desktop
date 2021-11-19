@@ -38,6 +38,30 @@ public class DAOTarefa extends DAO {
 
     }
 
+    /**
+     *
+     * @return
+     */
+    public Integer getMaiorPosicao() {
+        getSession().beginTransaction();
+        TypedQuery<Integer> maiorId = getSession().createQuery("SELECT t.posicao FROM Tarefa t ORDER by t.posicao DESC")
+                .setMaxResults(1);
+        //    NativeQuery quer = getSession().createNativeQuery("SELECT MAX(id_pers) AS maior_id FROM tarefas");
+        List<Integer> res = maiorId.getResultList();
+        getSession().getTransaction().commit();
+
+        LOG_DAO_T.debug("Enc: " + res.size());
+
+        if (res.size() > 0) {
+            LOG_DAO_T.debug("Maior: " + res.get(0));
+
+            return res.get(0);
+        } else {
+            return 0;
+        }
+
+    }
+
     public List<Tarefa> listaTodas() {
         getSession().beginTransaction();
         TypedQuery<Tarefa> queryTarefas = getSession().
@@ -54,6 +78,25 @@ public class DAOTarefa extends DAO {
         TypedQuery<Tarefa> queryTarefas = getSession().
                 createQuery("SELECT t FROM TarefaComposta t where t.idPers = :idPers").setMaxResults(1);
         queryTarefas.setParameter("idPers", idPers);
+
+        List<Tarefa> res = queryTarefas.getResultList();
+        getSession().getTransaction().commit();
+
+        if (res.size() > 0) {
+            Tarefa tarefa = res.get(0);
+
+            return tarefa;
+        } else {
+            return null;
+        }
+
+    }
+
+    public Tarefa getByPosicao(Integer posicao) {
+        getSession().beginTransaction();
+        TypedQuery<Tarefa> queryTarefas = getSession().
+                createQuery("SELECT t FROM TarefaComposta t where t.posicao = :posicao").setMaxResults(1);
+        queryTarefas.setParameter("posicao", posicao);
 
         List<Tarefa> res = queryTarefas.getResultList();
         getSession().getTransaction().commit();
