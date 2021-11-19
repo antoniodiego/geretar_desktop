@@ -11,6 +11,9 @@ import org.apache.logging.log4j.Logger;
  */
 public class Principal {
 
+    /**
+     *
+     */
     public static boolean DESENV = false;
 
     private static final Logger LOG_PRINC = LogManager.

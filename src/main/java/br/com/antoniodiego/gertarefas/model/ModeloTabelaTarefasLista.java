@@ -137,7 +137,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 tarefaLinha.setDataModif(LocalDateTime.now());
                 break;
             case 8:
-                tarefaLinha.setPosicao((Integer) aValue);
+                alteraPosicao(tarefaLinha, (int) aValue);
                 ordena();
                 break;
             case 9:
@@ -147,6 +147,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 tarefaLinha.setStatus((String) aValue);
                 break;
         }
+
         DAOTarefa daoT = new DAOTarefa();
         daoT.atualiza(tarefaLinha);
 
@@ -154,6 +155,25 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
 //        
 //         */
 //        contr.getDaoUsuario().flush();
+    }
+
+    public void alteraPosicao(Tarefa t, int posicao) {
+        Integer posAnt = t.getPosicao();
+        DAOTarefa daoT = new DAOTarefa();
+        if (posicao < posAnt) {
+            Integer maiorP = daoT.getMaiorPosicao();
+            t.setPosicao(maiorP + 1);
+            daoT.atualiza(t);
+
+            Tarefa tarP;
+            for (int i = posAnt - 1; i >= posicao; i--) {
+                tarP = daoT.getByPosicao(i);
+                tarP.setPosicao(i + 1);
+                daoT.atualiza(tarP);
+            }
+
+            t.setPosicao(posicao);
+        }
     }
 
     public void adicionaTarefa(Tarefa tar) {
