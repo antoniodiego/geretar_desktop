@@ -88,7 +88,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 col.setPreferredWidth(40);
             } else if (i == 8) {
                 //Posição
-                col.setPreferredWidth(100);
+                col.setPreferredWidth(50);
             } else if (i == 9) {
                 col.setPreferredWidth(100);
             } else if (i == 10) {

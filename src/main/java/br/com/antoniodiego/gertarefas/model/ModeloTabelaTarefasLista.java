@@ -186,7 +186,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 }
 
                 if (o1.getPosicao() == null && o2.getPosicao() == null) {
-                    return LOG_CONTR_PRINC.traceExit("2 n", 1);
+                    return LOG_CONTR_PRINC.traceExit("2 n", 0);
                 } else if (o1.getPosicao() == null) {
                     return LOG_CONTR_PRINC.traceExit("1 n", 1);
                 } else if (o2.getPosicao() == null) {
