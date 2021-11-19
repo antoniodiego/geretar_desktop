@@ -10,7 +10,15 @@ public class Defini {
      *
      */
     public static final String STRING_VER = "2.4.2-beta";
-    public static final Estado ESTADO = Estado.PRODUCAO;
+
+    /**
+     * Importante
+     *
+     * Muda estágio. O local do banco muda de acordo com ele.
+     *
+     * O estado de desenv deve ser configurado na classe Principal
+     */
+    public static final Estado ESTADO = Estado.DESEN;
 
     public enum Estado {
         DESEN, TESTE, DEBUG, PRODUCAO;
