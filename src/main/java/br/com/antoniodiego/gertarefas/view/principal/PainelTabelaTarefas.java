@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
@@ -65,7 +66,35 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
         TableColumnModel colM = tabelaTarefas.getColumnModel();
 
-        
+        TableColumn col;
+        for (int i = 0; i < colM.getColumnCount(); i++) {
+            col = colM.getColumn(i);
+
+            if (i == 0) {
+                col.setPreferredWidth(50);
+            } else if (i == 1) {
+                col.setPreferredWidth(50);
+            } else if (i == 2) {
+                col.setPreferredWidth(200);
+            } else if (i == 3) {
+                col.setPreferredWidth(80);
+            } else if (i == 4) {
+                col.setPreferredWidth(40);
+            } else if (i == 5) {
+                col.setPreferredWidth(80);
+            } else if (i == 6) {
+                col.setPreferredWidth(80);
+            } else if (i == 7) {
+                col.setPreferredWidth(40);
+            } else if (i == 8) {
+                //Posição
+                col.setPreferredWidth(100);
+            } else if (i == 9) {
+                col.setPreferredWidth(100);
+            } else if (i == 10) {
+                col.setPreferredWidth(70);
+            }
+        }
     }
 
     public TableRowSorter<ModeloTabelaTarefasLista> getRs() {
@@ -94,7 +123,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
 
         setMaximumSize(new java.awt.Dimension(500, 65534));
-        setPreferredSize(new java.awt.Dimension(600, 400));
+        setPreferredSize(new java.awt.Dimension(1000, 600));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
         painelDeBusca.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
@@ -117,7 +146,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(btBuscar)
-                .addContainerGap(299, Short.MAX_VALUE))
+                .addContainerGap(465, Short.MAX_VALUE))
         );
         painelDeBuscaLayout.setVerticalGroup(
             painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
