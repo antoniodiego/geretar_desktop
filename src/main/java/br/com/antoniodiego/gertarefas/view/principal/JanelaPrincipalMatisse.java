@@ -62,6 +62,8 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gerente de tarefas");
+        setLocationByPlatform(true);
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jSplitPane1.setOneTouchExpandable(true);
