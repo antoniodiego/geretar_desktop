@@ -274,6 +274,9 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
             novaTarefa.setIdPers(idNum);
         }
 
+        Integer maiorP = daoT.getMaiorPosicao();
+        novaTarefa.setPosicao(maiorP + 1);
+
         daoT.salva(novaTarefa);
 
         dispose();
