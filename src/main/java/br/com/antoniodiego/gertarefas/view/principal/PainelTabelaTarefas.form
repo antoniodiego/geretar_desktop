@@ -106,7 +106,6 @@
                     <Column editable="true" title="Status" type="java.lang.Object"/>
                   </Table>
                 </Property>
-                <Property name="autoResizeMode" type="int" value="1"/>
               </Properties>
             </Component>
           </SubComponents>

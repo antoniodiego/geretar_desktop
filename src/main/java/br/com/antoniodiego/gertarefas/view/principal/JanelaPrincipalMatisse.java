@@ -7,6 +7,14 @@ package br.com.antoniodiego.gertarefas.view.principal;
 
 import br.com.antoniodiego.gertarefas.controller.JanelaPrincipalMatisseController;
 import br.com.antoniodiego.gertarefas.view.DialogoNovaTarView;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import net.minidev.json.JSONObject;
 
 /**
  *
@@ -64,6 +72,11 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerente de tarefas");
         setLocationByPlatform(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jSplitPane1.setOneTouchExpandable(true);
@@ -71,6 +84,8 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
 
         jSplitPane2.setResizeWeight(1.0);
         jSplitPane2.setOneTouchExpandable(true);
+
+        painelTabelaTarefas1.setReferenciaJan(this);
         jSplitPane2.setLeftComponent(painelTabelaTarefas1);
 
         painelFuncoes1.setPreferredSize(new java.awt.Dimension(100, 359));
@@ -169,6 +184,34 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     private void menuExportarComoXMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExportarComoXMLActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuExportarComoXMLActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        TableColumnModel modelC = painelTabelaTarefas1.getTabelaTarefas().getColumnModel();
+        TableColumn col;
+
+        JSONObject js = new JSONObject();
+        JSONObject config;
+        for (int i = 0; i < modelC.getColumnCount(); i++) {
+            col = modelC.getColumn(i);
+
+            config = new JSONObject();
+            config.put("width", col.getWidth());
+            config.put("index", i);
+            js.put(String.valueOf(col.getIdentifier()), config);
+        }
+
+        File arquivoTam = new File("colunas.json");
+        FileWriter fw;
+        try {
+            fw = new FileWriter(arquivoTam);
+            fw.append(js.toJSONString());
+            fw.flush();
+            fw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(JanelaPrincipalMatisse.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

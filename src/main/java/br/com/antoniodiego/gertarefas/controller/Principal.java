@@ -14,7 +14,7 @@ public class Principal {
     /**
      *
      */
-    public static boolean DESENV = true;
+    public static boolean DESENV = false;
 
     private static final Logger LOG_PRINC = LogManager.
             getLogger(JanelaPrincipal.class);

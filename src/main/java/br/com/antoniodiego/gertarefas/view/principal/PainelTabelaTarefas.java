@@ -5,13 +5,20 @@ import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.view.DialogoEditarTarefa;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowSorter;
@@ -19,6 +26,9 @@ import javax.swing.SortOrder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 
 /**
  * O painel expõe o modelo da tabela de tarefas para que os da
@@ -30,11 +40,14 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     private ModeloTabelaTarefasLista modeloTabela;
     TableRowSorter<ModeloTabelaTarefasLista> rs;
 
+    private JFrame referenciaJan;
+
     /**
      * Creates new form PainelListaTarefas2
      */
     public PainelTabelaTarefas() {
         initComponents();
+        this.referenciaJan = referenciaJan;
         modeloTabela = new ModeloTabelaTarefasLista();
         tabelaTarefas.setModel(modeloTabela);
 
@@ -80,6 +93,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 col.setPreferredWidth(80);
             } else if (i == 4) {
                 col.setPreferredWidth(40);
+
             } else if (i == 5) {
                 col.setPreferredWidth(80);
             } else if (i == 6) {
@@ -88,13 +102,59 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 col.setPreferredWidth(40);
             } else if (i == 8) {
                 //Posição
-                col.setPreferredWidth(100);
+                col.setPreferredWidth(40);
             } else if (i == 9) {
                 col.setPreferredWidth(100);
             } else if (i == 10) {
                 col.setPreferredWidth(70);
             }
         }
+
+        File arquivoTam = new File("colunas.json");
+        if (arquivoTam.exists()) {
+            try {
+                FileReader fr = new FileReader(arquivoTam);
+                JSONParser js = new JSONParser(JSONParser.ACCEPT_NAN);
+                Object res = js.parse(fr);
+
+                if (res instanceof JSONObject) {
+                    JSONObject jsO = (JSONObject) res;
+
+                    jsO.entrySet().forEach((e) -> {
+                        LOG_CONTR_PRINC.debug("Key: {}", e.getKey());
+
+                        TableColumn coluna = tabelaTarefas.getColumn(e.getKey());
+                        LOG_CONTR_PRINC.debug("Alterando tam coluna " + e.getKey());
+                        JSONObject config = (JSONObject) jsO.get(e.getKey());
+
+                        coluna.setPreferredWidth(config.getAsNumber("width").intValue());
+                        //coluna.setModelIndex(config.getAsNumber("index").intValue());
+                    });
+                }
+
+//            StringBuilder leit = new StringBuilder();
+//            char[] cbuf = new char[1024];
+//            int len = 0;
+//            while ((len = fr.read(cbuf)) != -1) {
+//                leit.append(new String(cbuf, 0, len));
+//            }
+//            fr.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(PainelTabelaTarefas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(PainelTabelaTarefas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(PainelTabelaTarefas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public JFrame getReferenciaJan() {
+        return referenciaJan;
+    }
+
+    public void setReferenciaJan(JFrame referenciaJan) {
+        this.referenciaJan = referenciaJan;
     }
 
     public TableRowSorter<ModeloTabelaTarefasLista> getRs() {
@@ -188,7 +248,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tabelaTarefas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
         scrollPaneTabela.setViewportView(tabelaTarefas);
 
         painelTabela.add(scrollPaneTabela);
@@ -349,7 +408,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
     private void btVerTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerTarefaActionPerformed
         //TODO: JFrame jane princ
-        DialogoEditarTarefa dialogEditar = new DialogoEditarTarefa(null, modeloTabela);
+        DialogoEditarTarefa dialogEditar = new DialogoEditarTarefa(referenciaJan, modeloTabela);
         Tarefa t = modeloTabela.getTarefas().get(tabelaTarefas.convertRowIndexToModel(tabelaTarefas.getSelectedRow()));
         dialogEditar.setTarefa(t);
         dialogEditar.setVisible(true);

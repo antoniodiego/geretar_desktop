@@ -248,7 +248,7 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void campoHoraAlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoHoraAlActionPerformed
