@@ -206,7 +206,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(btBuscar)
-                .addContainerGap(465, Short.MAX_VALUE))
+                .addContainerGap(586, Short.MAX_VALUE))
         );
         painelDeBuscaLayout.setVerticalGroup(
             painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,7 +215,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 .addGroup(painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscar))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         add(painelDeBusca);
@@ -267,6 +267,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         });
 
         btVerTarefa.setText("Ver");
+        btVerTarefa.setToolTipText("Ver e editar detalhes da tarefa");
         btVerTarefa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btVerTarefaActionPerformed(evt);
@@ -278,22 +279,23 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btSubir)
                     .addComponent(btVerTarefa)
-                    .addComponent(btDescer)
-                    .addComponent(btSubir))
-                .addGap(16, 16, 16))
+                    .addComponent(btDescer))
+                .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(btSubir)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btDescer)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btVerTarefa)
-                .addContainerGap(227, Short.MAX_VALUE))
+                .addContainerGap(388, Short.MAX_VALUE))
         );
 
         painelTabela.add(jPanel1);
@@ -380,27 +382,41 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     }//GEN-LAST:event_btSubirActionPerformed
 
     private void btDescerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDescerActionPerformed
+        LOG_CONTR_PRINC.traceEntry();
+
         Tarefa t
                 = modeloTabela.getTarefas().get(tabelaTarefas.convertRowIndexToModel(tabelaTarefas.getSelectedRow()));
 
-        if (t.getPosicao() < modeloTabela.getTarefas().size() - 1) {
-            t.setPosicao(t.getPosicao() + 1);
+        if (t.getPosicao() >= modeloTabela.getTarefas().size() - 1) {
+            return;
         }
 
-        Integer pos = t.getPosicao();
+        Integer posicaoAt = t.getPosicao();
+
+        if (t.getPosicao() < modeloTabela.getTarefas().size() - 1) {
+            t.setPosicao(t.getPosicao() + 1);
+            LOG_CONTR_PRINC.debug("Pos alt para " + t.getPosicao());
+        }
 
         //Remove a pos
         DAOTarefa daoT = new DAOTarefa();
-        Integer posicaoAt = t.getPosicao();
+
         t.setPosicao(daoT.getMaiorPosicao() + 1);
         daoT.atualiza(t);
 
-        //TODO: Trocar posição da de baixo com a dela
-        Tarefa tarAbaixo = daoT.getByPosicao(pos + 1);
-        tarAbaixo.setPosicao(posicaoAt);
-        daoT.atualiza(tarAbaixo);
+        LOG_CONTR_PRINC.debug("Tarefa movida para o fim. Pos: " + t.getPosicao());
 
-        t.setPosicao(pos + 1);
+        //TODO: Trocar posição da de baixo com a dela
+        Tarefa tarAbaixo = daoT.getByPosicao(posicaoAt + 1);
+        if (tarAbaixo != null) {
+            LOG_CONTR_PRINC.debug("Tarefa enc pos seg. pos: " + (posicaoAt + 1));
+            tarAbaixo.setPosicao(posicaoAt);
+
+            daoT.atualiza(tarAbaixo);
+        }
+
+        //TODO: Rever ter se galhar
+        t.setPosicao(posicaoAt + 1);
         daoT.atualiza(t);
 
         modeloTabela.ordena();
