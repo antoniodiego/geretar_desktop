@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Antônoio Diego <antoniodiegoluz at gmail.com>
+ * @author Antônio Diego <antoniodiegoluz at gmail.com>
  */
 public class DialogoEditarTarefa extends javax.swing.JDialog {
 
@@ -313,7 +313,8 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
         LocalDate prazo = t.getDataFazer();
 
         if (prazo != null) {
-            campoPrazo.getModeloDef().setDate(prazo.getDayOfMonth(), prazo.getMonthValue(), prazo.getYear());
+
+            campoPrazo.getModeloDef().setValue(prazo);//Date(prazo.getDayOfMonth(), prazo.getMonthValue(), prazo.getYear());
         }
 
         campoComentários.setText(t.getComentario());
