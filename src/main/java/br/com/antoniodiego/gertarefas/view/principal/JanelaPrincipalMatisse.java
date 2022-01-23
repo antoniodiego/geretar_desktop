@@ -80,6 +80,8 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jSplitPane1.setOneTouchExpandable(true);
+
+        painelMenuLadoEsquerdo1.setPreferredSize(new java.awt.Dimension(100, 100));
         jSplitPane1.setLeftComponent(painelMenuLadoEsquerdo1);
 
         jSplitPane2.setResizeWeight(1.0);
