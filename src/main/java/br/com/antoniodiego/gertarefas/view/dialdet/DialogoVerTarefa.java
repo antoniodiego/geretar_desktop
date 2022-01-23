@@ -49,6 +49,7 @@ public class DialogoVerTarefa extends JDialog {
     private final JanelaPrincipal janelaMae;
 
     public DialogoVerTarefa(Tarefa tarefa, JanelaPrincipal janelaMae) {
+        super(janelaMae);
         this.tarefaVisu = tarefa;
         this.janelaMae = janelaMae;
 
