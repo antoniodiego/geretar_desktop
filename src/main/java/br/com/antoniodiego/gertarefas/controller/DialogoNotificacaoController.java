@@ -5,8 +5,8 @@
  */
 package br.com.antoniodiego.gertarefas.controller;
 
-import br.com.antoniodiego.gertarefas.view.DialogoAdiar;
-import br.com.antoniodiego.gertarefas.view.DialogoNotificacao;
+import br.com.antoniodiego.gertarefas.telas.DialogoAdiar;
+import br.com.antoniodiego.gertarefas.telas.DialogoNotificacao;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;

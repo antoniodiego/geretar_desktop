@@ -8,7 +8,7 @@ package br.com.antoniodiego.gertarefas.controller;
 import br.com.antoniodiego.gertarefas.controller.JanelaPrincipalController;
 import br.com.antoniodiego.gertarefas.pojo.Agendamento;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
-import br.com.antoniodiego.gertarefas.view.principal.DialogoAgend;
+import br.com.antoniodiego.gertarefas.telas.principal.DialogoAgend;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import javax.swing.AbstractAction;

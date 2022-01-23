@@ -1,6 +1,6 @@
 package br.com.antoniodiego.gertarefas.controller;
 
-import br.com.antoniodiego.gertarefas.view.principal.JanelaPrincipal;
+import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipal;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
