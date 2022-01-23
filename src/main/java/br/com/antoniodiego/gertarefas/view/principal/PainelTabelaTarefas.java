@@ -188,7 +188,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
         painelDeBusca.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
         painelDeBusca.setMaximumSize(new java.awt.Dimension(32767, 100));
-        painelDeBusca.setPreferredSize(new java.awt.Dimension(420, 100));
+        painelDeBusca.setPreferredSize(new java.awt.Dimension(20, 50));
 
         btBuscar.setText("Buscar");
         btBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -202,20 +202,19 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         painelDeBuscaLayout.setHorizontalGroup(
             painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDeBuscaLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap()
                 .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(42, 42, 42)
                 .addComponent(btBuscar)
-                .addContainerGap(586, Short.MAX_VALUE))
+                .addContainerGap(588, Short.MAX_VALUE))
         );
         painelDeBuscaLayout.setVerticalGroup(
             painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDeBuscaLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
                 .addGroup(painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscar))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
 
         add(painelDeBusca);
@@ -295,7 +294,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 .addComponent(btDescer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btVerTarefa)
-                .addContainerGap(388, Short.MAX_VALUE))
+                .addContainerGap(437, Short.MAX_VALUE))
         );
 
         painelTabela.add(jPanel1);
