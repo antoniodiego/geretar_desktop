@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.TableColumn;
@@ -331,27 +332,32 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
     private void btSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSubirActionPerformed
         LOG_CONTR_PRINC.traceEntry();
+
+        //A linha escolhida na tabela
         int linhaSel = tabelaTarefas.getSelectedRow();
+
+        //Posição da tarefa no modelo
         int posicaoSelModelo = tabelaTarefas.convertRowIndexToModel(linhaSel);
-        Tarefa t
+
+        Tarefa tarefaMover
                 = modeloTabela.getTarefas().get(posicaoSelModelo);
 
-        if (t.getPosicao() <= 0) {
+        if (tarefaMover.getPosicao() <= 0) {
             return;
         }
 
-        LOG_CONTR_PRINC.debug("Pos {} maior que 0", t.getTitulo());
+        LOG_CONTR_PRINC.debug("Pos {} maior que 0", tarefaMover.getTitulo());
 
         //Remove a posição dela
         DAOTarefa daoT = new DAOTarefa();
 
-        Integer posicaoAt = t.getPosicao();
+        Integer posicaoAt = tarefaMover.getPosicao();
         LOG_CONTR_PRINC.debug("Pos at {}", posicaoAt);
 
         Integer posSucMaior = daoT.getMaiorPosicao() + 1;
         LOG_CONTR_PRINC.debug("Próx m {}", posSucMaior);
-        t.setPosicao(posSucMaior);
-        daoT.atualiza(t);
+        tarefaMover.setPosicao(posSucMaior);
+        daoT.atualiza(tarefaMover);
 
         //Muda a pos da que está na frente pra dela
         Tarefa tLogoFrente = modeloTabela.getTarefas().get(posicaoSelModelo - 1);//daoT.getByPosicao(posicaoAt - 1);
@@ -371,39 +377,59 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
          */
         daoT.atualiza(tLogoFrente);
 
-        t.setPosicao(posicaoAt - 1);
-        daoT.atualiza(t);
+        tarefaMover.setPosicao(posicaoAt - 1);
+        daoT.atualiza(tarefaMover);
 
         //  modeloTabela.setTarefas(daoT.listaTodas());
         modeloTabela.ordena();
 
-        tabelaTarefas.getSelectionModel().setLeadSelectionIndex(linhaSel - 1);
+        /**
+         * Após a ordenação a seleção é perdida
+         *
+         */
+        ListSelectionModel modeloSelecao = tabelaTarefas.getSelectionModel();
+
+        /**
+         * Importante não ser duplicada
+         */
+        int idxNovoModelo = modeloTabela.getTarefas().indexOf(tarefaMover);
+
+        LOG_CONTR_PRINC.debug("Novo índice tarefa modelo: {}", idxNovoModelo);
+
+        int idxTabela = tabelaTarefas.convertRowIndexToView(idxNovoModelo);
+
+        LOG_CONTR_PRINC.debug("Novo índice tarefa tabela: {}", idxTabela);
+
+        /**
+         * O parâmetro é o índice na tabela
+         */
+        modeloSelecao.setSelectionInterval(idxTabela, idxTabela);
     }//GEN-LAST:event_btSubirActionPerformed
 
     private void btDescerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDescerActionPerformed
         LOG_CONTR_PRINC.traceEntry();
 
-        Tarefa t
+        Tarefa tarefasDescer
                 = modeloTabela.getTarefas().get(tabelaTarefas.convertRowIndexToModel(tabelaTarefas.getSelectedRow()));
 
-        if (t.getPosicao() >= modeloTabela.getTarefas().size() - 1) {
+        if (tarefasDescer.getPosicao() >= modeloTabela.getTarefas().size() - 1) {
             return;
         }
 
-        Integer posicaoAt = t.getPosicao();
+        Integer posicaoAt = tarefasDescer.getPosicao();
 
-        if (t.getPosicao() < modeloTabela.getTarefas().size() - 1) {
-            t.setPosicao(t.getPosicao() + 1);
-            LOG_CONTR_PRINC.debug("Pos alt para " + t.getPosicao());
+        if (tarefasDescer.getPosicao() < modeloTabela.getTarefas().size() - 1) {
+            tarefasDescer.setPosicao(tarefasDescer.getPosicao() + 1);
+            LOG_CONTR_PRINC.debug("Pos alt para " + tarefasDescer.getPosicao());
         }
 
         //Remove a pos
         DAOTarefa daoT = new DAOTarefa();
 
-        t.setPosicao(daoT.getMaiorPosicao() + 1);
-        daoT.atualiza(t);
+        tarefasDescer.setPosicao(daoT.getMaiorPosicao() + 1);
+        daoT.atualiza(tarefasDescer);
 
-        LOG_CONTR_PRINC.debug("Tarefa movida para o fim. Pos: " + t.getPosicao());
+        LOG_CONTR_PRINC.debug("Tarefa movida para o fim. Pos: " + tarefasDescer.getPosicao());
 
         //TODO: Trocar posição da de baixo com a dela
         Tarefa tarAbaixo = daoT.getByPosicao(posicaoAt + 1);
@@ -415,10 +441,32 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         }
 
         //TODO: Rever ter se galhar
-        t.setPosicao(posicaoAt + 1);
-        daoT.atualiza(t);
+        tarefasDescer.setPosicao(posicaoAt + 1);
+        daoT.atualiza(tarefasDescer);
 
         modeloTabela.ordena();
+
+        /**
+         * Após a ordenação a seleção é perdida
+         *
+         */
+        ListSelectionModel modeloSelecao = tabelaTarefas.getSelectionModel();
+
+        /**
+         * Importante não ser duplicada
+         */
+        int idxNovoModelo = modeloTabela.getTarefas().indexOf(tarefasDescer);
+
+        LOG_CONTR_PRINC.debug("Novo índice tarefa modelo: {}", idxNovoModelo);
+
+        int idxTabela = tabelaTarefas.convertRowIndexToView(idxNovoModelo);
+
+        LOG_CONTR_PRINC.debug("Novo índice tarefa tabela: {}", idxTabela);
+
+        /**
+         * O parâmetro é o índice na tabela
+         */
+        modeloSelecao.setSelectionInterval(idxTabela, idxTabela);
     }//GEN-LAST:event_btDescerActionPerformed
 
     private void btVerTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerTarefaActionPerformed
