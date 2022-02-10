@@ -29,4 +29,6 @@ public interface Constantes {
             = DateTimeFormatter.ofPattern("dd/MM/u", LOCAL_BR);
     public static final DateTimeFormatter FORMATADOR_DATA_H_BR_T
             = DateTimeFormatter.ofPattern("dd/MM/u[ kk:mm]", LOCAL_BR);
+     public static final DateTimeFormatter FORMATADOR_HORA_BR_T
+            = DateTimeFormatter.ofPattern("HH:mm", LOCAL_BR);
 }
