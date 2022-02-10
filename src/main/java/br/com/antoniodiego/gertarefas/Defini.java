@@ -9,7 +9,7 @@ public class Defini {
     /**
      *
      */
-    public static final String STRING_VER = "2.4.5-beta";
+    public static final String STRING_VER = "2.4.6-beta";
 
     /**
      * Importante
@@ -18,7 +18,7 @@ public class Defini {
      *
      * O estado de desenv deve ser configurado na classe Principal
      */
-    public static final Estado ESTADO = Estado.DEBUG;
+    public static final Estado ESTADO = Estado.PRODUCAO;
 
     public enum Estado {
         TESTE, DEBUG, PRODUCAO;
