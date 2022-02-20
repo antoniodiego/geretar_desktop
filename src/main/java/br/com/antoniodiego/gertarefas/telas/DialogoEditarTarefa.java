@@ -366,7 +366,9 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
 
         String dataFormatada = dataAtual.format(Constantes.FORMATADOR_DATA_BR_T);
 
-        campoComentários.append(dataFormatada);
+        int posicaoCursor = campoComentários.getCaret().getDot();
+        
+        campoComentários.insert(dataFormatada, posicaoCursor);
     }//GEN-LAST:event_btDataActionPerformed
 
     private void btHoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHoraActionPerformed
@@ -374,7 +376,9 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
 
         String horaFormatada = horaAtual.format(Constantes.FORMATADOR_HORA_BR_T);
 
-        campoComentários.append(horaFormatada);
+         int posicaoCursor = campoComentários.getCaret().getDot();
+         
+        campoComentários.insert(horaFormatada, posicaoCursor);
     }//GEN-LAST:event_btHoraActionPerformed
 
     /**
