@@ -104,8 +104,7 @@ import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.TransferHandler;
-import static javax.swing.TransferHandler.COPY_OR_MOVE;
-import static javax.swing.TransferHandler.MOVE;
+
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
@@ -171,12 +170,12 @@ public class JanelaPrincipalController {
     private AcaoBackup acaoBackup;
     private AcaoExcluirGrupo acaoExG;
     private AcaoRecortar acaoRec;
-    private AcaoCopiar acaoCop;
+  //  private AcaoCopiar acaoCop;
     private AcaoColar acaoColar;
 
     private AdicCam acaoAdic;
     private RemovCam acaoRem;
-    private JButton botaRem;
+  //  private JButton botaRem;
     private AcaoReiniciar acaoReiniciarBanco;
     private AcaoExcluirTudo acaoExT;
     private AcaoNovoGr acaoNovG;
@@ -329,7 +328,7 @@ public class JanelaPrincipalController {
 
         acaoRec = new AcaoRecortar();
 
-        acaoCop = new AcaoCopiar();
+     //   acaoCop = new AcaoCopiar();
 
         KeyStroke combCop = KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK);
 
@@ -406,7 +405,7 @@ public class JanelaPrincipalController {
         view.getPainelFunLadoDire().getBtDiminuiPrio().setAction(new AcaoDiminuiPrio());
         view.getPainelFunLadoDire().getBtAumentaPrio().setAction(new AcaoAumentaPrio());
 
-        ordenadorTabelaLista = new TableRowSorter(modeloTab);
+        ordenadorTabelaLista = new TableRowSorter<>(modeloTab);
 
         // RowSorter.SortKey skSta = new RowSorter.SortKey(4, SortOrder.ASCENDING);
         // RowSorter.SortKey skDataF = new RowSorter.SortKey(3, SortOrder.DESCENDING);
@@ -883,7 +882,7 @@ public class JanelaPrincipalController {
         }
     };
     private Icon iconeAdicionarGrupo;
-    private TableRowSorter ordenadorTabelaLista;
+    private TableRowSorter<> ordenadorTabelaLista;
     private ModeloData modeloCData;
     private ModeloData modeloCDataFaz;
     private ModeloData modeloCDataAl;

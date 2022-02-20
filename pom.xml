@@ -193,11 +193,9 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>br.antoniodiego</groupId>
-            <artifactId>Gertar_Ma_NB</artifactId>
-            <version>2.4-beta</version>
-        </dependency>
+
+     
+
     </dependencies>
     
     <properties>

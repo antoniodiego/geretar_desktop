@@ -37,7 +37,6 @@ public class DialogoNovaTarefaController {
     private final SpinnerNumberModel modeloCampoPro;
     private final RemovCam acaoRemover;
     private final ModeloData modeloCDataFz;
-    private final ModeloData modeloCDataAl;
 
     private final ActionListener listA = new ActionListener() {
         @Override
@@ -99,7 +98,7 @@ public class DialogoNovaTarefaController {
         // this.princ = princ;
 
         modeloCDataFz = (ModeloData) view.getCampoDataFazer().getModel();
-        modeloCDataAl = (ModeloData) view.getCampoDataFazer().getModel();
+     //   modeloCDataAl = (ModeloData) view.getCampoDataFazer().getModel();
 
         FormatadorJTime formatadorHora = new FormatadorJTime(true);
         DefaultFormatterFactory factoryFormHoras
