@@ -93,7 +93,7 @@ import java.util.stream.Stream;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
+
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -882,7 +882,7 @@ public class JanelaPrincipalController {
         }
     };
     private Icon iconeAdicionarGrupo;
-    private TableRowSorter<> ordenadorTabelaLista;
+    private TableRowSorter<ModeloTabelaTarefasLista> ordenadorTabelaLista;
     private ModeloData modeloCData;
     private ModeloData modeloCDataFaz;
     private ModeloData modeloCDataAl;
@@ -959,12 +959,12 @@ public class JanelaPrincipalController {
         });
     }
 
-    private PainelAgController contrPA;
+  //  private PainelAgController contrPA;
 
     private void confPainelAg() {
         modAg = new ModeloTabAgend();
         view.getPainelAgendamentos().getTabelaAgendamentos().setModel(modAg);
-        contrPA = new PainelAgController(this, view.getPainelAgendamentos());
+     //   contrPA = new PainelAgController(this, view.getPainelAgendamentos());
     }
 
     private void confPainNotif() {
