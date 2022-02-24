@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.antoniodiego.gertarefas.telas.principal;
 
 import br.com.antoniodiego.gertarefas.controller.JanelaPrincipalMatisseController;
@@ -18,7 +14,7 @@ import net.minidev.json.JSONObject;
 
 /**
  *
- * @author antonio
+ * @author Antonio Diêgo
  */
 public class JanelaPrincipalMatisse extends javax.swing.JFrame {
 
