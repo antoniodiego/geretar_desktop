@@ -1,6 +1,5 @@
 package br.com.antoniodiego.gertarefas.model;
 
-import static br.com.antoniodiego.gertarefas.controller.JanelaPrincipalMatisseController.LOG_CONTR_PRINC;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.util.FuncoesTarefas;
@@ -9,13 +8,23 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+
 import javax.swing.table.AbstractTableModel;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 
 /**
  *
  * @author Antônio Diego <antoniodiegoluz at gmail.com>
  */
 public class ModeloTabelaTarefasLista extends AbstractTableModel {
+
+    private static final Logger LOG_MODELO = LogManager.
+            getLogger("log_modelo");
 
     /**
      * Colunas da tabela
@@ -189,15 +198,15 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
 
                 if (o1.getPosicao() != null && o2.getPosicao() != null) {
 
-                    return LOG_CONTR_PRINC.traceExit("Compare n n", o1.getPosicao().compareTo(o2.getPosicao()));
+                    return LOG_MODELO.traceExit("Compare n n", o1.getPosicao().compareTo(o2.getPosicao()));
                 }
 
                 if (o1.getPosicao() == null && o2.getPosicao() == null) {
-                    return LOG_CONTR_PRINC.traceExit("2 n", 0);
+                    return LOG_MODELO.traceExit("2 n", 0);
                 } else if (o1.getPosicao() == null) {
-                    return LOG_CONTR_PRINC.traceExit("1 n", 1);
+                    return LOG_MODELO.traceExit("1 n", 1);
                 } else if (o2.getPosicao() == null) {
-                    return LOG_CONTR_PRINC.traceExit("2 n", -1);
+                    return LOG_MODELO.traceExit("2 n", -1);
                 }
 
                 return 0;

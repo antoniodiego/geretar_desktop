@@ -331,6 +331,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     }
 
     private void btSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSubirActionPerformed
+      
         LOG_CONTR_PRINC.traceEntry();
 
         //A linha escolhida na tabela
