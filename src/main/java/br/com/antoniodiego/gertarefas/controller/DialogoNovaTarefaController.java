@@ -32,6 +32,11 @@ public class DialogoNovaTarefaController {
 
     public static final Logger logDNT = LogManager.
             getLogger(DialogoNovaTarefaController.class);
+             /**
+     *
+     */
+    public static final Logger LOG_ARQUIVO = LogManager.getLogger("saida_para_arquivo");
+
     private DialogoNovaTarView view;
     private ModeloTabelaTarefa modeloTab;
     private final SpinnerNumberModel modeloCampoPro;

@@ -21,7 +21,8 @@ public class DAOTarefa extends DAO {
 
     public Long getMaiorIDPers() {
         getSession().beginTransaction();
-        TypedQuery<Long> maiorId = getSession().createQuery("SELECT t.idPers FROM Tarefa t ORDER by t.idPers DESC").setMaxResults(1);
+        TypedQuery<Long> maiorId = getSession().createQuery("SELECT t.idPers FROM Tarefa t ORDER by t.idPers DESC", 
+        Long.class).setMaxResults(1);
         //    NativeQuery quer = getSession().createNativeQuery("SELECT MAX(id_pers) AS maior_id FROM tarefas");
         List<Long> res = maiorId.getResultList();
         getSession().getTransaction().commit();
@@ -44,7 +45,7 @@ public class DAOTarefa extends DAO {
      */
     public Integer getMaiorPosicao() {
         getSession().beginTransaction();
-        TypedQuery<Integer> maiorId = getSession().createQuery("SELECT t.posicao FROM Tarefa t ORDER by t.posicao DESC")
+        TypedQuery<Integer> maiorId = getSession().createQuery("SELECT t.posicao FROM Tarefa t ORDER by t.posicao DESC", Integer.class)
                 .setMaxResults(1);
         //    NativeQuery quer = getSession().createNativeQuery("SELECT MAX(id_pers) AS maior_id FROM tarefas");
         List<Integer> res = maiorId.getResultList();
@@ -65,7 +66,7 @@ public class DAOTarefa extends DAO {
     public List<Tarefa> listaTodas() {
         getSession().beginTransaction();
         TypedQuery<Tarefa> queryTarefas = getSession().
-                createQuery("SELECT t FROM TarefaComposta t");
+                createQuery("SELECT t FROM TarefaComposta t", Tarefa.class);
 
         List<Tarefa> tarefas = queryTarefas.getResultList();
 
@@ -76,7 +77,7 @@ public class DAOTarefa extends DAO {
     public Tarefa getByIdPers(Long idPers) {
         getSession().beginTransaction();
         TypedQuery<Tarefa> queryTarefas = getSession().
-                createQuery("SELECT t FROM TarefaComposta t where t.idPers = :idPers").setMaxResults(1);
+                createQuery("SELECT t FROM TarefaComposta t where t.idPers = :idPers", Tarefa.class).setMaxResults(1);
         queryTarefas.setParameter("idPers", idPers);
 
         List<Tarefa> res = queryTarefas.getResultList();
@@ -95,7 +96,7 @@ public class DAOTarefa extends DAO {
     public Tarefa getByPosicao(Integer posicao) {
         getSession().beginTransaction();
         TypedQuery<Tarefa> queryTarefas = getSession().
-                createQuery("SELECT t FROM TarefaComposta t where t.posicao = :posicao").setMaxResults(1);
+                createQuery("SELECT t FROM TarefaComposta t where t.posicao = :posicao", Tarefa.class).setMaxResults(1);
         queryTarefas.setParameter("posicao", posicao);
 
         List<Tarefa> res = queryTarefas.getResultList();
