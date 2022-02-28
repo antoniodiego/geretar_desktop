@@ -22,6 +22,10 @@ import org.apache.logging.log4j.core.layout.PatternLayout;
  */
 public class Principal {
 
+    public Principal() {
+        super();
+    }
+
     /**
      * Banco separado
      */
@@ -62,20 +66,20 @@ public class Principal {
 
         // Caminho arquivo
         StringBuilder caminhoArquivoLogger = new StringBuilder("logs/");
-       
+
         LocalDateTime dataHa = LocalDateTime.now();
 
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-YYYY");
 
         String dataAt = dataHa.format(format);
-        
+
         caminhoArquivoLogger.append("/").append(dataAt).append("/");
 
         // Adiciona a data
 
         DateTimeFormatter formataHora = DateTimeFormatter.ofPattern("HH");
 
-      //  LOG_PRINC.debug("Mes data atual: {}", dataHa.getMonth());
+        // LOG_PRINC.debug("Mes data atual: {}", dataHa.getMonth());
         String dataFormatada = dataHa.format(formataHora);
 
         caminhoArquivoLogger.append(dataFormatada);
