@@ -2,11 +2,11 @@ package br.com.antoniodiego.gertarefas.controller;
 
 import br.com.antoniodiego.gertarefas.igu.FormatadorJTime;
 import br.com.antoniodiego.gertarefas.igu.modelos.ModeloData;
-import br.com.antoniodiego.gertarefas.view.principal.JanelaPrincipal;
+import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipal;
 import br.com.antoniodiego.gertarefas.igu.modelos.ModeloTabelaTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Notificacao;
 import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
-import br.com.antoniodiego.gertarefas.view.DialogoNovaTarView;
+import br.com.antoniodiego.gertarefas.telas.DialogoNovaTarView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;

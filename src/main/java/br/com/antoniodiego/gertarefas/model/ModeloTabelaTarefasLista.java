@@ -3,6 +3,7 @@ package br.com.antoniodiego.gertarefas.model;
 import static br.com.antoniodiego.gertarefas.controller.JanelaPrincipalMatisseController.LOG_CONTR_PRINC;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
+import br.com.antoniodiego.gertarefas.util.FuncoesTarefas;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
         Long.class,
         String.class,
         LocalDate.class, Integer.class, LocalDate.class, LocalDateTime.class, Boolean.class, Integer.class, String.class, String.class};
+
     private List<Tarefa> tarefas;
     //  private final JanelaPrincipalController contr;
     public static final Boolean[] EDITAVEL = new Boolean[]{false, true, true,
@@ -136,7 +138,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 tarefaLinha.setDataModif(LocalDateTime.now());
                 break;
             case 8:
-                alteraPosicao(tarefaLinha, (int) aValue);
+                FuncoesTarefas.alteraPosicao(tarefaLinha, (int) aValue);
                 ordena();
                 break;
             case 9:
@@ -156,34 +158,11 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
 //        contr.getDaoUsuario().flush();
     }
 
-    public void alteraPosicao(Tarefa t, int posicao) {
-        Integer posAnt = t.getPosicao();
-        DAOTarefa daoT = new DAOTarefa();
-
-        Tarefa tarefaPos = daoT.getByPosicao(posicao);
-        if (tarefaPos != null) {
-            if (posicao < posAnt) {
-
-                Integer maiorP = daoT.getMaiorPosicao();
-                t.setPosicao(maiorP + 1);
-                daoT.atualiza(t);
-
-                Tarefa tarP;
-                for (int i = posAnt - 1; i >= posicao; i--) {
-                    tarP = daoT.getByPosicao(i);
-                    if (tarP != null) {
-                        tarP.setPosicao(i + 1);
-                        daoT.atualiza(tarP);
-                    }
-                }
-
-                t.setPosicao(posicao);
-            }
-        } else {
-            t.setPosicao(posicao);
-        }
-    }
-
+    /**
+     * Adiciona uma nova tarefa no modelo da tabela
+     *
+     * @param tar
+     */
     public void adicionaTarefa(Tarefa tar) {
         this.tarefas.add(tar);
         fireTableRowsInserted(tarefas.size() - 1, tarefas.size() - 1);
@@ -225,6 +204,21 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
             }
         };
         this.tarefas.sort(comp);
+        fireTableDataChanged();
+    }
+
+    /**
+     *
+     */
+    public void recarregaTarefasBanco() {
+        DAOTarefa daoT = new DAOTarefa();
+        
+        //TODO: PaginaÃ§Ã£o
+        
+        List<Tarefa> tarefasBanco = daoT.listaTodas();
+        this.tarefas.clear();
+        this.tarefas.addAll(tarefasBanco);
+        ordena();
         fireTableDataChanged();
     }
 }

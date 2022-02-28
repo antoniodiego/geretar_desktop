@@ -5,7 +5,7 @@
  */
 package br.com.antoniodiego.gertarefas.controller;
 
-import br.com.antoniodiego.gertarefas.view.TelaOpc;
+import br.com.antoniodiego.gertarefas.telas.TelaOpc;
 
 /**
  *

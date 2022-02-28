@@ -1,8 +1,8 @@
 package br.com.antoniodiego.gertarefas.controller;
 
-import br.com.antoniodiego.gertarefas.view.principal.JanelaPrincipal;
+import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipal;
 import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
-import br.com.antoniodiego.gertarefas.view.TelaLogin;
+import br.com.antoniodiego.gertarefas.telas.TelaLogin;
 import br.com.antoniodiego.gertarefas.igu.TransfXMLT;
 import br.com.antoniodiego.gertarefas.igu.modelos.ModeloArvore;
 import br.com.antoniodiego.gertarefas.igu.modelos.ModeloData;
@@ -27,10 +27,10 @@ import br.com.antoniodiego.gertarefas.pojo.Voto;
 import br.com.antoniodiego.gertarefas.util.ConversXML;
 import br.com.antoniodiego.gertarefas.util.ConversXMLD;
 import br.com.antoniodiego.gertarefas.util.HibernateUtil;
-import br.com.antoniodiego.gertarefas.view.DialogoConfirmarExcTudo;
-import br.com.antoniodiego.gertarefas.view.DialogoNovaTarView;
-import br.com.antoniodiego.gertarefas.view.principal.JanelaPrincipalMatisse;
-import br.com.antoniodiego.gertarefas.view.principal.PainelListaTarefas;
+import br.com.antoniodiego.gertarefas.telas.DialogoConfirmarExcTudo;
+import br.com.antoniodiego.gertarefas.telas.DialogoNovaTarView;
+import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalMatisse;
+import br.com.antoniodiego.gertarefas.telas.principal.PainelListaTarefas;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;

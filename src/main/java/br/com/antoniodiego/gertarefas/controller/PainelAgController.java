@@ -7,7 +7,7 @@ package br.com.antoniodiego.gertarefas.controller;
 
 import br.com.antoniodiego.gertarefas.persist.daos.DAOAgendamentos;
 import br.com.antoniodiego.gertarefas.pojo.Agendamento;
-import br.com.antoniodiego.gertarefas.view.principal.PainelAgendamentosMat;
+import br.com.antoniodiego.gertarefas.telas.principal.PainelAgendamentosMat;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.util.List;
