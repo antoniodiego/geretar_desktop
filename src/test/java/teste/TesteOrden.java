@@ -5,21 +5,20 @@
  */
 package teste;
 
-import br.com.antoniodiego.gertarefas.controller.JanelaPrincipalController;
-import br.com.antoniodiego.gertarefas.Constantes;
-import br.com.antoniodiego.gertarefas.pojo.Tarefa;
-import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
-import br.com.antoniodiego.gertarefas.util.ConversXMLD;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import br.com.antoniodiego.gertarefas.Constantes;
+import br.com.antoniodiego.gertarefas.pojo.Tarefa;
+import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
+import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalController;
 
 /**
  *
@@ -27,16 +26,13 @@ import org.junit.Test;
  */
 public class TesteOrden {
 
-    private static ConversXMLD cxd;
-    private Logger logTe;
-
     public TesteOrden() {
-        logTe = LogManager.getLogger();
+    
     }
 
     @BeforeClass
     public static void setUpClass() {
-        cxd = new ConversXMLD();
+     
     }
 
     @AfterClass
@@ -71,10 +67,12 @@ public class TesteOrden {
         TarefaComposta t3 = new TarefaComposta();
         t3.setPrioridade(3);
         ts.add(t3);
-        
+
         ts.sort(new JanelaPrincipalController.ComparaTarPrio());
-        
-        ts.forEach((t)->{System.out.println(t.getPrioridade());});
+
+        ts.forEach((t) -> {
+            System.out.println(t.getPrioridade());
+        });
     }
 
     @Test

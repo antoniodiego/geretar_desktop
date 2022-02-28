@@ -5,12 +5,15 @@
  */
 package br.com.antoniodiego.gertarefas.beans;
 
-import br.com.antoniodiego.gertarefas.igu.modelos.FormatDatePick;
-import br.com.antoniodiego.gertarefas.igu.modelos.ModeloData;
 import java.util.Properties;
+
 import javax.swing.JFormattedTextField;
+
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
+
+import br.com.antoniodiego.gertarefas.telas.modelos.FormatDatePick;
+import br.com.antoniodiego.gertarefas.telas.modelos.ModeloData;
 
 /**
  *
