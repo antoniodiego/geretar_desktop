@@ -13,6 +13,10 @@ import br.com.antoniodiego.gertarefas.pojo.Tarefa;
  */
 public class FuncoesTarefas {
 
+    public FuncoesTarefas(){
+        super();
+    }
+    
     /**
      *
      * @param t
