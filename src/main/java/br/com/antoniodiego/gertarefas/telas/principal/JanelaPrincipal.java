@@ -1,19 +1,6 @@
 package br.com.antoniodiego.gertarefas.telas.principal;
 
-import br.com.antoniodiego.gertarefas.controller.JanelaPrincipalController;
-import br.com.antoniodiego.gertarefas.igu.FormatadorJTime;
-import br.com.antoniodiego.gertarefas.igu.modelos.FormatDatePick;
-import br.com.antoniodiego.gertarefas.igu.modelos.ModeloData;
-
-import br.com.antoniodiego.gertarefas.igu.renderers.RenderizadorGT;
 import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JTextField;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -21,24 +8,30 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.util.Properties;
+
 import javax.swing.DropMode;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.JTree;
-
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.tree.TreeCellRenderer;
-
 import javax.swing.tree.TreeSelectionModel;
 
 import org.apache.logging.log4j.LogManager;
@@ -50,6 +43,15 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
+
+import br.com.antoniodiego.gertarefas.telas.FormatadorJTime;
+import br.com.antoniodiego.gertarefas.telas.modelos.FormatDatePick;
+import br.com.antoniodiego.gertarefas.telas.modelos.ModeloData;
+import br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelAgendamentosMat;
+import br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFunc;
+import br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelListaTarefas;
+import br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelNotificacoesM;
+import br.com.antoniodiego.gertarefas.telas.renderers.RenderizadorGT;
 
 /**
  * Classe que repredenta o JFrame da janela principal.

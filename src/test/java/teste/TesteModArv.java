@@ -5,15 +5,17 @@
  */
 package teste;
 
-import br.com.antoniodiego.gertarefas.igu.modelos.ModeloArvore;
-import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
 import javax.swing.tree.TreePath;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
+import br.com.antoniodiego.gertarefas.telas.modelos.ModeloArvore;
 
 /**
  *
