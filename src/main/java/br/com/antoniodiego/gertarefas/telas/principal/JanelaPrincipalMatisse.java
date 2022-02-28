@@ -1,15 +1,17 @@
 
 package br.com.antoniodiego.gertarefas.telas.principal;
 
-import br.com.antoniodiego.gertarefas.controller.JanelaPrincipalMatisseController;
-import br.com.antoniodiego.gertarefas.telas.DialogoNovaTarView;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
+import br.com.antoniodiego.gertarefas.telas.novatarefa.DialogoNovaTarView;
+import br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas;
 import net.minidev.json.JSONObject;
 
 /**
@@ -38,10 +40,10 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     private void initComponents() {
 
         jSplitPane1 = new javax.swing.JSplitPane();
-        painelMenuLadoEsquerdo1 = new br.com.antoniodiego.gertarefas.telas.principal.PainelMenuLadoEsquerdo();
+        painelMenuLadoEsquerdo1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelMenuLadoEsquerdo();
         jSplitPane2 = new javax.swing.JSplitPane();
-        painelTabelaTarefas1 = new br.com.antoniodiego.gertarefas.telas.principal.PainelTabelaTarefas();
-        painelFuncoes1 = new br.com.antoniodiego.gertarefas.telas.principal.PainelFuncoes();
+        painelTabelaTarefas1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas();
+        painelFuncoes1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFuncoes();
         barraDeMenus = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         itemNovaTarefa = new javax.swing.JMenuItem();
@@ -173,7 +175,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemNovaTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNovaTarefaActionPerformed
-        JanelaPrincipalMatisseController.LOG_CONTR_PRINC.trace("Item nova tar");
+        JanPrinMatController.LOG_CONTR_PRINC.trace("Item nova tar");
 
         DialogoNovaTarView dialogoNovaTar = new DialogoNovaTarView(this, painelTabelaTarefas1.getModeloTabela());
         dialogoNovaTar.setVisible(true);
@@ -271,9 +273,9 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     private javax.swing.JMenu menuEditar;
     private javax.swing.JMenuItem menuExportarComoXML;
     private javax.swing.JMenuItem menuOp;
-    private br.com.antoniodiego.gertarefas.telas.principal.PainelFuncoes painelFuncoes1;
-    private br.com.antoniodiego.gertarefas.telas.principal.PainelMenuLadoEsquerdo painelMenuLadoEsquerdo1;
-    private br.com.antoniodiego.gertarefas.telas.principal.PainelTabelaTarefas painelTabelaTarefas1;
+    private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFuncoes painelFuncoes1;
+    private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelMenuLadoEsquerdo painelMenuLadoEsquerdo1;
+    private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas painelTabelaTarefas1;
     private javax.swing.JPopupMenu.Separator sepMenuEd;
     // End of variables declaration//GEN-END:variables
 }

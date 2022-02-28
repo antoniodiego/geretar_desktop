@@ -6,13 +6,14 @@
 package br.com.antoniodiego.gertarefas.util;
 
 import br.com.antoniodiego.gertarefas.Defini;
-import br.com.antoniodiego.gertarefas.controller.Principal;
 import br.com.antoniodiego.gertarefas.pojo.Agendamento;
 import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
 import br.com.antoniodiego.gertarefas.pojo.Notificacao;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
 import br.com.antoniodiego.gertarefas.pojo.Usuario;
+import br.com.antoniodiego.gertarefas.principal.Principal;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
