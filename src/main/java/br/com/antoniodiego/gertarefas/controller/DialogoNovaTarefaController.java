@@ -32,12 +32,16 @@ public class DialogoNovaTarefaController {
 
     public static final Logger logDNT = LogManager.
             getLogger(DialogoNovaTarefaController.class);
+             /**
+     *
+     */
+    public static final Logger LOG_ARQUIVO = LogManager.getLogger("saida_para_arquivo");
+
     private DialogoNovaTarView view;
     private ModeloTabelaTarefa modeloTab;
     private final SpinnerNumberModel modeloCampoPro;
     private final RemovCam acaoRemover;
     private final ModeloData modeloCDataFz;
-    private final ModeloData modeloCDataAl;
 
     private final ActionListener listA = new ActionListener() {
         @Override
@@ -99,7 +103,7 @@ public class DialogoNovaTarefaController {
         // this.princ = princ;
 
         modeloCDataFz = (ModeloData) view.getCampoDataFazer().getModel();
-        modeloCDataAl = (ModeloData) view.getCampoDataFazer().getModel();
+     //   modeloCDataAl = (ModeloData) view.getCampoDataFazer().getModel();
 
         FormatadorJTime formatadorHora = new FormatadorJTime(true);
         DefaultFormatterFactory factoryFormHoras

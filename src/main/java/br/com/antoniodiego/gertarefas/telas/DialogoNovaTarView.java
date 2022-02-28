@@ -25,11 +25,20 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 /**
  *
  * @author Antônoio Diego <antoniodiegoluz at gmail.com>
  */
 public class DialogoNovaTarView extends javax.swing.JDialog {
+
+      /**
+     *
+     */
+    public static final Logger LOG_ARQUIVO = LogManager.getLogger("saida_para_arquivo");
 
     private final ModeloTabelaTarefasLista modelo;
     // private final DialogoNovaTarefaController contro;
@@ -337,6 +346,10 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
 //        Integer maiorP = daoT.getMaiorPosicao();
 //        novaTarefa.setPosicao(maiorP + 1);
         daoT.salva(novaTarefa);
+
+        LOG_ARQUIVO.trace("[CRIADA] Foi salva a tarefa de título '{}' e id '{}'. id pers: '{}', comentário: '{}'"+
+        ", posicao: '{}'", novaTarefa.getTitulo(),
+        novaTarefa.getId(), novaTarefa.getIdPers(), novaTarefa.getComentario(),novaTarefa.getPosicao()) ;
 
         dispose();
 

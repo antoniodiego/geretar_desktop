@@ -1,11 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
  */
 package br.com.antoniodiego.gertarefas.controller;
 
-import br.com.antoniodiego.gertarefas.controller.JanelaPrincipalController;
 import br.com.antoniodiego.gertarefas.pojo.Agendamento;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.telas.principal.DialogoAgend;

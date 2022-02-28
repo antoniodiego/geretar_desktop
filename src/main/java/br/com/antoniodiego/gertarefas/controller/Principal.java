@@ -1,6 +1,9 @@
 package br.com.antoniodiego.gertarefas.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,13 +22,16 @@ import org.apache.logging.log4j.core.layout.PatternLayout;
  */
 public class Principal {
 
+    public Principal() {
+        super();
+    }
+
     /**
      * Banco separado
      */
     public static boolean DESENV = false;
 
-    private static final Logger LOG_PRINC = LogManager.
-            getLogger("principal");
+    private static final Logger LOG_PRINC = LogManager.getLogger("principal");
 
     /**
      *
@@ -33,6 +39,9 @@ public class Principal {
     public static final Logger LOG_ARQUIVO = LogManager.getLogger("saida_para_arquivo");
 
     public static final void main(String[] args) {
+        LOG_PRINC.traceEntry();
+
+        LOG_PRINC.trace("Configurando loggers...");
         configuraLogger();
 
         LOG_ARQUIVO.traceEntry();
@@ -44,39 +53,45 @@ public class Principal {
         contPrinc.inicializaSistema();
 
         if (DESENV == false) {
-            //TODO: Desativar debug
+            // TODO: Desativar debug
         }
 
         LOG_ARQUIVO.traceExit();
     }
 
     private static void configuraLogger() {
-        //Config arq
+        // Config arq
         LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
         Configuration cf = ctx.getConfiguration();
 
-        //Camin arqui
-        StringBuilder camArq = new StringBuilder().append("logs/log_geretar");
+        // Caminho arquivo
+        StringBuilder caminhoArquivoLogger = new StringBuilder("logs/");
 
         LocalDateTime dataHa = LocalDateTime.now();
 
-        camArq.append(dataHa.getDayOfMonth()).
-                append(dataHa.getMonth()).
-                append(dataHa.getYear());
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-YYYY");
 
-        camArq.append("-");
-        camArq.append(dataHa.getHour()).append(dataHa.getMinute()).append(dataHa.getSecond());
-        camArq.append(".log");
+        String dataAt = dataHa.format(format);
 
-        Layout<String> la = PatternLayout.newBuilder().
-                withPattern("%d{HH:mm:ss} %-5level %logger{36} %class{36} %L %M %m%n").
-                build();
+        caminhoArquivoLogger.append("/").append(dataAt).append("/");
 
-        Appender arqu = FileAppender.newBuilder().withName("arquivo").
-                withFileName(camArq.toString()).
-                withAppend(true).withLayout(la)
-               .
-                build();
+        // Adiciona a data
+
+        DateTimeFormatter formataHora = DateTimeFormatter.ofPattern("HH");
+
+        // LOG_PRINC.debug("Mes data atual: {}", dataHa.getMonth());
+        String dataFormatada = dataHa.format(formataHora);
+
+        caminhoArquivoLogger.append(dataFormatada);
+        caminhoArquivoLogger.append(".log");
+
+        Layout<String> la = PatternLayout.newBuilder()
+                .withPattern("%d{HH:mm:ss} %-5level %logger{36} %class{36} %L %M %m%n").build();
+
+        Appender arqu = FileAppender.newBuilder().withName("arquivo").withFileName(caminhoArquivoLogger.toString())
+                .withAppend(true)
+                .withLayout(la)
+                .build();
 
         arqu.start();
         LoggerConfig confLogArquivo = cf.getLoggerConfig("saida_para_arquivo");
