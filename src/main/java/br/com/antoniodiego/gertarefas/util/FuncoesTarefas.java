@@ -59,6 +59,7 @@ public class FuncoesTarefas {
     public static void deslocaTarefasBaixo(int posicaoUltima, int posicaoCima) {
         DAOTarefa daoT = new DAOTarefa();
         Tarefa tarP;
+        
         for (int i = posicaoUltima; i >= posicaoCima; i--) {
             tarP = daoT.getByPosicao(i);
             if (tarP != null) {

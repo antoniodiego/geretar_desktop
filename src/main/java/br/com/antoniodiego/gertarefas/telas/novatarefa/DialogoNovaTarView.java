@@ -333,6 +333,8 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btSalvarActionPerformed
         LOG_NOVA_TAREFA.trace("Salvando tarefa...");
+        
+        LoggingParaArquivo loggingParaArquivo = LoggingParaArquivo.getInstancia();
 
         // Ao criar nova
         // Obtem uma instância da tarefa
@@ -371,10 +373,23 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
         /*
          * Configuração da posição
          */
-        novaTarefa.setPosicao(modeloSpinnerPosicao.getNumber().intValue());
 
+         int posicao = modeloSpinnerPosicao.getNumber().intValue();
+        novaTarefa.setPosicao(posicao);
+
+        long currentMillis = System.currentTimeMillis();
         // Fazer desvio de tarefas para baixo partindo da posição 0
-        FuncoesTarefas.deslocaTarefasBaixo(0);
+        FuncoesTarefas.deslocaTarefasBaixo(posicao);
+
+        long instanteFinal = System.currentTimeMillis();;
+
+        long duracaoDeslocamento = instanteFinal - currentMillis;
+
+        try{
+        loggingParaArquivo.loga("Deslocamento levou: "+(duracaoDeslocamento/1000));
+        }catch(IOException ex){
+                ex.printStackTrace();
+        }
 
         /**
          * Se a operação de salvamento falhar as tarefas vão ficar deslocadas para baixo
@@ -389,13 +404,15 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
         // novaTarefa.setPosicao(maiorP + 1);
         daoT.salva(novaTarefa);
 
-        LoggingParaArquivo loggingParaArquivo = LoggingParaArquivo.getInstancia();
+       
 
         LOG_ARQUIVO.trace("[CRIADA] Foi salva a tarefa de título '{}' e id '{}'. id pers: '{}', comentário: '{}'" +
                 ", posicao: '{}'", novaTarefa.getTitulo(),
                 novaTarefa.getId(), novaTarefa.getIdPers(), novaTarefa.getComentario(), novaTarefa.getPosicao());
 
         try {
+
+
             loggingParaArquivo.loga(
                     "[CRIADA] Foi salva a tarefa de título '%s' e id '%s'. id pers: '%s', comentário: '%s'" +
                             ", posicao: '%s'",
