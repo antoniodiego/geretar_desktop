@@ -6,6 +6,7 @@ package br.com.antoniodiego.gertarefas.util;
 
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
+import org.hibernate.Session;
 
 /**
  *
@@ -59,14 +60,17 @@ public class FuncoesTarefas {
     public static void deslocaTarefasBaixo(int posicaoUltima, int posicaoCima) {
         DAOTarefa daoT = new DAOTarefa();
         Tarefa tarP;
-        
+        Session sessao = DAOTarefa.getSession();
+        sessao.beginTransaction();
         for (int i = posicaoUltima; i >= posicaoCima; i--) {
-            tarP = daoT.getByPosicao(i);
+            tarP = daoT.getByPosicaoS(i);
             if (tarP != null) {
                 tarP.setPosicao(i + 1);
-                daoT.atualiza(tarP);
+                sessao.update(tarP);
+                //daoT.atualiza(tarP);
             }
         }
+        sessao.getTransaction().commit();
     }
 
     /**
