@@ -6,6 +6,7 @@ package br.com.antoniodiego.gertarefas.util;
 
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
+import static br.com.antoniodiego.gertarefas.telas.novatarefa.DialogoNovaTarView.LOG_NOVA_TAREFA;
 import org.hibernate.Session;
 
 /**
@@ -14,10 +15,10 @@ import org.hibernate.Session;
  */
 public class FuncoesTarefas {
 
-    public FuncoesTarefas(){
+    public FuncoesTarefas() {
         super();
     }
-    
+
     /**
      *
      * @param t
@@ -54,10 +55,14 @@ public class FuncoesTarefas {
     /**
      * Desloca posição de intervalo de tarefas para baixo no intervalo
      *
-     * @param posicaoUltima posição tarefas mais abaixo, de onde deve ser começado o desvio para baixo
+     * @param posicaoUltima posição tarefas mais abaixo, de onde deve ser
+     * começado o desvio para baixo
      * @param posicaoCima Posição da tarefa no topo, que deve descer
      */
     public static void deslocaTarefasBaixo(int posicaoUltima, int posicaoCima) {
+
+        long currentMillis = System.currentTimeMillis();
+
         DAOTarefa daoT = new DAOTarefa();
         Tarefa tarP;
         Session sessao = DAOTarefa.getSession();
@@ -71,10 +76,19 @@ public class FuncoesTarefas {
             }
         }
         sessao.getTransaction().commit();
+
+        long instanteFinal = System.currentTimeMillis();;
+
+        long duracaoDeslocamento = instanteFinal - currentMillis;
+
+        LOG_NOVA_TAREFA.debug("Deslocamento levou: {}", duracaoDeslocamento);
+        LOG_NOVA_TAREFA.debug("Deslocamento levou: {}", duracaoDeslocamento / 1000);
+
     }
 
     /**
-     * Desloca posição de intervalo de tarefas para baixo no intervalo [posicaoCima,maiorPosicao]
+     * Desloca posição de intervalo de tarefas para baixo no intervalo
+     * [posicaoCima,maiorPosicao]
      *
      * @param posicaoCima Posição da tarefa no topo, que deve descer
      */

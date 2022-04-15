@@ -112,7 +112,7 @@ public class DAOTarefa extends DAO {
     }
 
     public Tarefa getByPosicao(Integer posicao) {
-        if (getSession().getTransaction().isActive()) {
+        if (!getSession().getTransaction().isActive()) {
             getSession().beginTransaction();
         }
 
