@@ -1,21 +1,20 @@
 package br.com.antoniodiego.gertarefas.model;
 
-import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
-import br.com.antoniodiego.gertarefas.pojo.Tarefa;
-import br.com.antoniodiego.gertarefas.util.FuncoesTarefas;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-
 import javax.swing.table.AbstractTableModel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
+import br.com.antoniodiego.gertarefas.pojo.Rotulo;
+import br.com.antoniodiego.gertarefas.pojo.Tarefa;
+import br.com.antoniodiego.gertarefas.util.FuncoesTarefas;
 
 /**
  *
@@ -23,28 +22,30 @@ import org.apache.logging.log4j.Logger;
  */
 public class ModeloTabelaTarefasLista extends AbstractTableModel {
 
-    private static final Logger LOG_MODELO = LogManager.
-            getLogger("log_modelo");
+    private static final Logger LOG_MODELO = LogManager.getLogger("log_modelo");
 
     /**
      * Colunas da tabela
      */
-    private static final String[] COLUNAS = new String[]{"ID", "ID Pers",
-        "Título",
-        "Data de criação", "Prioridade", "Data fazer", "Data modif",
-        "Concluída",
-        "Posição", "Comentário", "Status"};
+    private static final String[] COLUNAS = new String[] { "ID", "ID Pers",
+            "Título",
+            "Data de criação", "Prioridade", "Data fazer", "Data modif",
+            "Concluída",
+            "Posição", "Comentário", "Status", "Rotulos" };
 
-    public static final Class[] CLASSES_COLUNAS = new Class[]{Long.class,
-        Long.class,
-        String.class,
-        LocalDate.class, Integer.class, LocalDate.class, LocalDateTime.class, Boolean.class, Integer.class, String.class, String.class};
+    public static final Class[] CLASSES_COLUNAS = new Class[] { Long.class,
+            Long.class,
+            String.class,
+            LocalDate.class, Integer.class,
+            LocalDate.class, LocalDateTime.class,
+            Boolean.class, Integer.class, String.class,
+            String.class, Rotulo.class };
 
     private List<Tarefa> tarefas;
-    //  private final JanelaPrincipalController contr;
-    public static final Boolean[] EDITAVEL = new Boolean[]{false, true, true,
-        false,
-        true, true, false, true, true, true, true};
+    // private final JanelaPrincipalController contr;
+    public static final Boolean[] EDITAVEL = new Boolean[] { false, true, true,
+            false,
+            true, true, false, true, true, true, true, false };
 
     /**
      *
@@ -52,7 +53,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
      */
     public ModeloTabelaTarefasLista() {
         tarefas = new ArrayList<>();
-//        //  this.contr = controller;
+        // // this.contr = controller;
     }
 
     @Override
@@ -92,7 +93,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 return tarefaLinha.getTitulo();
             case 3:
                 return tarefaLinha.getDataCriacao();
-            //  case 3:
+            // case 3:
             // return tarefaLinha.getDataCriacao();
             case 4:
                 return tarefaLinha.getPrioridade();
@@ -108,9 +109,10 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 return tarefaLinha.getComentario();
             case 10:
                 return tarefaLinha.getStatus();
-
+            case 11:
+                return tarefaLinha.getRotulos();
             default:
-                //TODO: poderia ser lan uma excessão
+                // TODO: poderia ser lan uma excessão
                 return null;
         }
     }
@@ -121,7 +123,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
 
         switch (columnIndex) {
             case 0:
-                //tarefaLinha.setId((Long) aValue);
+                // tarefaLinha.setId((Long) aValue);
                 break;
             case 1:
                 tarefaLinha.setIdPers((Long) aValue);
@@ -161,10 +163,10 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
         DAOTarefa daoT = new DAOTarefa();
         daoT.atualiza(tarefaLinha);
 
-//        /*Nessa chamada de método a alteração do id pode falhar.
-//        
-//         */
-//        contr.getDaoUsuario().flush();
+        // /*Nessa chamada de método a alteração do id pode falhar.
+        //
+        // */
+        // contr.getDaoUsuario().flush();
     }
 
     /**
@@ -221,9 +223,9 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
      */
     public void recarregaTarefasBanco() {
         DAOTarefa daoT = new DAOTarefa();
-        
-        //TODO: PaginaÃ§Ã£o
-        
+
+        // TODO: PaginaÃ§Ã£o
+
         List<Tarefa> tarefasBanco = daoT.listaTodas();
         this.tarefas.clear();
         this.tarefas.addAll(tarefasBanco);

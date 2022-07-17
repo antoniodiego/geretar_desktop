@@ -15,9 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 
+import br.com.antoniodiego.gertarefas.principal.InterfPrincipal;
 import br.com.antoniodiego.gertarefas.telas.confirmacoes.DialogoConfirmarExcTudo;
-import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipal;
+
 
 /**
  *
@@ -31,7 +33,7 @@ public class TelaOpc extends javax.swing.JDialog {
     //private final DAOUsuario daoUs;
     //  private final ModeloArvore modelArv;
     // private final JanelaPrincipalController contPrinc;
-    private final JanelaPrincipal janPrinc;
+   private InterfPrincipal janPrinc;
 
     /**
      * Creates new form TelaOpc
@@ -39,12 +41,12 @@ public class TelaOpc extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-    public TelaOpc(JanelaPrincipal parent, boolean modal) {
+    public TelaOpc(JFrame parent, boolean modal) {
         super(parent, modal);
-        this.janPrinc = parent;
+    
         arqProp = new File("conf.properties");
         //Mesma instancia carreg prin para causar efeito em tempo real
-        pr = parent.getControl().getProp();
+       // pr = parent.getControl().getProp();
 //        try {
 //            pr.load(new FileInputStream(arqProp));
 //        } catch (IOException ex) {

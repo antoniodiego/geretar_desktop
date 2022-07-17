@@ -9,6 +9,7 @@ import br.com.antoniodiego.gertarefas.Defini;
 import br.com.antoniodiego.gertarefas.pojo.Agendamento;
 import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
 import br.com.antoniodiego.gertarefas.pojo.Notificacao;
+import br.com.antoniodiego.gertarefas.pojo.Rotulo;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
 import br.com.antoniodiego.gertarefas.pojo.Usuario;
@@ -26,7 +27,8 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 /**
- * Hibernate Utility class with a convenient method to get Session Factory object.
+ * Hibernate Utility class with a convenient method to get Session Factory
+ * object.
  *
  * @author Antonio Diego
  */
@@ -52,46 +54,45 @@ public class HibernateUtil {
      *
      * @return
      */
-    //TODO: Talv fosse bom que em caso de erro fossem feitas outras tent
+    // TODO: Talv fosse bom que em caso de erro fossem feitas outras tent
     public boolean inicia() {
         logUt.traceEntry("Iniciando bootstrap do Hib");
 
         try {
-            // Create the SessionFactory from standard (hibernate.cfg.xml) 
+            // Create the SessionFactory from standard (hibernate.cfg.xml)
             // config file.
             logUt.trace("Criando bsr...");
             bsr = new BootstrapServiceRegistryBuilder().build();
-            StandardServiceRegistryBuilder cons
-                    = new StandardServiceRegistryBuilder(bsr);
+            StandardServiceRegistryBuilder cons = new StandardServiceRegistryBuilder(bsr);
             cons.configure("hibernate.cfg.xml");
 
             logUt.trace("Subreescrevendo conf...");
-            //Define local do banco para pasta do usuário
+            // Define local do banco para pasta do usuário
 
             cons.applySetting("hibernate.connection.url", determinaURIBanco());
 
             StandardServiceRegistry sr = cons.build();
             smd = new MetadataSources(sr);
             // smd.addAnnotatedClass(Tarefa.class);
-            smd.addAnnotatedClass(Usuario.class).
-                    addAnnotatedClass(GrupoTarefas.class);
+            smd.addAnnotatedClass(Usuario.class).addAnnotatedClass(GrupoTarefas.class);
             smd.addAnnotatedClass(Tarefa.class);
-            //Importante mapear pois se n?o n?o reconhece heran?a
+            // Importante mapear pois se n?o n?o reconhece heran?a
             smd.addAnnotatedClass(TarefaComposta.class);
-            //porque tarcom referenci uma entidade desco (TarSim)
-            //smd.addAnnotatedClass(TarefaSimples.class);
+            // porque tarcom referenci uma entidade desco (TarSim)
+            // smd.addAnnotatedClass(TarefaSimples.class);
 
             smd.addAnnotatedClass(Notificacao.class);
             smd.addAnnotatedClass(Agendamento.class);
-
+            smd.addAnnotatedClass(Rotulo.class);
+            
             dm = smd.buildMetadata();
             sessionFactory = dm.buildSessionFactory();
-            //sessionFactory = new BootstrapServiceRegistryBuilder().build();
+            // sessionFactory = new BootstrapServiceRegistryBuilder().build();
             logUt.debug("Final do bootstrap");
 
             return logUt.traceExit(true);
         } catch (Throwable ex) {
-            // Log the exception. 
+            // Log the exception.
             System.err.println("Initial SessionFactory creation failed." + ex);
             return false;
             // throw new ExceptionInInitializerError(ex);
@@ -121,8 +122,7 @@ public class HibernateUtil {
             nomePastaBanco.append("_dese");
         }
 
-        consURL.append(pathS).
-                append(nomePastaBanco).append(pathS).append(HibernateUtil.NOME_BANCO);
+        consURL.append(pathS).append(nomePastaBanco).append(pathS).append(HibernateUtil.NOME_BANCO);
 
         logUt.debug("Sep pas: " + pathS);
         logUt.debug("URL Cons: " + consURL);
