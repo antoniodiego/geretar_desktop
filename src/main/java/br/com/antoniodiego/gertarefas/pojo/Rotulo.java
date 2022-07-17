@@ -9,6 +9,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "rotulos")
 public class Rotulo {
+    private static final long serialVersionUID = 1L;
+    
     private Long id;
 
     private String nome;

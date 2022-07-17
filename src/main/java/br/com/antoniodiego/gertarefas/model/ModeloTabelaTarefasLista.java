@@ -110,6 +110,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
             case 10:
                 return tarefaLinha.getStatus();
             case 11:
+          
                 return tarefaLinha.getRotulos();
             default:
                 // TODO: poderia ser lan uma excessão

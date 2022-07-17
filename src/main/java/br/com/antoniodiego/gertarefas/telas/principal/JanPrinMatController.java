@@ -86,6 +86,7 @@ import br.com.antoniodiego.gertarefas.persist.daos.DAOUsuario;
 import br.com.antoniodiego.gertarefas.pojo.Agendamento;
 import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
 import br.com.antoniodiego.gertarefas.pojo.Notificacao;
+import br.com.antoniodiego.gertarefas.pojo.Rotulo;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
 import br.com.antoniodiego.gertarefas.pojo.TipoVoto;
@@ -240,6 +241,21 @@ public class JanPrinMatController {
             DAOTarefa daoTarefa = new DAOTarefa();
             List<Tarefa> tarefas = daoTarefa.listaTodas();
 
+            // Rotulo teste = new Rotulo();
+            // teste.setCor("0xFF0000");
+            // teste.setNome("atrasado");
+
+            // Rotulo urgente = new Rotulo();
+            // urgente.setCor("0xFF8000");
+            // urgente.setNome("importante");
+
+            // Tarefa t = daoTarefa.getByIdPers(483L);
+            // t.adicionaRotulo(teste);
+            // t.adicionaRotulo(urgente);
+
+            // daoTarefa.atualiza(t);
+
+         //   LOG_CONTR_PRINC.debug("Adicionado rot em {}", t.getTitulo());
             princ.getPainelTarefas().getModeloTabela().setTarefas(tarefas);
             princ.getPainelTarefas().getModeloTabela().ordena();
             // princ.getPainelTarefas().getRs().sort();

@@ -27,8 +27,10 @@ import org.apache.logging.log4j.Logger;
 
 import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
+import br.com.antoniodiego.gertarefas.pojo.Rotulo;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.telas.editartarefa.DialogoEditarTarefa;
+import br.com.antoniodiego.gertarefas.telas.renderers.RotulosRenderer;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
@@ -115,6 +117,8 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
             }
         }
 
+        tabelaTarefas.setDefaultRenderer(Rotulo.class, new RotulosRenderer());
+        
         File arquivoTam = new File("colunas.json");
         if (arquivoTam.exists()) {
             try {

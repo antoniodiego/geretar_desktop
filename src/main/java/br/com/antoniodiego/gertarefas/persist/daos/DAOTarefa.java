@@ -66,7 +66,7 @@ public class DAOTarefa extends DAO {
     public List<Tarefa> listaTodas() {
         getSession().beginTransaction();
         TypedQuery<Tarefa> queryTarefas = getSession().
-                createQuery("SELECT t FROM TarefaComposta t LEFT JOIN FETCH t.rotulos", Tarefa.class);
+                createQuery("SELECT t FROM TarefaComposta t", Tarefa.class);
 
         List<Tarefa> tarefas = queryTarefas.getResultList();
 

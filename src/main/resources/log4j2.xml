@@ -15,7 +15,7 @@ and open the template in the editor.
     <Loggers>
         <Logger name="Controller_Principal" level="TRACE" />
 
-        <Root level="debug">
+        <Root level="error">
             <AppenderRef ref="Console" />
         </Root>
 
