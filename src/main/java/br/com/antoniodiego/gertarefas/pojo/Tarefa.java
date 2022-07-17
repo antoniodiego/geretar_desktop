@@ -1,16 +1,10 @@
 package br.com.antoniodiego.gertarefas.pojo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -19,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -35,8 +30,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 import org.hibernate.annotations.NaturalId;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * Classe que representa uma tarefa. Pojo do Hibernate
@@ -44,17 +46,18 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Antônio Diego
  *
  */
-//TODO: Melhorar compat arrast e so
-//[TODO: Tornar abstrata depois]
-//Pode ser entity
+// TODO: Melhorar compat arrast e so
+// [TODO: Tornar abstrata depois]
+// Pode ser entity
 @Entity
-//Para mapear classes filhas
-//[FIXME:] N?o est? surtindo efeito. N?o est? criando tabela com 
+// Para mapear classes filhas
+// [FIXME:] N?o est? surtindo efeito. N?o est? criando tabela com
 
 /*
-21/06/18 20:25 - Parece que faltava mapear tarefas filhas. AS mapeei e come?ou
-a funcionar com descrito no tuto: 
-campo DTYPE
+ * 21/06/18 20:25 - Parece que faltava mapear tarefas filhas. AS mapeei e
+ * come?ou
+ * a funcionar com descrito no tuto:
+ * campo DTYPE
  */
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @JsonDeserialize(as = TarefaComposta.class)
@@ -67,8 +70,7 @@ public abstract class Tarefa implements Externalizable, Transferable,
     /**
      * Sabor que representa o POJO tarefa mais atual
      */
-    public static final DataFlavor TAREFA_FLAVOR
-            = new DataFlavor(Tarefa.class, "Tarefa");
+    public static final DataFlavor TAREFA_FLAVOR = new DataFlavor(Tarefa.class, "Tarefa");
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
@@ -103,25 +105,22 @@ public abstract class Tarefa implements Externalizable, Transferable,
      */
     private Integer prioridade;
     @ManyToOne(cascade = CascadeType.PERSIST)
-    //TODO: Resolver problema com Jackson
-    //Talvez fosse bom que fosse enviado pelo menos o ID
+    // TODO: Resolver problema com Jackson
+    // Talvez fosse bom que fosse enviado pelo menos o ID
     private GrupoTarefas pai;
     @ElementCollection
-    @CollectionTable(name = "votos_de_tarefas", joinColumns = @JoinColumn(name
-            = "id_tarefa"))
+    @CollectionTable(name = "votos_de_tarefas", joinColumns = @JoinColumn(name = "id_tarefa"))
     private List<Voto> votos;
 
     @ElementCollection
-    @CollectionTable(name = "reflexoes_de_tarefas", joinColumns
-            = @JoinColumn(name = "id_tarefa"))
+    @CollectionTable(name = "reflexoes_de_tarefas", joinColumns = @JoinColumn(name = "id_tarefa"))
     private List<Reflexao> reflexoes;
 
     @ElementCollection
-    @CollectionTable(name = "relatorios_de_tarefas", joinColumns
-            = @JoinColumn(name = "id_tarefa"))
+    @CollectionTable(name = "relatorios_de_tarefas", joinColumns = @JoinColumn(name = "id_tarefa"))
     private List<Relatorio> relatorios;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = { CascadeType.ALL })
     @JoinColumn(name = "id_notificacao")
     private Notificacao notificacao;
 
@@ -145,6 +144,9 @@ public abstract class Tarefa implements Externalizable, Transferable,
 
     private String status;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Rotulo> rotulos;
+
     public Tarefa() {
         this("");
     }
@@ -152,13 +154,14 @@ public abstract class Tarefa implements Externalizable, Transferable,
     public Tarefa(String titulo) {
         this.titulo = titulo;
         this.concluida = false;
-        sobs = new DataFlavor[]{TAREFA_FLAVOR};
+        sobs = new DataFlavor[] { TAREFA_FLAVOR };
         this.prioridade = 0;
         this.votos = new ArrayList<>();
         this.reflexoes = new ArrayList<>();
         this.relatorios = new ArrayList<>();
         this.agendamentos = new ArrayList<>();
         this.dataModif = LocalDateTime.now();
+        this.rotulos = new ArrayList<>();
     }
 
     public Long getId() {
@@ -255,7 +258,7 @@ public abstract class Tarefa implements Externalizable, Transferable,
         return prioridade;
     }
 
-    //TODO: 1 a 10
+    // TODO: 1 a 10
     public void setPrioridade(Integer prioridade) {
         this.prioridade = prioridade;
     }
@@ -337,11 +340,25 @@ public abstract class Tarefa implements Externalizable, Transferable,
         this.status = status;
     }
 
+    public void adicionaRotulo(Rotulo r) {
+        if (!this.rotulos.contains(r)) {
+            rotulos.add(r);
+        }
+    }
+
+    public void removeRotulo(Rotulo r) {
+        this.rotulos.remove(r);
+    }
+
+    public List<Rotulo> getRotulos() {
+        return rotulos;
+    }
+
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeLong(id);
         out.writeUTF(titulo);
-        //    out.writeUTF(conteudo);
+        // out.writeUTF(conteudo);
         out.writeBoolean(concluida);
         if (dataCriacao != null) {
             out.writeObject(dataCriacao);
@@ -355,24 +372,24 @@ public abstract class Tarefa implements Externalizable, Transferable,
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         this.id = in.readLong();
         this.titulo = in.readUTF();
-        //  this.conteudo = in.readUTF();
+        // this.conteudo = in.readUTF();
         this.concluida = in.readBoolean();
         this.dataCriacao = (LocalDate) in.readObject();
         this.dataFazer = (LocalDate) in.readObject();
     }
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (obj == this) {
-//            return true;
-//        }
-//        if(obj==null||obj.getClass()!=this.getClass())return false;
-//        Tarefa t = (Tarefa) obj;
-//        return Objects.equals(this.titulo, t.titulo);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(titulo);
-//    }
+    // @Override
+    // public boolean equals(Object obj) {
+    // if (obj == this) {
+    // return true;
+    // }
+    // if(obj==null||obj.getClass()!=this.getClass())return false;
+    // Tarefa t = (Tarefa) obj;
+    // return Objects.equals(this.titulo, t.titulo);
+    // }
+    //
+    // @Override
+    // public int hashCode() {
+    // return Objects.hash(titulo);
+    // }
 }
