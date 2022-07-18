@@ -376,6 +376,7 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
         int posicao = modeloSpinnerPosicao.getNumber().intValue();
         novaTarefa.setPosicao(posicao);
         
+        
         long currentMillis = System.currentTimeMillis();
         // Fazer desvio de tarefas para baixo partindo da posição 0
         FuncoesTarefas.deslocaTarefasBaixo(posicao);

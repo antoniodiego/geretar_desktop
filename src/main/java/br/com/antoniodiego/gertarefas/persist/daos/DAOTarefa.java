@@ -74,6 +74,18 @@ public class DAOTarefa extends DAO {
         return tarefas;
     }
 
+    public List<Tarefa> listaTodasSemCommit() {
+       // getSession().beginTransaction();
+        TypedQuery<Tarefa> queryTarefas = getSession().
+                createQuery("SELECT t FROM TarefaComposta t", Tarefa.class);
+
+        List<Tarefa> tarefas = queryTarefas.getResultList();
+
+       // getSession().getTransaction().commit();
+        return tarefas;
+    }
+
+
     public Tarefa getByIdPers(Long idPers) {
         getSession().beginTransaction();
         TypedQuery<Tarefa> queryTarefas = getSession().

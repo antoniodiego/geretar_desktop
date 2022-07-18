@@ -126,13 +126,17 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                     JSONObject jsO = (JSONObject) res;
 
                     jsO.entrySet().forEach((e) -> {
-                        LOG_PAINEL_T.debug("Key: {}", e.getKey());
+                        LOG_PAINEL_T.trace("Key: {}", e.getKey());
 
+                        try{
                         TableColumn coluna = tabelaTarefas.getColumn(e.getKey());
                         LOG_PAINEL_T.debug("Alterando tam coluna " + e.getKey());
                         JSONObject config = (JSONObject) jsO.get(e.getKey());
 
                         coluna.setPreferredWidth(config.getAsNumber("width").intValue());
+                        }catch(Exception ex){
+                            ex.printStackTrace();
+                        }
                         // coluna.setModelIndex(config.getAsNumber("index").intValue());
                     });
                 }
