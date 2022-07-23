@@ -18,7 +18,8 @@ import org.apache.logging.log4j.Logger;
 
 
 /**
- *
+ * * Esse modelo é usado para exibir as tarefas na tabela que fica no centro da janela principal
+ * 
  * @author Antônio Diego <antoniodiegoluz at gmail.com>
  */
 public class ModeloTabelaTarefasLista extends AbstractTableModel {

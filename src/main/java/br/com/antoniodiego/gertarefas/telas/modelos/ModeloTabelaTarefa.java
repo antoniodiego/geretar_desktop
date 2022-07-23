@@ -11,19 +11,25 @@ import javax.swing.table.AbstractTableModel;
 /**
  * Um modelo para exibição e edição de tarefas coordenadas
  *
+ * 
+ * Esse não modelo é usado para exibir as tarefas na tabela que fica no centro
+ * da janela principal
+ * 
+ * Esse modelo é o br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista
+ * 
  * @author Ant?nio Diego- Comp:Ant?nio Diego <your.name at your.org>
  */
 public class ModeloTabelaTarefa extends AbstractTableModel {
 
-    //private TarefaComposta tarefa;
+    // private TarefaComposta tarefa;
     private List<TarefaCoordenada> coords;
     private final boolean exibicao;
     private boolean editando;
 
-    public ModeloTabelaTarefa(boolean  exib){
+    public ModeloTabelaTarefa(boolean exib) {
         this(new ArrayList<TarefaCoordenada>(), exib);
     }
-    
+
     public ModeloTabelaTarefa(List<TarefaCoordenada> tcs, boolean exibicao) {
         // this.tarefa = t;
         this.coords = tcs;
@@ -57,7 +63,7 @@ public class ModeloTabelaTarefa extends AbstractTableModel {
     }
 
     @Override
-    //TODO: col coment
+    // TODO: col coment
     public String getColumnName(int column) {
         if (!exibicao) {
             if (column == 0) {
@@ -87,43 +93,43 @@ public class ModeloTabelaTarefa extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        //TODO: Usar ao clic em edit
+        // TODO: Usar ao clic em edit
         return !exibicao || (exibicao && editando);
 
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        //TODO: linha 0 deve ser prin
-        //XXX: Parece que pode ser otimiz
-        //  TarefaComposta tc = (TarefaComposta) tarefa;
+        // TODO: linha 0 deve ser prin
+        // XXX: Parece que pode ser otimiz
+        // TarefaComposta tc = (TarefaComposta) tarefa;
 
-//        if (tc == null) {
-//            System.out.println("Sem tar");
-//            return null;
-//        }
+        // if (tc == null) {
+        // System.out.println("Sem tar");
+        // return null;
+        // }
         TarefaCoordenada tf = coords.get(rowIndex);
         if (tf == null) {
-         //   System.out.println("Filha li nÃ£o en");
+            // System.out.println("Filha li nÃ£o en");
             return null;
         } else {
-          //  System.out.println("Tem f");
+            // System.out.println("Tem f");
         }
 
         Object retorno = null;
         if (!exibicao) {
-//Unica col
+            // Unica col
             retorno = tf.getDescricao();
         } else {
             LocalDateTime dc = tf.getDataConclusao();
-          //  System.out.println("dc: " + dc);
+            // System.out.println("dc: " + dc);
             switch (columnIndex) {
                 case 0:
                     retorno = tf.isConcluida();
                     break;
                 case 1:
                     if (dc == null) {
-             //           System.out.println("dc n: " + dc);
+                        // System.out.println("dc n: " + dc);
                         retorno = null;
 
                     } else {
@@ -153,11 +159,10 @@ public class ModeloTabelaTarefa extends AbstractTableModel {
     }
 
     @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex
-    ) {
-        //OBS: Poderia ser bom salvar no banco durante edi??o
-        //     if (tarefa instanceof TarefaComposta) {
-        //  TarefaComposta tc = (TarefaComposta) tarefa;
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        // OBS: Poderia ser bom salvar no banco durante edi??o
+        // if (tarefa instanceof TarefaComposta) {
+        // TarefaComposta tc = (TarefaComposta) tarefa;
         if (coords.isEmpty()) {
             return;
         }
@@ -171,27 +176,29 @@ public class ModeloTabelaTarefa extends AbstractTableModel {
                     f.setConcluida((Boolean) aValue);
                     break;
                 case 1:
-                    //DeverÃ¡ ser um Date vindo do cell editor
-//                        Date nova = (Date) aValue;
-//                        Instant t = nova.toInstant();
-                    LocalDate ld = (LocalDate) aValue;//t.atZone(ZoneId.systemDefault()).toLocalDate();
+                    // DeverÃ¡ ser um Date vindo do cell editor
+                    // Date nova = (Date) aValue;
+                    // Instant t = nova.toInstant();
+                    LocalDate ld = (LocalDate) aValue;// t.atZone(ZoneId.systemDefault()).toLocalDate();
                     if (ld == null) {
                         f.setDataConclusao(null);
                         break;
                     }
-                    LocalDateTime novaT = f.getDataConclusao() == null ? LocalDateTime.now().with(ld) : f.getDataConclusao().with(ld);
+                    LocalDateTime novaT = f.getDataConclusao() == null ? LocalDateTime.now().with(ld)
+                            : f.getDataConclusao().with(ld);
                     f.setDataConclusao(novaT);
                     break;
                 case 2:
                     LocalTime te = (LocalTime) aValue;
-                    //    Calendar c2 = Calendar.getInstance();
+                    // Calendar c2 = Calendar.getInstance();
                     // LocalTime elt = ni.atZone(ZoneId.systemDefault()).toLocalTime();
                     if (te == null) {
                         f.setDataConclusao(null);
                         break;
                     }
 
-                    f.setDataConclusao(f.getDataConclusao() == null ? LocalDateTime.from(te) : f.getDataConclusao().with(te));
+                    f.setDataConclusao(
+                            f.getDataConclusao() == null ? LocalDateTime.from(te) : f.getDataConclusao().with(te));
                     break;
                 case 3:
                     f.setDescricao((String) aValue);
@@ -214,36 +221,36 @@ public class ModeloTabelaTarefa extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-//    public void setTarefa(TarefaComposta tarefa) {
-//        this.tarefa = tarefa;
-//        fireTableDataChanged();
-//    }
-//
-//    public TarefaComposta getTarefa() {
-//        return tarefa;
-//    }
+    // public void setTarefa(TarefaComposta tarefa) {
+    // this.tarefa = tarefa;
+    // fireTableDataChanged();
+    // }
+    //
+    // public TarefaComposta getTarefa() {
+    // return tarefa;
+    // }
     public void novaCoordenada() {
         // if (tarefa instanceof TarefaSimples) {
-//        if (tarefa.getConteudo() instanceof List) {
-//            List tc = (List) tarefa.getConteudo();
-//            tc.add(new TarefaSimples());
-//        }
+        // if (tarefa.getConteudo() instanceof List) {
+        // List tc = (List) tarefa.getConteudo();
+        // tc.add(new TarefaSimples());
+        // }
         coords.add(new TarefaCoordenada());
-        //TODO: simp
+        // TODO: simp
         fireTableRowsInserted(getRowCount() - 1, getRowCount() - 1);
     }
 
     public void remove(int idx) {
-//        if (tarefa.getTarefasFilhas instanceof List) {
-//            List tc = (List) tarefa.getTarefasFilhas();
-//            //   tc.add(new TarefaSimples());
-            if (coords.isEmpty()) {
-                return;
-            }
-            coords.remove(idx);
-            //TODO: Del
-            fireTableRowsDeleted(idx, idx);
-       // }
+        // if (tarefa.getTarefasFilhas instanceof List) {
+        // List tc = (List) tarefa.getTarefasFilhas();
+        // // tc.add(new TarefaSimples());
+        if (coords.isEmpty()) {
+            return;
+        }
+        coords.remove(idx);
+        // TODO: Del
+        fireTableRowsDeleted(idx, idx);
+        // }
     }
 
     public boolean isEditando() {
@@ -252,7 +259,7 @@ public class ModeloTabelaTarefa extends AbstractTableModel {
 
     public void setEditando(boolean editando) {
         this.editando = editando;
-        //OBS: Achar outra forma cencelar ediçõ 
+        // OBS: Achar outra forma cencelar ediçõ
         fireTableDataChanged();
     }
 
