@@ -1,6 +1,7 @@
 
 package br.com.antoniodiego.gertarefas.telas.principal;
 
+import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,10 +41,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     private void initComponents() {
 
         jSplitPane1 = new javax.swing.JSplitPane();
-        painelMenuLadoEsquerdo1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelMenuLadoEsquerdo();
         jSplitPane2 = new javax.swing.JSplitPane();
-        painelTabelaTarefas1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas();
-        painelFuncoes1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFuncoes();
         barraDeMenus = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         itemNovaTarefa = new javax.swing.JMenuItem();
@@ -54,7 +52,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        miExcluirTarefa = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
@@ -79,18 +77,8 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
 
         jSplitPane1.setOneTouchExpandable(true);
 
-        painelMenuLadoEsquerdo1.setPreferredSize(new java.awt.Dimension(100, 100));
-        jSplitPane1.setLeftComponent(painelMenuLadoEsquerdo1);
-
         jSplitPane2.setResizeWeight(1.0);
         jSplitPane2.setOneTouchExpandable(true);
-
-        painelTabelaTarefas1.setReferenciaJan(this);
-        jSplitPane2.setLeftComponent(painelTabelaTarefas1);
-
-        painelFuncoes1.setPreferredSize(new java.awt.Dimension(100, 359));
-        jSplitPane2.setRightComponent(painelFuncoes1);
-
         jSplitPane1.setRightComponent(jSplitPane2);
 
         getContentPane().add(jSplitPane1);
@@ -126,8 +114,13 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         jMenuItem8.setText("jMenuItem8");
         menuArquivo.add(jMenuItem8);
 
-        jMenuItem9.setText("Excluir tarefa");
-        menuArquivo.add(jMenuItem9);
+        miExcluirTarefa.setText("Excluir tarefa");
+        miExcluirTarefa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miExcluirTarefaActionPerformed(evt);
+            }
+        });
+        menuArquivo.add(miExcluirTarefa);
 
         jMenuItem10.setText("Reiniciar banco");
         menuArquivo.add(jMenuItem10);
@@ -213,6 +206,10 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowClosing
 
+    private void miExcluirTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miExcluirTarefaActionPerformed
+       Tarefa tarefaEscolhida = pai
+    }//GEN-LAST:event_miExcluirTarefaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -266,16 +263,13 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenu menuEditar;
     private javax.swing.JMenuItem menuExportarComoXML;
     private javax.swing.JMenuItem menuOp;
-    private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFuncoes painelFuncoes1;
-    private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelMenuLadoEsquerdo painelMenuLadoEsquerdo1;
-    private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas painelTabelaTarefas1;
+    private javax.swing.JMenuItem miExcluirTarefa;
     private javax.swing.JPopupMenu.Separator sepMenuEd;
     // End of variables declaration//GEN-END:variables
 }
