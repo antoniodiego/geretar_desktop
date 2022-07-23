@@ -7,9 +7,11 @@ package br.com.antoniodiego.gertarefas.persist.daos;
 
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import java.util.List;
+import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
 
 /**
  *
@@ -75,16 +77,15 @@ public class DAOTarefa extends DAO {
     }
 
     public List<Tarefa> listaTodasSemCommit() {
-       // getSession().beginTransaction();
+        // getSession().beginTransaction();
         TypedQuery<Tarefa> queryTarefas = getSession().
                 createQuery("SELECT t FROM TarefaComposta t", Tarefa.class);
 
         List<Tarefa> tarefas = queryTarefas.getResultList();
 
-       // getSession().getTransaction().commit();
+        // getSession().getTransaction().commit();
         return tarefas;
     }
-
 
     public Tarefa getByIdPers(Long idPers) {
         getSession().beginTransaction();
@@ -112,7 +113,6 @@ public class DAOTarefa extends DAO {
 
         List<Tarefa> res = queryTarefas.getResultList();
 
- 
         if (!res.isEmpty()) {
             Tarefa tarefa = res.get(0);
 
@@ -144,5 +144,19 @@ public class DAOTarefa extends DAO {
             return null;
         }
 
+    }
+
+    public void exclui(Tarefa t) {
+        Session ses = getSession();
+        ses.beginTransaction();
+        ses.delete(t);
+
+        try {
+            ses.getTransaction().commit();
+        } catch (RollbackException ex) {
+            ses.getTransaction().rollback();
+        } catch (IllegalStateException ex) {
+
+        }
     }
 }
