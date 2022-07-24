@@ -201,12 +201,44 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     </properties>
 
     <build>
+
+        <sourceDirectory>
+            src/main/java
+        </sourceDirectory>
+
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
+
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>**/Log4j2Plugins.dat</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>shade</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -234,6 +266,20 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+             
+                <configuration>
+                  <archive>
+                    <manifest>
+                      <addClasspath>true</addClasspath>
+                      <mainClass>br.com.antoniodiego.gertarefas.principal.Principal</mainClass>
+                    </manifest>
+                  </archive>
+                </configuration>
+            
+              </plugin>
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -277,11 +323,13 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                     <includeProjectDependencies>false</includeProjectDependencies>
                     <includePluginDependencies>true</includePluginDependencies>
 
-                    <mainClass>br.com.antoniodiego.gertarefas.principal.Principal </mainClass>
+                    <mainClass>br.com.antoniodiego.gertarefas.principal.Principal</mainClass>
 
                 </configuration>
 
             </plugin>
+
+
         </plugins>
     </build>
 </project>
