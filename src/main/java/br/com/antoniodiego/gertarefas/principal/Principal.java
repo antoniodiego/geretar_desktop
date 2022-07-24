@@ -40,6 +40,8 @@ public class Principal {
     public static final Logger LOG_ARQUIVO = LogManager.getLogger("saida_para_arquivo");
 
     public static final void main(String[] args) {
+        System.out.println("main");
+
         LOG_PRINC.traceEntry();
 
         LOG_PRINC.trace("Configurando loggers...");
@@ -61,9 +63,14 @@ public class Principal {
     }
 
     private static void configuraLogger() {
+        System.out.println("Configura loggers");
+        
         // Config arq
         LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
         Configuration cf = ctx.getConfiguration();
+
+        // LoggerConfig confLogRoot= cf.getLoggerConfig("root");
+        // System.out.println("Level Root "+ confLogRoot.getLevel());
 
         // Caminho arquivo
         StringBuilder caminhoArquivoLogger = new StringBuilder("logs/");
@@ -74,7 +81,7 @@ public class Principal {
 
         String dataAt = dataHa.format(format);
 
-        caminhoArquivoLogger.append("/").append(dataAt).append("/");
+        caminhoArquivoLogger.append(dataAt).append("/");
 
         // Adiciona a data
 
@@ -85,6 +92,8 @@ public class Principal {
 
         caminhoArquivoLogger.append(dataFormatada);
         caminhoArquivoLogger.append(".log");
+
+        System.out.println("Caminho arquivo: " + caminhoArquivoLogger.toString());
 
         Layout<String> la = PatternLayout.newBuilder()
                 .withPattern("%d{HH:mm:ss} %-5level %logger{36} %class{36} %L %M %m%n").build();
@@ -102,7 +111,15 @@ public class Principal {
         LoggerConfig confLogGered = cf.getLoggerConfig("principal");
         confLogGered.addAppender(arqu, Level.TRACE, null);
 
+        // System.out.println("Level Root "+ confLogRoot.getLevel());
+
+        System.out.println("Atualizando loggers...");
+
+        // confLogRoot.setLevel(Level.ERROR);
+
         ctx.updateLoggers();
+
+        // System.out.println("Level Root "+ confLogRoot.getLevel());
 
         LOG_ARQUIVO.debug("Loggers configurados");
         LOG_PRINC.debug("Loggers configurados");
