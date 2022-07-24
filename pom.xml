@@ -117,11 +117,13 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <artifactId>httpclient</artifactId>
             <version>4.5.10</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-rest</artifactId>
             <version>2.2.2.RELEASE</version>
         </dependency>
+        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -216,7 +218,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.3.0</version>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <filters>
@@ -241,45 +243,17 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.0</version>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.2</version>
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>br.com.antoniodiego.gertarefas.principal.Principal</mainClass>
                             <addClasspath>true</addClasspath>
+                            <mainClass>br.com.antoniodiego.gertarefas.principal.Principal</mainClass>
                         </manifest>
                     </archive>
-
-                    <descriptors>
-                        <descriptor>src/assembly/jar.xml</descriptor>
-                    </descriptors>
-
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>makeAssembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-             
-                <configuration>
-                  <archive>
-                    <manifest>
-                      <addClasspath>true</addClasspath>
-                      <mainClass>br.com.antoniodiego.gertarefas.principal.Principal</mainClass>
-                    </manifest>
-                  </archive>
-                </configuration>
-            
-              </plugin>
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -290,7 +264,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.10.1</version>
             </plugin>
 
             <plugin>
@@ -310,7 +284,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <goals>
