@@ -7,9 +7,11 @@ package br.com.antoniodiego.gertarefas.persist.daos;
 
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import java.util.List;
+import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
 
 /**
  *
@@ -21,8 +23,8 @@ public class DAOTarefa extends DAO {
 
     public Long getMaiorIDPers() {
         getSession().beginTransaction();
-        TypedQuery<Long> maiorId = getSession().createQuery("SELECT t.idPers FROM Tarefa t ORDER by t.idPers DESC", 
-        Long.class).setMaxResults(1);
+        TypedQuery<Long> maiorId = getSession().createQuery("SELECT t.idPers FROM Tarefa t ORDER by t.idPers DESC",
+                Long.class).setMaxResults(1);
         //    NativeQuery quer = getSession().createNativeQuery("SELECT MAX(id_pers) AS maior_id FROM tarefas");
         List<Long> res = maiorId.getResultList();
         getSession().getTransaction().commit();
@@ -74,6 +76,17 @@ public class DAOTarefa extends DAO {
         return tarefas;
     }
 
+    public List<Tarefa> listaTodasSemCommit() {
+        // getSession().beginTransaction();
+        TypedQuery<Tarefa> queryTarefas = getSession().
+                createQuery("SELECT t FROM TarefaComposta t", Tarefa.class);
+
+        List<Tarefa> tarefas = queryTarefas.getResultList();
+
+        // getSession().getTransaction().commit();
+        return tarefas;
+    }
+
     public Tarefa getByIdPers(Long idPers) {
         getSession().beginTransaction();
         TypedQuery<Tarefa> queryTarefas = getSession().
@@ -93,13 +106,34 @@ public class DAOTarefa extends DAO {
 
     }
 
-    public Tarefa getByPosicao(Integer posicao) {
-        getSession().beginTransaction();
+    public Tarefa getByPosicaoS(Integer posicao) {
         TypedQuery<Tarefa> queryTarefas = getSession().
                 createQuery("SELECT t FROM TarefaComposta t where t.posicao = :posicao", Tarefa.class).setMaxResults(1);
         queryTarefas.setParameter("posicao", posicao);
 
         List<Tarefa> res = queryTarefas.getResultList();
+
+        if (!res.isEmpty()) {
+            Tarefa tarefa = res.get(0);
+
+            return tarefa;
+        } else {
+            return null;
+        }
+
+    }
+
+    public Tarefa getByPosicao(Integer posicao) {
+        if (!getSession().getTransaction().isActive()) {
+            getSession().beginTransaction();
+        }
+
+        TypedQuery<Tarefa> queryTarefas = getSession().
+                createQuery("SELECT t FROM TarefaComposta t where t.posicao = :posicao", Tarefa.class).setMaxResults(1);
+        queryTarefas.setParameter("posicao", posicao);
+
+        List<Tarefa> res = queryTarefas.getResultList();
+
         getSession().getTransaction().commit();
 
         if (res.size() > 0) {
@@ -110,5 +144,19 @@ public class DAOTarefa extends DAO {
             return null;
         }
 
+    }
+
+    public void exclui(Tarefa t) {
+        Session ses = getSession();
+        ses.beginTransaction();
+        ses.delete(t);
+
+        try {
+            ses.getTransaction().commit();
+        } catch (RollbackException ex) {
+            ses.getTransaction().rollback();
+        } catch (IllegalStateException ex) {
+
+        }
     }
 }

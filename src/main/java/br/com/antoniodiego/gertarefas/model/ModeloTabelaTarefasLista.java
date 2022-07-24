@@ -9,15 +9,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-
 import javax.swing.table.AbstractTableModel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
-
 /**
+ * * Esse modelo é usado para exibir as tarefas na tabela que fica no centro da
+ * janela principal
  *
  * @author Antônio Diego <antoniodiegoluz at gmail.com>
  */
@@ -177,6 +176,11 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
         fireTableRowsInserted(tarefas.size() - 1, tarefas.size() - 1);
     }
 
+    public void removeTarefa(int idx) {
+        tarefas.remove(idx);
+        fireTableRowsInserted(idx, idx);
+    }
+
     public void setTarefas(List<Tarefa> tarefas) {
         this.tarefas = tarefas;
         fireTableDataChanged();
@@ -221,9 +225,8 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
      */
     public void recarregaTarefasBanco() {
         DAOTarefa daoT = new DAOTarefa();
-        
+
         //TODO: PaginaÃ§Ã£o
-        
         List<Tarefa> tarefasBanco = daoT.listaTodas();
         this.tarefas.clear();
         this.tarefas.addAll(tarefasBanco);
