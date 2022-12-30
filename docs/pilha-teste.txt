@@ -1,0 +1,103 @@
+
+  Iniciar
+  [ ] usando buit i nconnect pooll
+[ ]
+[V] Arrastar 1 ou mais tarefas para outro grupo ou app.
+* Não funciona- Corrigido
+28/06/18 ~16:40 conseguir arras 1 de grup p outr
+|| ~16:58-Func arras varias mas não apag mov
+[ ]Arrastar grupo para sub
+ * Não funciona
+
+[V] Exibir tarefa 
+  [V] Composta
+  * O campo da princ estava largo mais estava bom. Os outros estava mais curtos. 
+    Solu: Mudei pref siz do scr 100 para 200
+  * Campos estavam iniciando habilitados- Corrigi
+[V]Editar tarefa
+ 25/06/18 15:59
+   Erro
+ * Não estava aparecendo Salvar [V]
+ * [V]Não estva ativ edição tarefas filhas e checkboxes 
+   Corrigi prim. Falta os outros checks
+   [V] Nem para check conc e [V] Campo data conc
+[ ] Excluir grupo filho raiz
+   Não está tendo efeito após reiniciar
+[V]Criar grupo no grupo raiz
+ * [V] Falha ao persistir no grupo raiz o qual não é salvo em nenhum momento.
+   Corrigido - Removendo grupo raiz
+ Salvar ediçoes
+[V] Não desabilita checks 
+[V]Não desabilita edições filhas
+[V] Não desabilita campo data conc. Func corr
+
+[V] Mover botao + para baixo.
+ * Só funciona apos a adic 2 campos [V] Corrigido -25/06
+[ ] Importar grupo [ ] Ou tarefa de aplic versão 2.2.7, colando ou soltando.
+-- Teste 26/06/18 ~~ 10:15 am
+Res: Obs: 
+TelaNovaTarefa: 
+ Campos descrição estavam muito pouco largos.
+ Botão adicionar parecia estar muito grande
+ Não tinha como remover uma tarefa filha.
+ Depois de ter quatro campos os botões salvar e cancelar estavam ficando miudos.
+
+Após criar nova:
+[V]  Só foram salvar a princ e a filha 1
+ Corrigido-11:03
+
+Editei a tarefa criada:
+ Marquei a tarefa filha 1 como conc. E a TareComp conc com data 26/06
+ Adicionei a palavra acr na descrição fiha 1 e salvei.
+
+Arrastar e soltar interno
+Criei o grupo teste soltar na raiz.
+Arrastei tarefa de teste de outro grupo da raiz para ele. Não foi arrastada. O xml não tinha nenhum grupo.
+
+Arrastar de exter.
+Criei tarefa teste no 2.2.7
+ Arrastei tarefa para grupo teste soltar da raiz.
+ Res: A tarefa sumiu do ap de sai e apareceu no grupo dest. com a des correta e data criação correta.
+
+Arrastar para ext:
+ Arrastei um tar para grup 2.2.7 não funcionou.
+
+Arrastar de extern con
+ criei tar. marquei como conc data 26/06/18
+ Arrastei para grupo teste sol do no
+ Res: Tarefa foi copiada com conteudo e data cri corretos e como conc mas sem data conc
+
+ Receber grupo de 2.2.7.1
+ Criei grupo teste
+ Pus duas tarefas. Uma concluida com data e outra não con com data fazer.
+ Tente arrastar com control e soltar em raiz.
+ Não funcionou.
+ Tete arrastar para grupo de raiz teste sol. Não func
+
+Arrastar grupo interno
+ Tentei arrasta subgr raiz com tar para teste solt de raiz. 
+ Falhou apareceu constraint violation
+ 
+Fechei e iniciei  Teste 10:35
+Obs: Haviam 6 campos descrições.
+Rec: Procurei tarefa criada composta em Tarefas-Teste-Teste2.
+[V]a filha 1 estava conc. 
+[V]O acréscimo estava pres
+[V] E a tarefa com estava conc em 26/06/18 
+--
+Campos checks filhas não estava alterando confome nova a exibir
+--- 10:58 -nova exec
+Obs:
+[ ] Camp conc estava hab antes de carregar tar
+--11:22 - exec
+[ ]Depois de expandir vários nos arvore tar não apareceu barra rol vert
+[ ]Arrastar
+---
+28/06/18 - 9:37 a
+Teste importar de xml de 2.2.7.1
+Importei XML no nó tarefas.
+Apareceram vários grupos com as suas tarefas.
+Um falhou certamento por conflito entre ids.
+Erros:
+ *O check ao lada de uma tarefa principal conc não estava marcado.
+ *O de cima estava marcado porém sem  data conc
