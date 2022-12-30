@@ -1,5 +1,0 @@
-XML:
-<? xml-version?>
-<exportação>
-pode ter elemento <grupotarefas> ou <tarefa> sem ordem espec
-</exportação>

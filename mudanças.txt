@@ -1,5 +1,0 @@
-16/05/19 11:46
-V. 2.3.0-alfa-2
-
-- Parece haver mais rapidez na inicialização.
-- Dados agora são armazenados na pasta do usuário.

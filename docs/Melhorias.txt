@@ -1,0 +1,6 @@
+2.2.7.1
+Corrigido erro que fazia campo data conc ficar editavel sem editar
+
+Corrigido erro ao deletar usuário
+Corrido falha que fazia exibir tela login no início no primeiro uso.
+Adicionado opção de renomear grupo.
