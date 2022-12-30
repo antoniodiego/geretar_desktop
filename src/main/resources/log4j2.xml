@@ -25,9 +25,11 @@ and open the template in the editor.
         <Logger name="nova_tarefa" level="TRACE" />
         <Logger name="painel_tabela" level="TRACE" />
         <Logger name="funcoes" level="TRACE" />
+        
         <Logger name="saida_para_arquivo" level="TRACE" additivity="false">
             <AppenderRef ref="arquivo" />
         </Logger>
+        
     </Loggers>
 
 </Configuration>

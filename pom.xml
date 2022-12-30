@@ -5,7 +5,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <groupId>br.antoniodiego</groupId>
 
     <artifactId>Gertar_Ma_NB</artifactId>
-    <version>2.4.10-beta</version>
+    <version>2.4.11-beta</version>
     <packaging>jar</packaging>
     <name>Gerenciador de tarefas - Lista - J8 - Swing - Git</name>
     <profiles>
@@ -117,11 +117,13 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <artifactId>httpclient</artifactId>
             <version>4.5.10</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-rest</artifactId>
             <version>2.2.2.RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -201,35 +203,44 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     </properties>
 
     <build>
+
+        <sourceDirectory>
+            src/main/java
+        </sourceDirectory>
+
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.0</version>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.3.0</version>
                 <configuration>
-                    <archive>
-                        <manifest>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>**/Log4j2Plugins.dat</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                             <mainClass>br.com.antoniodiego.gertarefas.principal.Principal</mainClass>
-                            <addClasspath>true</addClasspath>
-                        </manifest>
-                    </archive>
-
-                    <descriptors>
-                        <descriptor>src/assembly/jar.xml</descriptor>
-                    </descriptors>
-
+                        </transformer>
+                    </transformers>
                 </configuration>
                 <executions>
                     <execution>
-                        <id>makeAssembly</id>
+                        <id>shade</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>shade</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -244,7 +255,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.10.1</version>
             </plugin>
 
             <plugin>
@@ -264,7 +275,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -277,11 +288,13 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                     <includeProjectDependencies>false</includeProjectDependencies>
                     <includePluginDependencies>true</includePluginDependencies>
 
-                    <mainClass>br.com.antoniodiego.gertarefas.principal.Principal </mainClass>
+                    <mainClass>br.com.antoniodiego.gertarefas.principal.Principal</mainClass>
 
                 </configuration>
 
             </plugin>
+
+
         </plugins>
     </build>
 </project>

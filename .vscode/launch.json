@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Principal",
+            "request": "launch",
+            "mainClass": "br.com.antoniodiego.gertarefas.principal.Principal",
+            "projectName": "Gertar_Ma_NB"
+        },
+        {
+            "type": "java",
             "name": "Launch JanelaPrincipalMatisse",
             "request": "launch",
             "mainClass": "br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalMatisse",
