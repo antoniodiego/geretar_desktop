@@ -58,7 +58,7 @@
 			CodeGeneration
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Dec 30 21:32:01 BRT 2022'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Dec 30 21:21:42 BRT 2022'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.34(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -120,15 +120,6 @@
         <UML:Class xmi.id = '-64--88-1-109-5e5d047c:1856462ddfa:-8000:0000000000000EDE'
           name = 'Tarefa' visibility = 'public' isSpecification = 'false' isRoot = 'false'
           isLeaf = 'false' isAbstract = 'true' isActive = 'false'>
-          <UML:ModelElement.taggedValue>
-            <UML:TaggedValue xmi.id = '-64--88-1-109-5e5d047c:1856462ddfa:-8000:0000000000000F37'
-              isSpecification = 'false'>
-              <UML:TaggedValue.dataValue>Na versão 2, a classe deve ter a funcionalidade de adição de vários comentários</UML:TaggedValue.dataValue>
-              <UML:TaggedValue.type>
-                <UML:TagDefinition xmi.idref = '-64--88-1-109-5e5d047c:1856462ddfa:-8000:0000000000000EE7'/>
-              </UML:TaggedValue.type>
-            </UML:TaggedValue>
-          </UML:ModelElement.taggedValue>
           <UML:Classifier.feature>
             <UML:Attribute xmi.id = '-64--88-1-109-5e5d047c:1856462ddfa:-8000:0000000000000EDF'
               name = 'id' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
@@ -817,7 +808,7 @@
     </group>
   </group>
   <group name="Fig2"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[856, 16, 125, 71]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[864, 104, 125, 71]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="-84-19-48-1-5b360746:17a6e9a7fcf:-8000:0000000000000967"
        fill="1"
        fillcolor="white"
@@ -828,8 +819,8 @@
     </private>
     
     <rectangle name="Fig2.0"
-      x="856"
-      y="16"
+      x="864"
+      y="104"
       width="125"
       height="71"
       fill="1"
@@ -838,8 +829,8 @@
       strokecolor="black"
     />
     <text name="Fig2.1"
-      x="857"
-      y="17"
+      x="865"
+      y="105"
       width="123"
       height="23"
       fill="0"
@@ -854,7 +845,7 @@
       justification="Center"
     >ConversXMLD</text>
     <group name="Fig2.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[857, 17, 94, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[865, 105, 94, 0]"
          href="-84-19-48-1-5b360746:17a6e9a7fcf:-8000:0000000000000967"
          fill="0"
          fillcolor="white"
@@ -866,8 +857,8 @@
       </private>
       
       <rectangle name="Fig2.2.0"
-        x="857"
-        y="17"
+        x="865"
+        y="105"
         width="94"
         height="0"
         fill="0"
@@ -877,8 +868,8 @@
       />
     </group>
     <rectangle name="Fig2.3"
-      x="856"
-      y="40"
+      x="864"
+      y="128"
       width="125"
       height="1"
       fill="1"
@@ -887,7 +878,7 @@
       strokecolor="black"
     />
     <group name="Fig2.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[857, 41, 123, 25]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[865, 129, 123, 25]"
          href="-84-19-48-1-5b360746:17a6e9a7fcf:-8000:0000000000000967"
          fill="0"
          fillcolor="white"
@@ -898,8 +889,8 @@
       </private>
       
       <rectangle name="Fig2.4.0"
-        x="857"
-        y="41"
+        x="865"
+        y="129"
         width="123"
         height="25"
         fill="0"
@@ -908,8 +899,8 @@
         strokecolor="black"
       />
       <text name="Fig2.4.1"
-        x="857"
-        y="41"
+        x="865"
+        y="129"
         width="123"
         height="23"
         fill="0"
@@ -925,8 +916,8 @@
       >public Integer newAttr</text>
     </group>
     <rectangle name="Fig2.5"
-      x="856"
-      y="65"
+      x="864"
+      y="153"
       width="125"
       height="1"
       fill="1"
@@ -935,7 +926,7 @@
       strokecolor="black"
     />
     <group name="Fig2.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[857, 66, 123, 21]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[865, 154, 123, 21]"
          href="-84-19-48-1-5b360746:17a6e9a7fcf:-8000:0000000000000967"
          fill="0"
          fillcolor="white"
@@ -946,8 +937,8 @@
       </private>
       
       <rectangle name="Fig2.6.0"
-        x="857"
-        y="66"
+        x="865"
+        y="154"
         width="123"
         height="21"
         fill="0"
