@@ -57,6 +57,8 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
         this.modelo = modelTab;
         initComponents();
         // contro = new DialogoNovaTarefaController(this);
+
+        setLocationByPlatform(true);
     }
 
     /**
