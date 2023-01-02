@@ -9,7 +9,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import br.com.antoniodiego.gertarefas.pojo.Comentario;
-import br.com.antoniodiego.gertarefas.pojo.Reflexao;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -46,7 +45,7 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
      * @param modelTab
      */
     public DialogoVerComentarios(JFrame princ, ModeloComentarios modelTab) {
-        super(princ, "Nova tarefa", false);
+        super(princ, "Comentários", false);
         this.modelo = modelTab;
         initComponents();
         // contro = new DialogoNovaTarefaController(this);
@@ -54,7 +53,6 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         setLocationByPlatform(true);
 
         listaComentarios.setCellRenderer(new ComentarioRenderer());
-
     }
 
     /**
@@ -77,7 +75,7 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         canvas1 = new Canv();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Editar tarefa");
+        setTitle("Comentários");
 
         campoTitulo.setEditable(false);
 
@@ -136,15 +134,18 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_botaoCancelarActionPerformed
+    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+// GEN-FIRST:event_botaoCancelarActionPerformed
         dispose();
     }// GEN-LAST:event_botaoCancelarActionPerformed
 
-    private void campoHoraAlActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_campoHoraAlActionPerformed
+    private void campoHoraAlActionPerformed(java.awt.event.ActionEvent evt) {
+// GEN-FIRST:event_campoHoraAlActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_campoHoraAlActionPerformed
 
-    private void botaoConcluidoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_botaoConcluidoActionPerformed
+    private void botaoConcluidoActionPerformed(java.awt.event.ActionEvent evt) 
+    {// GEN-FIRST:event_botaoConcluidoActionPerformed
         LOG_EDITAR_TAREFA.trace("Salvando tarefa...");
 
     }// GEN-LAST:event_botaoConcluidoActionPerformed
@@ -154,17 +155,29 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         ModeloComentarios modCom = ((ModeloComentarios) listaComentarios.
                 getModel());
 
-        List<Reflexao> r = t.getReflexoes();
-
+        // List<Reflexao> r = t.getReflexoes();
         List<Comentario> coment = modCom.getComent();
-     
-        r.forEach((relato) -> {
-            Comentario c = new Comentario();
-            c.setData(relato.getDataCriacao());
-            c.setHora(relato.getHora());
-            c.setComentario(relato.getTexto());
-            coment.add(c);
-        });
+
+        Comentario teste = new Comentario();
+        teste.setComentario("Teste 1");
+
+        coment.add(teste);
+
+        Comentario teste2 = new Comentario();
+        teste2.setComentario("Teste 2");
+        coment.add(teste2);
+        int x = 0;
+        while (x < 10) {
+            coment.add(teste2);
+            x++;
+        }
+//        r.forEach((relato) -> {
+//            Comentario c = new Comentario();
+//            c.setData(relato.getDataCriacao());
+//            c.setHora(relato.getHora());
+//            c.setComentario(relato.getTexto());
+//            coment.add(c);
+//        });
 
         campoTitulo.setText(t.getTitulo());
     }

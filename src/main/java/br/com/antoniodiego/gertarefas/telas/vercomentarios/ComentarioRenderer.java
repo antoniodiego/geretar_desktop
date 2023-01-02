@@ -80,9 +80,9 @@ public class ComentarioRenderer implements ListCellRenderer<Comentario> {
             String s = c.getData().format(DateTimeFormatter.ISO_LOCAL_DATE)
                     + c.getHora().format(DateTimeFormatter.ISO_LOCAL_TIME);
             g2d.drawString(s,
-                    5, 12);
+                    5, 29);
 
-            g2d.drawString(c.getComentario(), 5, 35);
+            g2d.drawString(c.getComentario(), 5, getHeight() - 25);
         }
 
         @Override

@@ -122,7 +122,8 @@ public class HibernateUtil {
         }
 
         consURL.append(pathS).
-                append(nomePastaBanco).append(pathS).append(HibernateUtil.NOME_BANCO);
+                append(nomePastaBanco).append(pathS).append(HibernateUtil.
+                        NOME_BANCO);
 
         logUt.debug("Sep pas: " + pathS);
         logUt.debug("URL Cons: " + consURL);

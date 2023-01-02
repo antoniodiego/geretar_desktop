@@ -19,6 +19,12 @@ public class Comentario implements Serializable{
     private LocalTime hora;
     private String comentario;
 
+    public Comentario() {
+        data = LocalDate.now();
+        hora = LocalTime.now();
+    }
+
+    
     public LocalDate getData() {
         return data;
     }
