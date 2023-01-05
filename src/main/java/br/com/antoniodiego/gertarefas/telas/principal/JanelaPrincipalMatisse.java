@@ -71,25 +71,21 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerente de tarefas");
         setLocationByPlatform(true);
-        setPreferredSize(new java.awt.Dimension(1100, 600));
+        setPreferredSize(new java.awt.Dimension(1000, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
-        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         splitPaneDireito.setResizeWeight(1.0);
         splitPaneDireito.setMinimumSize(new java.awt.Dimension(200, 219));
         splitPaneDireito.setOneTouchExpandable(true);
-        splitPaneDireito.setPreferredSize(new java.awt.Dimension(700, 600));
 
         painelTabelaTarefas1.setReferenciaJan(this);
         painelTabelaTarefas1.setPreferredSize(new java.awt.Dimension(800, 600));
         splitPaneDireito.setLeftComponent(painelTabelaTarefas1);
         splitPaneDireito.setRightComponent(painelFuncoes1);
-
-        getContentPane().add(splitPaneDireito);
 
         menuArquivo.setText("Arquivo");
 
@@ -176,6 +172,23 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         barraDeMenus.add(jMenu4);
 
         setJMenuBar(barraDeMenus);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(splitPaneDireito, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(splitPaneDireito, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
