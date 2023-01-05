@@ -42,11 +42,9 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        splitPaneEsquerdo = new javax.swing.JSplitPane();
         splitPaneDireito = new javax.swing.JSplitPane();
         painelTabelaTarefas1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas();
-        painelFuncoes1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFuncoes();
-        painelMenuLadoEsquerdo1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelMenuLadoEsquerdo();
+        painelFuncoes1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFuncoes(painelTabelaTarefas1,this);
         barraDeMenus = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         itemNovaTarefa = new javax.swing.JMenuItem();
@@ -81,21 +79,17 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
-        splitPaneEsquerdo.setDividerLocation(100);
-        splitPaneEsquerdo.setOneTouchExpandable(true);
-
         splitPaneDireito.setResizeWeight(1.0);
         splitPaneDireito.setMinimumSize(new java.awt.Dimension(200, 219));
         splitPaneDireito.setOneTouchExpandable(true);
+        splitPaneDireito.setPreferredSize(new java.awt.Dimension(700, 600));
 
+        painelTabelaTarefas1.setReferenciaJan(this);
         painelTabelaTarefas1.setPreferredSize(new java.awt.Dimension(800, 600));
         splitPaneDireito.setLeftComponent(painelTabelaTarefas1);
         splitPaneDireito.setRightComponent(painelFuncoes1);
 
-        splitPaneEsquerdo.setRightComponent(splitPaneDireito);
-        splitPaneEsquerdo.setLeftComponent(painelMenuLadoEsquerdo1);
-
-        getContentPane().add(splitPaneEsquerdo);
+        getContentPane().add(splitPaneDireito);
 
         menuArquivo.setText("Arquivo");
 
@@ -304,10 +298,8 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuOp;
     private javax.swing.JMenuItem miExcluirTarefa;
     private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFuncoes painelFuncoes1;
-    private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelMenuLadoEsquerdo painelMenuLadoEsquerdo1;
     private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas painelTabelaTarefas1;
     private javax.swing.JPopupMenu.Separator sepMenuEd;
     private javax.swing.JSplitPane splitPaneDireito;
-    private javax.swing.JSplitPane splitPaneEsquerdo;
     // End of variables declaration//GEN-END:variables
 }

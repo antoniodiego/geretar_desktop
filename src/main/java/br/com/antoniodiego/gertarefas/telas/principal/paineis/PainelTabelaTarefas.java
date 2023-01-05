@@ -3,7 +3,6 @@ package br.com.antoniodiego.gertarefas.telas.principal.paineis;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -43,41 +42,45 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     private ModeloTabelaTarefasLista modeloTabela;
     TableRowSorter<ModeloTabelaTarefasLista> rs;
 
+    /**
+     * É melhor setar esse campo manualmente pelo Matisse, usando a opção custo-
+     * mizar código no menu de contexto
+     */
     private JFrame referenciaJan;
     /**
      *
      */
-    public static final Logger LOG_PAINEL_T = LogManager.getLogger("painel_tabela");
+    public static final Logger LOG_PAINEL_T = LogManager.
+            getLogger("painel_tabela");
 
     /**
      * Creates new form PainelListaTarefas2
+     *
+     * @param dono
      */
     public PainelTabelaTarefas() {
         initComponents();
-        this.referenciaJan = referenciaJan;
+     
         modeloTabela = new ModeloTabelaTarefasLista();
         tabelaTarefas.setModel(modeloTabela);
 
-        List<RowSorter.SortKey> sortKeys = new ArrayList<RowSorter.SortKey>();
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(8, SortOrder.ASCENDING));
 
         rs = new TableRowSorter<>(modeloTabela);
 
         // rs.setSortKeys(sortKeys);
-        rs.setComparator(8, Comparator.nullsLast(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                if (o1 != null && o2 != null) {
-                    return LOG_PAINEL_T.traceExit("Compare n n", o1.compareTo(o2));
-                }
+        rs.setComparator(8, Comparator.nullsLast((Integer o1, Integer o2) -> {
+            if (o1 != null && o2 != null) {
+                return LOG_PAINEL_T.traceExit("Compare n n", o1.compareTo(o2));
+            }
 
-                if (o1 == null && o2 == null) {
-                    return LOG_PAINEL_T.traceExit("2 n", 0);
-                } else if (o1 == null) {
-                    return LOG_PAINEL_T.traceExit("1 n", 0);
-                } else {
-                    return LOG_PAINEL_T.traceExit("2 n", 0);
-                }
+            if (o1 == null && o2 == null) {
+                return LOG_PAINEL_T.traceExit("2 n", 0);
+            } else if (o1 == null) {
+                return LOG_PAINEL_T.traceExit("1 n", 0);
+            } else {
+                return LOG_PAINEL_T.traceExit("2 n", 0);
             }
         }));
         tabelaTarefas.setRowSorter(rs);
@@ -88,30 +91,43 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         for (int i = 0; i < colM.getColumnCount(); i++) {
             col = colM.getColumn(i);
 
-            if (i == 0) {
-                col.setPreferredWidth(50);
-            } else if (i == 1) {
-                col.setPreferredWidth(50);
-            } else if (i == 2) {
-                col.setPreferredWidth(200);
-            } else if (i == 3) {
-                col.setPreferredWidth(80);
-            } else if (i == 4) {
-                col.setPreferredWidth(40);
-
-            } else if (i == 5) {
-                col.setPreferredWidth(80);
-            } else if (i == 6) {
-                col.setPreferredWidth(80);
-            } else if (i == 7) {
-                col.setPreferredWidth(40);
-            } else if (i == 8) {
-                // Posição
-                col.setPreferredWidth(40);
-            } else if (i == 9) {
-                col.setPreferredWidth(100);
-            } else if (i == 10) {
-                col.setPreferredWidth(70);
+            switch (i) {
+                case 0:
+                    col.setPreferredWidth(50);
+                    break;
+                case 1:
+                    col.setPreferredWidth(50);
+                    break;
+                case 2:
+                    col.setPreferredWidth(200);
+                    break;
+                case 3:
+                    col.setPreferredWidth(80);
+                    break;
+                case 4:
+                    col.setPreferredWidth(40);
+                    break;
+                case 5:
+                    col.setPreferredWidth(80);
+                    break;
+                case 6:
+                    col.setPreferredWidth(80);
+                    break;
+                case 7:
+                    col.setPreferredWidth(40);
+                    break;
+                case 8:
+                    // Posição
+                    col.setPreferredWidth(40);
+                    break;
+                case 9:
+                    col.setPreferredWidth(100);
+                    break;
+                case 10:
+                    col.setPreferredWidth(70);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -128,14 +144,14 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                     jsO.entrySet().forEach((e) -> {
                         LOG_PAINEL_T.trace("Key: {}", e.getKey());
 
-                        try{
-                        TableColumn coluna = tabelaTarefas.getColumn(e.getKey());
-                        LOG_PAINEL_T.debug("Alterando tam coluna " + e.getKey());
-                        JSONObject config = (JSONObject) jsO.get(e.getKey());
+                        try {
+                            TableColumn coluna = tabelaTarefas.getColumn(e.getKey());
+                            LOG_PAINEL_T.debug("Alterando tam coluna " + e.getKey());
+                            JSONObject config = (JSONObject) jsO.get(e.getKey());
 
-                        coluna.setPreferredWidth(config.getAsNumber("width").intValue());
-                        }catch(Exception ex){
-                            ex.printStackTrace();
+                            coluna.setPreferredWidth(config.getAsNumber("width").intValue());
+                        } catch (Exception ex) {
+                            LOG_PAINEL_T.catching(ex);
                         }
                         // coluna.setModelIndex(config.getAsNumber("index").intValue());
                     });
@@ -148,12 +164,8 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 // leit.append(new String(cbuf, 0, len));
                 // }
                 // fr.close();
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (ParseException ex) {
-                ex.printStackTrace();
+            } catch (FileNotFoundException | ParseException ex) {
+                LOG_PAINEL_T.catching(ex);
             }
         }
     }
@@ -172,8 +184,8 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
     /**
      * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The
-     * content of this method is always regenerated by the Form Editor.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
@@ -307,7 +319,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 .addComponent(btDescer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btVerTarefa)
-                .addContainerGap(443, Short.MAX_VALUE))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
 
         painelTabela.add(jPanel1);
@@ -344,7 +356,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     }
 
     private void btSubirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btSubirActionPerformed
-
         LOG_PAINEL_T.traceEntry();
 
         // A linha escolhida na tabela
