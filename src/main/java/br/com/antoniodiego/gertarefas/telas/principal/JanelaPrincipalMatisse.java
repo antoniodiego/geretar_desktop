@@ -71,7 +71,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerente de tarefas");
         setLocationByPlatform(true);
-        setPreferredSize(new java.awt.Dimension(1000, 600));
+        setPreferredSize(new java.awt.Dimension(1200, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -178,7 +178,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(splitPaneDireito, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
+                .addComponent(splitPaneDireito, javax.swing.GroupLayout.PREFERRED_SIZE, 1086, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -229,6 +229,21 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
             Logger.getLogger(JanelaPrincipalMatisse.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        JSONObject objetoProp = new JSONObject();
+        objetoProp.appendField("largura", this.getWidth());
+        objetoProp.appendField("altura", this.getHeight());
+objetoProp.appendField("estado", this.getExtendedState());
+
+        File arquivoProp = new File("propriedades.json");
+
+        try {
+            fw = new FileWriter(arquivoProp);
+            fw.append(objetoProp.toJSONString());
+            fw.flush();
+            fw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(JanelaPrincipalMatisse.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowClosing
 
     private void miExcluirTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miExcluirTarefaActionPerformed
@@ -240,10 +255,9 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         Tarefa t = painelTabelaTarefas1.getModeloTabela().getTarefas().get(idxModel);
         DAOTarefa daoT = new DAOTarefa();
         daoT.exclui(t);
-        
-       
+
         painelTabelaTarefas1.getModeloTabela().removeTarefa(idxModel);
-        
+
         tabelaTarefas.getSelectionModel().setSelectionInterval(idxEscolhida, idxEscolhida);
     }//GEN-LAST:event_miExcluirTarefaActionPerformed
 

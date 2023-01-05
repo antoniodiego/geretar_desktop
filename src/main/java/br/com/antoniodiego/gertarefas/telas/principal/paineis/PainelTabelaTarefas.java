@@ -131,6 +131,8 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
             }
         }
 
+         
+          
         File arquivoTam = new File("colunas.json");
         if (arquivoTam.exists()) {
             try {

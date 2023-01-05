@@ -15,6 +15,13 @@ import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 
 import br.com.antoniodiego.gertarefas.telas.principal.JanPrinMatController;
+import static br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import javax.swing.table.TableColumn;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 
 /**
  * Ponto de entrada do programa
@@ -52,6 +59,7 @@ public class Principal {
         JanPrinMatController contPrinc = new JanPrinMatController();
 
         contPrinc.instanciaJanelaPrincipal();
+        
         contPrinc.exibeJanelaPrincipal();
         contPrinc.inicializaSistema();
 

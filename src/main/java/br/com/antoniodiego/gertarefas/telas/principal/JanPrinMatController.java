@@ -99,9 +99,14 @@ import br.com.antoniodiego.gertarefas.telas.modelos.ModeloTabelaTarefa;
 import br.com.antoniodiego.gertarefas.telas.novatarefa.DialogoNovaTarView;
 
 import br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelListaTarefas;
+import static br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
 import br.com.antoniodiego.gertarefas.util.ConversXML;
 import br.com.antoniodiego.gertarefas.util.ConversXMLD;
 import br.com.antoniodiego.gertarefas.util.HibernateUtil;
+import java.io.FileReader;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 
 /**
  *
@@ -119,9 +124,10 @@ public class JanPrinMatController {
     private File arquiP;
     private Properties proprie;
     /**
-     * Grupo selecionado. Da tarefa atual. Essa váriável guarda o grupo selecionado na árvore se houver um. Se não tiver
-     * um grupo, mas houver uma tarefa selecionada o pai dela é guardado no campo. Se um nó ramo que não for grupo for
-     * selecionado ela deve guardar uma ref para o nó raiz
+     * Grupo selecionado. Da tarefa atual. Essa váriável guarda o grupo
+     * selecionado na árvore se houver um. Se não tiver um grupo, mas houver uma
+     * tarefa selecionada o pai dela é guardado no campo. Se um nó ramo que não
+     * for grupo for selecionado ela deve guardar uma ref para o nó raiz
      */
     private GrupoTarefas grupoDaAtu;
     private Tarefa tarefaExibida;
@@ -157,6 +163,37 @@ public class JanPrinMatController {
 
     public void instanciaJanelaPrincipal() {
         princ = new JanelaPrincipalMatisse();
+
+        File arquivoProp = new File("propriedades.json");
+
+        if (arquivoProp.exists()) {
+            try {
+                Object res = null;
+                
+                try (FileReader fr = new FileReader(arquivoProp)) {
+                    JSONParser js = new JSONParser(JSONParser.ACCEPT_NAN);
+                    res = js.parse(fr);
+                } catch (IOException ex) {
+                     LOG_PAINEL_T.catching(ex);
+                }
+                
+                if (res instanceof JSONObject) {
+                    JSONObject jsO = (JSONObject) res;
+
+                    Number largura = jsO.getAsNumber("largura"); 
+                    Number altura = jsO.getAsNumber("altura");
+                    Number expState = jsO.getAsNumber("estado");
+                    
+                    princ.setSize(largura.intValue(), altura.intValue());
+                    princ.setExtendedState(expState.intValue());
+                    
+                }
+
+            } catch (ParseException|NullPointerException ex) {
+                LOG_PAINEL_T.catching(ex);
+            }
+        }
+
     }
 
     public void exibeJanelaPrincipal() {
@@ -170,7 +207,6 @@ public class JanPrinMatController {
             LOG_CONTR_PRINC.trace("Em run invoke later");
             LOG_CONTR_PRINC.trace("Antes setVisible");
 
-          
             princ.setVisible(true);
         });
     }
@@ -547,8 +583,7 @@ public class JanPrinMatController {
 
     }
 
-   // private PainelAgController contrPA;
-
+    // private PainelAgController contrPA;
     private void confPainelAg() {
         modAg = new ModeloTabAgend();
 
@@ -889,7 +924,8 @@ public class JanPrinMatController {
     }
 
     /**
-     * Atualiza conte\u00eddo da janela de acordo com os grupos e tarefas existentes no banco.
+     * Atualiza conte\u00eddo da janela de acordo com os grupos e tarefas
+     * existentes no banco.
      */
     public void exibeGrupos() {
         iniciaGrupoRaiz();
@@ -912,7 +948,8 @@ public class JanPrinMatController {
     }
 
     /**
-     * Aqui o usuário que fez login é definido no sistema. Nesse momento os grupos e tarefas dele são exi na árvore
+     * Aqui o usuário que fez login é definido no sistema. Nesse momento os
+     * grupos e tarefas dele são exi na árvore
      *
      * @param usuario
      */
@@ -965,7 +1002,7 @@ public class JanPrinMatController {
     }
 
     public void gravaProp() throws FileNotFoundException, IOException {
-        try ( FileOutputStream sai = new FileOutputStream(arquiP)) {
+        try (FileOutputStream sai = new FileOutputStream(arquiP)) {
             this.proprie.store(sai, "arqu conf");
         }
     }
@@ -1589,7 +1626,8 @@ public class JanPrinMatController {
     }
 
     /**
-     * Gera dados XML contendo todos os grupos e tarefas e o envia para o c?rrego especificado.
+     * Gera dados XML contendo todos os grupos e tarefas e o envia para o
+     * c?rrego especificado.
      *
      * @param saida
      */
