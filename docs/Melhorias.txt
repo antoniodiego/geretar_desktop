@@ -7,9 +7,6 @@ Agora o programa salva e recupera o tamanho e o estado da janela
 
 A fonte do texto da tabela teve o tamanho aumentado para 14
 
-
-
-
 2.2.7.1
 Corrigido erro que fazia campo data conc ficar editavel sem editar
 
