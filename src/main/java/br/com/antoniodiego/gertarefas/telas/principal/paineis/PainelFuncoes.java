@@ -28,6 +28,9 @@ public class PainelFuncoes extends javax.swing.JPanel {
 
         btAumentPrio = new javax.swing.JButton();
         btDiminuiPrio = new javax.swing.JButton();
+        btSubir = new javax.swing.JButton();
+        btDescer = new javax.swing.JButton();
+        btVerTarefa = new javax.swing.JButton();
 
         btAumentPrio.setText("Aumenta prio");
         btAumentPrio.addActionListener(new java.awt.event.ActionListener() {
@@ -38,25 +41,61 @@ public class PainelFuncoes extends javax.swing.JPanel {
 
         btDiminuiPrio.setText("Diminui prio");
 
+        btSubir.setText("Subir Posição");
+        btSubir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSubirActionPerformed(evt);
+            }
+        });
+
+        btDescer.setText("Descer");
+        btDescer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDescerActionPerformed(evt);
+            }
+        });
+
+        btVerTarefa.setText("Ver");
+        btVerTarefa.setToolTipText("Ver e editar detalhes da tarefa");
+        btVerTarefa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btVerTarefaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btDiminuiPrio)
-                    .addComponent(btAumentPrio))
-                .addContainerGap(94, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btDiminuiPrio)
+                            .addComponent(btSubir)
+                            .addComponent(btAumentPrio)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btVerTarefa)
+                            .addComponent(btDescer))))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addContainerGap()
                 .addComponent(btAumentPrio)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btDiminuiPrio)
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btSubir)
+                .addGap(18, 18, 18)
+                .addComponent(btDescer)
+                .addGap(18, 18, 18)
+                .addComponent(btVerTarefa)
+                .addContainerGap(170, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -64,9 +103,24 @@ public class PainelFuncoes extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btAumentPrioActionPerformed
 
+    private void btSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSubirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btSubirActionPerformed
+
+    private void btDescerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDescerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btDescerActionPerformed
+
+    private void btVerTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerTarefaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btVerTarefaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAumentPrio;
+    private javax.swing.JButton btDescer;
     private javax.swing.JButton btDiminuiPrio;
+    private javax.swing.JButton btSubir;
+    private javax.swing.JButton btVerTarefa;
     // End of variables declaration//GEN-END:variables
 }
