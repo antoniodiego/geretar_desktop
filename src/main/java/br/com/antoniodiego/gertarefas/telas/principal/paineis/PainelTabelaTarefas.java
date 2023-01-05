@@ -27,7 +27,7 @@ import org.apache.logging.log4j.Logger;
 import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
-import br.com.antoniodiego.gertarefas.telas.editartarefa.DialogoEditarTarefa;
+import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.DialogoEditarTarefa;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
@@ -199,10 +199,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         painelTabela = new javax.swing.JPanel();
         scrollPaneTabela = new javax.swing.JScrollPane();
         tabelaTarefas = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        btSubir = new javax.swing.JButton();
-        btDescer = new javax.swing.JButton();
-        btVerTarefa = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
 
         setMaximumSize(new java.awt.Dimension(500, 65534));
@@ -275,54 +271,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         scrollPaneTabela.setViewportView(tabelaTarefas);
 
         painelTabela.add(scrollPaneTabela);
-
-        btSubir.setText("Subir Posição");
-        btSubir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSubirActionPerformed(evt);
-            }
-        });
-
-        btDescer.setText("Descer");
-        btDescer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDescerActionPerformed(evt);
-            }
-        });
-
-        btVerTarefa.setText("Ver");
-        btVerTarefa.setToolTipText("Ver e editar detalhes da tarefa");
-        btVerTarefa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btVerTarefaActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btSubir)
-                    .addComponent(btVerTarefa)
-                    .addComponent(btDescer))
-                .addGap(10, 10, 10))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btSubir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btDescer)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btVerTarefa)
-                .addContainerGap(214, Short.MAX_VALUE))
-        );
-
-        painelTabela.add(jPanel1);
 
         add(painelTabela);
         add(filler1);
@@ -533,13 +481,9 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscar;
-    private javax.swing.JButton btDescer;
-    private javax.swing.JButton btSubir;
-    private javax.swing.JButton btVerTarefa;
     private javax.swing.JTextField campoTextoBusca;
     private javax.swing.Box.Filler filler1;
     private javax.swing.ButtonGroup grupoDataAgFiltr;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel painelDeBusca;
     private javax.swing.JPanel painelTabela;
     private javax.swing.JScrollPane scrollPaneTabela;

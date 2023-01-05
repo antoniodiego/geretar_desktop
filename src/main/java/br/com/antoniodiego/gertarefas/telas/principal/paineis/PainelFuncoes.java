@@ -8,7 +8,7 @@ package br.com.antoniodiego.gertarefas.telas.principal.paineis;
 import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
-import br.com.antoniodiego.gertarefas.telas.editartarefa.DialogoEditarTarefa;
+import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.DialogoEditarTarefa;
 import static br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
 import javax.swing.JFrame;
 import javax.swing.JTable;
