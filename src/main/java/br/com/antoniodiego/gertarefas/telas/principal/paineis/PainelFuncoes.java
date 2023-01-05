@@ -72,6 +72,11 @@ public class PainelFuncoes extends javax.swing.JPanel {
         });
 
         btDiminuiPrio.setText("Prioridade -");
+        btDiminuiPrio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDiminuiPrioActionPerformed(evt);
+            }
+        });
 
         btSubir.setText("Para cima");
         btSubir.setToolTipText("Mover a tarefa para cima na lista");
@@ -103,14 +108,14 @@ public class PainelFuncoes extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btAumentPrio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btSubir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btDiminuiPrio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btAumentPrio, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btDescer, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btVerTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btSubir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btDiminuiPrio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -128,8 +133,6 @@ public class PainelFuncoes extends javax.swing.JPanel {
                 .addComponent(btVerTarefa)
                 .addGap(170, 170, 170))
         );
-
-        btAumentPrio.getAccessibleContext().setAccessibleName("Prioridade +");
     }// </editor-fold>//GEN-END:initComponents
 
     private void btAumentPrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAumentPrioActionPerformed
@@ -148,7 +151,7 @@ public class PainelFuncoes extends javax.swing.JPanel {
         tarefaMover.aumentaPrio();
         DAOTarefa daoT = new DAOTarefa();
         daoT.atualiza(tarefaMover);
-        
+
         modeloTabela.fireTableRowsUpdated(linhaSel, linhaSel);
     }//GEN-LAST:event_btAumentPrioActionPerformed
 
@@ -300,6 +303,27 @@ public class PainelFuncoes extends javax.swing.JPanel {
         dialogEditar.setTarefa(t);
         dialogEditar.setVisible(true);
     }//GEN-LAST:event_btVerTarefaActionPerformed
+
+    private void btDiminuiPrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDiminuiPrioActionPerformed
+        LOG_PAINEL_T.traceEntry();
+
+//        JTable tabelaTarefas = painelTabelaTarefas.getTabelaTarefas();
+//        ModeloTabelaTarefasLista modeloTabela = painelTabelaTarefas.getModeloTabela();
+        // A linha escolhida na tabela
+        int linhaSel = tabelaTarefas.getSelectedRow();
+
+        // Posição da tarefa no modelo
+        int posicaoSelModelo = tabelaTarefas.convertRowIndexToModel(linhaSel);
+
+        Tarefa tarefaMover = modeloTabela.getTarefas().get(posicaoSelModelo);
+
+        tarefaMover.diminuiPrio();
+        DAOTarefa daoT = new DAOTarefa();
+        daoT.atualiza(tarefaMover);
+
+        modeloTabela.fireTableRowsUpdated(linhaSel, linhaSel);
+
+    }//GEN-LAST:event_btDiminuiPrioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

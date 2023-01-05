@@ -170,6 +170,7 @@ public class JanPrinMatController {
             LOG_CONTR_PRINC.trace("Em run invoke later");
             LOG_CONTR_PRINC.trace("Antes setVisible");
 
+          
             princ.setVisible(true);
         });
     }
