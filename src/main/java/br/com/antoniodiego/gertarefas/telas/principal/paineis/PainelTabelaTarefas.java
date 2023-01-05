@@ -199,11 +199,9 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         painelTabela = new javax.swing.JPanel();
         scrollPaneTabela = new javax.swing.JScrollPane();
         tabelaTarefas = new javax.swing.JTable();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
 
         setMaximumSize(new java.awt.Dimension(500, 65534));
         setPreferredSize(new java.awt.Dimension(1000, 600));
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
         painelDeBusca.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
         painelDeBusca.setMaximumSize(new java.awt.Dimension(32767, 100));
@@ -225,7 +223,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addComponent(btBuscar)
-                .addContainerGap(588, Short.MAX_VALUE))
+                .addContainerGap(567, Short.MAX_VALUE))
         );
         painelDeBuscaLayout.setVerticalGroup(
             painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,13 +231,12 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 .addGroup(painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscar))
-                .addGap(29, 29, 29))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        add(painelDeBusca);
 
         painelTabela.setLayout(new javax.swing.BoxLayout(painelTabela, javax.swing.BoxLayout.LINE_AXIS));
 
+        tabelaTarefas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaTarefas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -272,8 +269,21 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
         painelTabela.add(scrollPaneTabela);
 
-        add(painelTabela);
-        add(filler1);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(painelDeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(painelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(painelDeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(painelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btBuscarActionPerformed
@@ -482,7 +492,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscar;
     private javax.swing.JTextField campoTextoBusca;
-    private javax.swing.Box.Filler filler1;
     private javax.swing.ButtonGroup grupoDataAgFiltr;
     private javax.swing.JPanel painelDeBusca;
     private javax.swing.JPanel painelTabela;
