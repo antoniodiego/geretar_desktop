@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 
 import br.com.antoniodiego.gertarefas.telas.confirmacoes.DialogoConfirmarExcTudo;
-import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipal;
+import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalMatisse;
 
 /**
  *
@@ -31,7 +31,7 @@ public class TelaOpc extends javax.swing.JDialog {
     //private final DAOUsuario daoUs;
     //  private final ModeloArvore modelArv;
     // private final JanelaPrincipalController contPrinc;
-    private final JanelaPrincipal janPrinc;
+    private final JanelaPrincipalMatisse janPrinc;
 
     /**
      * Creates new form TelaOpc
@@ -39,12 +39,12 @@ public class TelaOpc extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-    public TelaOpc(JanelaPrincipal parent, boolean modal) {
+    public TelaOpc(JanelaPrincipalMatisse parent, boolean modal) {
         super(parent, modal);
         this.janPrinc = parent;
         arqProp = new File("conf.properties");
         //Mesma instancia carreg prin para causar efeito em tempo real
-        pr = parent.getControl().getProp();
+//        pr = parent.getControl().getProp();
 //        try {
 //            pr.load(new FileInputStream(arqProp));
 //        } catch (IOException ex) {
@@ -322,13 +322,13 @@ public class TelaOpc extends javax.swing.JDialog {
 
         if (st == DialogoConfirmarExcTudo.RET_OK) {
             if (dialogoConf.getCheckSim().isSelected()) {
-                if (dialogoConf.getCheckBackup().isSelected()) {
-                    janPrinc.getControl().getDaoUsuario().fazBackupB();
-                }
-                janPrinc.getControl().getModeloArv().removeTudo();
-                janPrinc.getControl().getDaoUsuario().flush();
-                janPrinc.getControl().atualizaEstadoDosMenusBotoes();
-                janPrinc.getControl().atualizaBarraDeStatus();
+//                if (dialogoConf.getCheckBackup().isSelected()) {
+//                    janPrinc.getControl().getDaoUsuario().fazBackupB();
+//                }
+//                janPrinc.getControl().getModeloArv().removeTudo();
+//                janPrinc.getControl().getDaoUsuario().flush();
+//                janPrinc.getControl().atualizaEstadoDosMenusBotoes();
+//                janPrinc.getControl().atualizaBarraDeStatus();
             }
         }
 

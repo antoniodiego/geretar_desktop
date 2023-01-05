@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import br.com.antoniodiego.gertarefas.Constantes;
-import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalController;
 
 public class DeseData extends DefaultTableCellRenderer {
 
@@ -23,9 +22,7 @@ public class DeseData extends DefaultTableCellRenderer {
 
     @Override
     protected void setValue(Object novoValor) {
-        JanelaPrincipalController.LOG_CONTR_PRINC.debug("Alt val de des data"
-                + " para {}",novoValor);
-        
+   
         LocalDate d = (LocalDate) novoValor;
         setText((d == null) ? "" : fd.format(d));
     }

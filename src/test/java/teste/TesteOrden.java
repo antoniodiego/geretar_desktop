@@ -18,7 +18,6 @@ import org.junit.Test;
 import br.com.antoniodiego.gertarefas.Constantes;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
-import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalController;
 
 /**
  *
@@ -68,7 +67,7 @@ public class TesteOrden {
         t3.setPrioridade(3);
         ts.add(t3);
 
-        ts.sort(new JanelaPrincipalController.ComparaTarPrio());
+//        ts.sort(new JanelaPrincipalController.ComparaTarPrio());
 
         ts.forEach((t) -> {
             System.out.println(t.getPrioridade());

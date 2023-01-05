@@ -97,7 +97,7 @@ import br.com.antoniodiego.gertarefas.telas.modelos.ModeloArvore;
 import br.com.antoniodiego.gertarefas.telas.modelos.ModeloData;
 import br.com.antoniodiego.gertarefas.telas.modelos.ModeloTabelaTarefa;
 import br.com.antoniodiego.gertarefas.telas.novatarefa.DialogoNovaTarView;
-import br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelAgController;
+
 import br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelListaTarefas;
 import br.com.antoniodiego.gertarefas.util.ConversXML;
 import br.com.antoniodiego.gertarefas.util.ConversXMLD;
@@ -319,7 +319,7 @@ public class JanPrinMatController {
     private void configuraIconeBandeja() {
         if (SystemTray.isSupported()) {
             SystemTray st = SystemTray.getSystemTray();
-            ImageIcon imageIcGer = new ImageIcon(JanelaPrincipal.class.getResource("/imagens/icone lapis.png"));
+            ImageIcon imageIcGer = new ImageIcon(JanelaPrincipalMatisse.class.getResource("/imagens/icone lapis.png"));
 
             iconeGeretar = new TrayIcon(imageIcGer.getImage(), "Gerenciador de tarefas " + Constantes.VERS);
 
@@ -546,7 +546,7 @@ public class JanPrinMatController {
 
     }
 
-    private PainelAgController contrPA;
+   // private PainelAgController contrPA;
 
     private void confPainelAg() {
         modAg = new ModeloTabAgend();
@@ -805,7 +805,7 @@ public class JanPrinMatController {
             try {
                 uriInfo = new URI("http://localhost:8015/sinc/info");
             } catch (URISyntaxException ex) {
-                java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+//                java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             LocalDateTime dataUlSincServ = templ.getForObject(uriInfo, LocalDateTime.class);

@@ -42,8 +42,8 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSplitPane1 = new javax.swing.JSplitPane();
-        jSplitPane2 = new javax.swing.JSplitPane();
+        splitPaneEsquerdo = new javax.swing.JSplitPane();
+        splitPaneDireito = new javax.swing.JSplitPane();
         painelTabelaTarefas1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas();
         painelFuncoes1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFuncoes();
         painelMenuLadoEsquerdo1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelMenuLadoEsquerdo();
@@ -73,6 +73,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerente de tarefas");
         setLocationByPlatform(true);
+        setPreferredSize(new java.awt.Dimension(1100, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -80,17 +81,21 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
-        jSplitPane1.setOneTouchExpandable(true);
+        splitPaneEsquerdo.setDividerLocation(100);
+        splitPaneEsquerdo.setOneTouchExpandable(true);
 
-        jSplitPane2.setResizeWeight(1.0);
-        jSplitPane2.setOneTouchExpandable(true);
-        jSplitPane2.setLeftComponent(painelTabelaTarefas1);
-        jSplitPane2.setRightComponent(painelFuncoes1);
+        splitPaneDireito.setResizeWeight(1.0);
+        splitPaneDireito.setMinimumSize(new java.awt.Dimension(200, 219));
+        splitPaneDireito.setOneTouchExpandable(true);
 
-        jSplitPane1.setRightComponent(jSplitPane2);
-        jSplitPane1.setLeftComponent(painelMenuLadoEsquerdo1);
+        painelTabelaTarefas1.setPreferredSize(new java.awt.Dimension(800, 600));
+        splitPaneDireito.setLeftComponent(painelTabelaTarefas1);
+        splitPaneDireito.setRightComponent(painelFuncoes1);
 
-        getContentPane().add(jSplitPane1);
+        splitPaneEsquerdo.setRightComponent(splitPaneDireito);
+        splitPaneEsquerdo.setLeftComponent(painelMenuLadoEsquerdo1);
+
+        getContentPane().add(splitPaneEsquerdo);
 
         menuArquivo.setText("Arquivo");
 
@@ -293,8 +298,6 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenu menuEditar;
     private javax.swing.JMenuItem menuExportarComoXML;
@@ -304,5 +307,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelMenuLadoEsquerdo painelMenuLadoEsquerdo1;
     private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas painelTabelaTarefas1;
     private javax.swing.JPopupMenu.Separator sepMenuEd;
+    private javax.swing.JSplitPane splitPaneDireito;
+    private javax.swing.JSplitPane splitPaneEsquerdo;
     // End of variables declaration//GEN-END:variables
 }
