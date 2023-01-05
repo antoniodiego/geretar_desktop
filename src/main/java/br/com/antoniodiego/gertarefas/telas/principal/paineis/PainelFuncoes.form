@@ -19,8 +19,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btSubir" alignment="1" min="-2" pref="103" max="-2" attributes="0"/>
-                  <Component id="btDiminuiPrio" alignment="1" min="-2" pref="103" max="-2" attributes="0"/>
+                  <Component id="btSubir" alignment="0" min="-2" pref="103" max="-2" attributes="0"/>
+                  <Component id="btDiminuiPrio" alignment="0" min="-2" pref="103" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btAumentPrio" min="-2" pref="103" max="-2" attributes="0"/>

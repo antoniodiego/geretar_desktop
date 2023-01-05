@@ -79,7 +79,6 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         });
 
         splitPaneDireito.setResizeWeight(1.0);
-        splitPaneDireito.setMinimumSize(new java.awt.Dimension(200, 219));
         splitPaneDireito.setOneTouchExpandable(true);
 
         painelTabelaTarefas1.setReferenciaJan(this);

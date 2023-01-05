@@ -200,9 +200,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         scrollPaneTabela = new javax.swing.JScrollPane();
         tabelaTarefas = new javax.swing.JTable();
 
-        setMaximumSize(new java.awt.Dimension(500, 65534));
-        setPreferredSize(new java.awt.Dimension(1000, 600));
-
         painelDeBusca.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
         painelDeBusca.setMaximumSize(new java.awt.Dimension(32767, 100));
         painelDeBusca.setPreferredSize(new java.awt.Dimension(20, 50));
