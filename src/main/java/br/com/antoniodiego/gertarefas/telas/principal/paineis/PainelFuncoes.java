@@ -20,7 +20,6 @@ import javax.swing.ListSelectionModel;
  */
 public class PainelFuncoes extends javax.swing.JPanel {
 
-    private PainelTabelaTarefas painelTabelaTarefas;
     private ModeloTabelaTarefasLista modeloTabela;
     private JTable tabelaTarefas;
     private JFrame dono;
@@ -28,8 +27,6 @@ public class PainelFuncoes extends javax.swing.JPanel {
     /**
      * Creates new form PainelFuncoes
      *
-     * @param painelTabelaTarefas
-     * @param dono
      */
     public PainelFuncoes() {
 
@@ -45,13 +42,10 @@ public class PainelFuncoes extends javax.swing.JPanel {
     public PainelFuncoes(PainelTabelaTarefas painelTabelaTarefas, JFrame dono) {
         this.dono = dono;
 
-        this.painelTabelaTarefas = painelTabelaTarefas;
-
         this.modeloTabela = painelTabelaTarefas.getModeloTabela();
         this.tabelaTarefas = painelTabelaTarefas.getTabelaTarefas();
 
         initComponents();
-        this.dono = dono;
     }
 
     /**
@@ -69,23 +63,25 @@ public class PainelFuncoes extends javax.swing.JPanel {
         btDescer = new javax.swing.JButton();
         btVerTarefa = new javax.swing.JButton();
 
-        btAumentPrio.setText("Aumenta prio");
+        btAumentPrio.setText("Prioridade +");
+        btAumentPrio.setToolTipText("Aumentar a prioridade da tarefa");
         btAumentPrio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btAumentPrioActionPerformed(evt);
             }
         });
 
-        btDiminuiPrio.setText("Diminui prio");
+        btDiminuiPrio.setText("Prioridade -");
 
-        btSubir.setText("Subir Posição");
+        btSubir.setText("Para cima");
+        btSubir.setToolTipText("Mover a tarefa para cima na lista");
         btSubir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSubirActionPerformed(evt);
             }
         });
 
-        btDescer.setText("Descer");
+        btDescer.setText("Para baixo");
         btDescer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btDescerActionPerformed(evt);
@@ -105,19 +101,17 @@ public class PainelFuncoes extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btAumentPrio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btDiminuiPrio)
-                            .addComponent(btSubir)
-                            .addComponent(btAumentPrio)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btVerTarefa)
-                            .addComponent(btDescer))))
-                .addContainerGap(7, Short.MAX_VALUE))
+                            .addComponent(btDescer, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btVerTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btSubir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btDiminuiPrio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,8 +126,10 @@ public class PainelFuncoes extends javax.swing.JPanel {
                 .addComponent(btDescer)
                 .addGap(18, 18, 18)
                 .addComponent(btVerTarefa)
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addGap(170, 170, 170))
         );
+
+        btAumentPrio.getAccessibleContext().setAccessibleName("Prioridade +");
     }// </editor-fold>//GEN-END:initComponents
 
     private void btAumentPrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAumentPrioActionPerformed

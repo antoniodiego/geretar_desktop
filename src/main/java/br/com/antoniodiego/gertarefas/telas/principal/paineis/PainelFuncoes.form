@@ -16,25 +16,21 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btDiminuiPrio" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="btSubir" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="btAumentPrio" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
+                  <Component id="btAumentPrio" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="btVerTarefa" min="-2" max="-2" attributes="0"/>
-                          <Component id="btDescer" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btDescer" min="-2" pref="103" max="-2" attributes="0"/>
+                          <Component id="btVerTarefa" min="-2" pref="103" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="btSubir" alignment="1" max="32767" attributes="0"/>
+                  <Component id="btDiminuiPrio" alignment="1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="7" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -51,7 +47,7 @@
               <Component id="btDescer" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btVerTarefa" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="170" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="170" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -59,20 +55,25 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btAumentPrio">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Aumenta prio"/>
+        <Property name="text" type="java.lang.String" value="Prioridade +"/>
+        <Property name="toolTipText" type="java.lang.String" value="Aumentar a prioridade da tarefa"/>
       </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Prioridade +"/>
+      </AccessibilityProperties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAumentPrioActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btDiminuiPrio">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Diminui prio"/>
+        <Property name="text" type="java.lang.String" value="Prioridade -"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btSubir">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Subir Posi&#xe7;&#xe3;o"/>
+        <Property name="text" type="java.lang.String" value="Para cima"/>
+        <Property name="toolTipText" type="java.lang.String" value="Mover a tarefa para cima na lista"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSubirActionPerformed"/>
@@ -80,7 +81,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btDescer">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Descer"/>
+        <Property name="text" type="java.lang.String" value="Para baixo"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDescerActionPerformed"/>
