@@ -178,7 +178,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(splitPaneDireito, javax.swing.GroupLayout.PREFERRED_SIZE, 1086, Short.MAX_VALUE)
+                .addComponent(splitPaneDireito, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -203,6 +203,8 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_menuExportarComoXMLActionPerformed
 
+    
+    
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         TableColumnModel modelC = painelTabelaTarefas1.getTabelaTarefas().getColumnModel();
         TableColumn col;
@@ -300,7 +302,17 @@ objetoProp.appendField("estado", this.getExtendedState());
         });
     }
 
+    private JanPrinMatController controller;
 
+    public JanPrinMatController getController() {
+        return controller;
+    }
+
+    public void setController(JanPrinMatController controller) {
+        this.controller = controller;
+    }
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraDeMenus;
     private javax.swing.JMenuItem itemNovaTarefa;

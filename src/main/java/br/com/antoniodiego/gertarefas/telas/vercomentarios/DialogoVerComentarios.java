@@ -1,11 +1,10 @@
 package br.com.antoniodiego.gertarefas.telas.vercomentarios;
 
+import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAO;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOComentario;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,11 +12,8 @@ import org.apache.logging.log4j.Logger;
 
 import br.com.antoniodiego.gertarefas.pojo.Comentario;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.RoundRectangle2D;
+import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalMatisse;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -39,21 +35,24 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
      */
     public static final Logger LOG_EDITAR_TAREFA = LogManager.
             getLogger("editar_tarefa");
-    private final ModeloComentarios modelo;
+    private final JanelaPrincipalMatisse janPrinc;
 
     private Tarefa tarefa;
+    private final ModeloTabelaTarefasLista modeloLista;
 
     /**
      * Creates new form DialogoNovaTarView
      *
      * @param princ
-     * @param modelTab
+     * @param modeloLista
      */
-    public DialogoVerComentarios(JFrame princ, ModeloComentarios modelTab) {
+    public DialogoVerComentarios(JanelaPrincipalMatisse princ,
+            ModeloTabelaTarefasLista modeloLista) {
         super(princ, "Comentários", false);
-        this.modelo = modelTab;
+
         initComponents();
-        // contro = new DialogoNovaTarefaController(this);
+        this.janPrinc = princ;
+        this.modeloLista = modeloLista;
 
         setLocationByPlatform(true);
 
@@ -160,36 +159,48 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         Comentario coment = new Comentario();
         coment.setComentario(texto);
 
+        //Sessão para carregar, inicializar coleção e atualizar tarefa
         Session s = DAO.getSession();
 
         s.getTransaction().begin();
-        Tarefa tC = s.load(Tarefa.class, tarefa.getId());
-
-        Hibernate.initialize(tC);
-        Hibernate.initialize(tC.getComentarios());
-
-        s.getTransaction().commit();
-
-        setTarefa(tC);
+        Tarefa tC = s.get(Tarefa.class, tarefa.getId());
 
         tC.getComentarios().add(coment);
         coment.setTarefa(tC);
 
-        DAOTarefa daoT = new DAOTarefa();
-        daoT.atualiza(tC);
+        tC.setDataModif(LocalDateTime.now());
 
-        ModeloComentarios modCom = ((ModeloComentarios) listaComentarios.
-                getModel());
+        s.update(tC);
 
-        modCom.adiciona(coment);
+        atualizaTarefa(tarefa, tC);
+
+        s.getTransaction().commit();
+
+        //Atualiza a tarefa e os comentários exibidos para a versão carregada
+        setTarefa(tC);
 
         campoComentario.setText("");
     }//GEN-LAST:event_btAdicionarActionPerformed
 
+    /**
+     *
+     * @param antiga Versão antiga [atual no modelo]
+     * @param versaoNova
+     */
+    public void atualizaTarefa(Tarefa antiga, Tarefa versaoNova) {
+        //Faz tarefa ser recarregada
+
+        int idx = modeloLista.getTarefas().indexOf(antiga);
+
+        modeloLista.getTarefas().set(idx, versaoNova);
+
+        modeloLista.fireTableRowsUpdated(idx, idx);
+
+    }
+
     private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
         campoComentario.setText("");
     }//GEN-LAST:event_btLimparActionPerformed
-
 
     // GEN-LAST:event_btDataActionPerformed
     // GEN-LAST:event_btHoraActionPerformed
@@ -236,17 +247,15 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         // </editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                DialogoVerComentarios dialog = new DialogoVerComentarios(null, null);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            DialogoVerComentarios dialog = new DialogoVerComentarios(null, null);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setVisible(true);
         });
     }
 

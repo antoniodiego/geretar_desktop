@@ -164,32 +164,34 @@ public class JanPrinMatController {
     public void instanciaJanelaPrincipal() {
         princ = new JanelaPrincipalMatisse();
 
+        princ.setController(this);
+
         File arquivoProp = new File("propriedades.json");
 
         if (arquivoProp.exists()) {
             try {
                 Object res = null;
-                
+
                 try (FileReader fr = new FileReader(arquivoProp)) {
                     JSONParser js = new JSONParser(JSONParser.ACCEPT_NAN);
                     res = js.parse(fr);
                 } catch (IOException ex) {
-                     LOG_PAINEL_T.catching(ex);
+                    LOG_PAINEL_T.catching(ex);
                 }
-                
+
                 if (res instanceof JSONObject) {
                     JSONObject jsO = (JSONObject) res;
 
-                    Number largura = jsO.getAsNumber("largura"); 
+                    Number largura = jsO.getAsNumber("largura");
                     Number altura = jsO.getAsNumber("altura");
                     Number expState = jsO.getAsNumber("estado");
-                    
+
                     princ.setSize(largura.intValue(), altura.intValue());
                     princ.setExtendedState(expState.intValue());
-                    
+
                 }
 
-            } catch (ParseException|NullPointerException ex) {
+            } catch (ParseException | NullPointerException ex) {
                 LOG_PAINEL_T.catching(ex);
             }
         }
@@ -229,8 +231,10 @@ public class JanPrinMatController {
              * Faz migração do banco
              * 
              */
-            Flyway fw = Flyway.configure().baselineOnMigrate(true).baselineVersion("0")
-                    .dataSource(HibernateUtil.determinaURIBanco(), "SA", "").load();
+            Flyway fw = Flyway.configure().baselineOnMigrate(true).
+                    baselineVersion("0")
+                    .dataSource(HibernateUtil.determinaURIBanco(), "SA", "").
+                    load();
 
             try {
                 fw.migrate();
@@ -238,7 +242,8 @@ public class JanPrinMatController {
                 if (ex.getCause() instanceof SQLException) {
                     SQLException excSQL = (SQLException) ex.getCause();
                     if (excSQL.getCause() instanceof HsqlException) {
-                        HsqlException excHSQL = (HsqlException) excSQL.getCause();
+                        HsqlException excHSQL = (HsqlException) excSQL.
+                                getCause();
                         LOG_CONTR_PRINC.trace(excHSQL.getErrorCode());
                         LOG_CONTR_PRINC.trace(excHSQL.getLevel());
                         LOG_CONTR_PRINC.trace(excHSQL.getMessage());
@@ -264,14 +269,7 @@ public class JanPrinMatController {
            * A partir daqui já deve ser possível fazer consulta do banco de dados.
             Seria interessante poder fazer isso mexendo apenas nos models.
              */
-            DAOTarefa daoTarefa = new DAOTarefa();
-            List<Tarefa> tarefas = daoTarefa.listaTodas();
-
-            princ.getPainelTarefas().getModeloTabela().setTarefas(tarefas);
-            princ.getPainelTarefas().getModeloTabela().ordena();
-            //  princ.getPainelTarefas().getRs().sort();
-
-            LOG_CONTR_PRINC.trace(tarefas.size() + " Tarefas carregadas no modelo da tabela");
+            carregaTarefas();
 
             /*
              * Aqui deve ser bom se com com o serv de sinc
@@ -353,12 +351,46 @@ public class JanPrinMatController {
         }
     }
 
+    /**
+     * Carrega tarefas do banco e exibe na tela
+     */
+    public void carregaTarefas() {
+        DAOTarefa daoTarefa = new DAOTarefa();
+        List<Tarefa> tarefas = daoTarefa.listaTodas();
+
+        princ.getPainelTarefas().getModeloTabela().setTarefas(tarefas);
+        princ.getPainelTarefas().getModeloTabela().ordena();
+        //  princ.getPainelTarefas().getRs().sort();
+
+        LOG_CONTR_PRINC.trace(tarefas.size() + " Tarefas carregadas no"
+                + " modelo da tabela");
+    }
+
+    /**
+     *
+     * @param antiga Versão antiga [atual no modelo]
+     */
+    public void atualizaTarefa(Tarefa antiga, Tarefa versaoNova) {
+        //Faz tarefa ser recarregada
+
+        ModeloTabelaTarefasLista modelo = princ.getPainelTarefas()
+                .getModeloTabela();
+        int idx = modelo.getTarefas().indexOf(antiga);
+
+        modelo.getTarefas().set(idx, versaoNova);
+        
+        modelo.fireTableRowsUpdated(idx, idx);
+
+    }
+
     private void configuraIconeBandeja() {
         if (SystemTray.isSupported()) {
             SystemTray st = SystemTray.getSystemTray();
-            ImageIcon imageIcGer = new ImageIcon(JanelaPrincipalMatisse.class.getResource("/imagens/icone lapis.png"));
+            ImageIcon imageIcGer = new ImageIcon(JanelaPrincipalMatisse.class.
+                    getResource("/imagens/icone lapis.png"));
 
-            iconeGeretar = new TrayIcon(imageIcGer.getImage(), "Gerenciador de tarefas " + Constantes.VERS);
+            iconeGeretar = new TrayIcon(imageIcGer.getImage(), "Gerenciador de"
+                    + " tarefas " + Constantes.VERS);
 
             PopupMenu menuPopUp = new PopupMenu();
             MenuItem sair = new MenuItem("Sair");

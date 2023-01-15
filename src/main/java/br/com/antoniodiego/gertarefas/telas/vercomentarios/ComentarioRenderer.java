@@ -13,6 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JList;
+import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
 
 /**
@@ -77,8 +78,10 @@ public class ComentarioRenderer implements ListCellRenderer<Comentario> {
             g2d.setColor(Color.black);
             g2d.draw(retanguloCorpo);
 
-            String s = c.getDataComentario().format(DateTimeFormatter.ISO_LOCAL_DATE)
-                    + c.getHora().format(DateTimeFormatter.ISO_LOCAL_TIME);
+            String s = c.getDataComentario().
+                    format(DateTimeFormatter.ISO_LOCAL_DATE)
+                    + "  " + c.getHora().
+                            format(DateTimeFormatter.ISO_LOCAL_TIME);
             g2d.drawString(s,
                     5, 29);
 

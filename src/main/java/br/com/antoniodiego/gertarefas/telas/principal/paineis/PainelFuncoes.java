@@ -9,10 +9,10 @@ import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.DialogoEditarTarefa;
+import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalMatisse;
 import static br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
 import br.com.antoniodiego.gertarefas.telas.vercomentarios.DialogoVerComentarios;
 import br.com.antoniodiego.gertarefas.telas.vercomentarios.ModeloComentarios;
-import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
@@ -24,7 +24,7 @@ public class PainelFuncoes extends javax.swing.JPanel {
 
     private ModeloTabelaTarefasLista modeloTabela;
     private JTable tabelaTarefas;
-    private JFrame dono;
+    private JanelaPrincipalMatisse dono;
 
     /**
      * Creates new form PainelFuncoes
@@ -39,9 +39,13 @@ public class PainelFuncoes extends javax.swing.JPanel {
      * Creates new form PainelFuncoes
      *
      * @param painelTabelaTarefas
-     * @param dono
+     * @param dono Referência à janela principal, pode ser mais generalizada
+     * para
+     * um JFrame, mas é importante passar uma ref da janela principal para o
+     * diálogo comentários. Ao menos uma ref para o modelo da tabela 
      */
-    public PainelFuncoes(PainelTabelaTarefas painelTabelaTarefas, JFrame dono) {
+    public PainelFuncoes(PainelTabelaTarefas painelTabelaTarefas,
+            JanelaPrincipalMatisse dono) {
         this.dono = dono;
 
         this.modeloTabela = painelTabelaTarefas.getModeloTabela();
@@ -337,7 +341,7 @@ public class PainelFuncoes extends javax.swing.JPanel {
 
     private void btVerComentariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerComentariosActionPerformed
         DialogoVerComentarios verComent = new DialogoVerComentarios(dono,
-                new ModeloComentarios());
+               modeloTabela);
         Tarefa t = modeloTabela.getTarefas().get(tabelaTarefas.
                 convertRowIndexToModel(tabelaTarefas.getSelectedRow()));
         verComent.setTarefa(t);
