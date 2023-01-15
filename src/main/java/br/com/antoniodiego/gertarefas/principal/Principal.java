@@ -37,14 +37,15 @@ public class Principal {
     /**
      * Banco separado
      */
-    public static boolean DESENV = false;
+    public static boolean DESENV = true;
 
     private static final Logger LOG_PRINC = LogManager.getLogger("principal");
 
     /**
      *
      */
-    public static final Logger LOG_ARQUIVO = LogManager.getLogger("saida_para_arquivo");
+    public static final Logger LOG_ARQUIVO = LogManager.
+            getLogger("saida_para_arquivo");
 
     public static final void main(String[] args) {
         System.out.println("main");
