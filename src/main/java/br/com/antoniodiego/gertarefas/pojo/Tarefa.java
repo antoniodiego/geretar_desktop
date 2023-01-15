@@ -145,10 +145,11 @@ public abstract class Tarefa implements Externalizable, Transferable,
      */
 
     private String status;
-//    @ElementCollection
-//    @CollectionTable(name = "comentarios_de_tarefas", joinColumns
-//            = @JoinColumn(name = "id_tarefa"))
-    @Transient
+
+ 
+    @OneToMany(mappedBy = "tarefa", orphanRemoval = true, 
+            cascade = CascadeType.ALL)
+   
     private List<Comentario> comentarios;
 
     public Tarefa() {
@@ -217,7 +218,7 @@ public abstract class Tarefa implements Externalizable, Transferable,
     }
 
     @Override
-    public Object getTransferData(DataFlavor flavor) throws 
+    public Object getTransferData(DataFlavor flavor) throws
             UnsupportedFlavorException, IOException {
         return this;
     }

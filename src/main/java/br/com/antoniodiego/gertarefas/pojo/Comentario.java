@@ -7,30 +7,41 @@ package br.com.antoniodiego.gertarefas.pojo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import javax.persistence.Embeddable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author anton
  */
-@Embeddable
-public class Comentario implements Serializable{
-    private LocalDate data;
+@Entity
+@Table(name = "comentarios")
+public class Comentario implements Serializable {
+
+    private LocalDate dataComentario;
     private LocalTime hora;
     private String comentario;
+    private Long id;
+    private Tarefa tarefa;
 
     public Comentario() {
-        data = LocalDate.now();
+        dataComentario = LocalDate.now();
         hora = LocalTime.now();
     }
 
-    
-    public LocalDate getData() {
-        return data;
+    @Column(name = "data_comentario")
+    public LocalDate getDataComentario() {
+        return dataComentario;
     }
 
-    public void setData(LocalDate data) {
-        this.data = data;
+    public void setDataComentario(LocalDate data) {
+        this.dataComentario = data;
     }
 
     public LocalTime getHora() {
@@ -48,7 +59,25 @@ public class Comentario implements Serializable{
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
-    
-    
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @ManyToOne
+     @JoinColumn(name = "id_tarefa")
+    public Tarefa getTarefa() {
+        return tarefa;
+    }
+
+    public void setTarefa(Tarefa tarefa) {
+        this.tarefa = tarefa;
+    }
+
 }

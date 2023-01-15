@@ -7,6 +7,7 @@ package br.com.antoniodiego.gertarefas.util;
 
 import br.com.antoniodiego.gertarefas.Defini;
 import br.com.antoniodiego.gertarefas.pojo.Agendamento;
+import br.com.antoniodiego.gertarefas.pojo.Comentario;
 import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
 import br.com.antoniodiego.gertarefas.pojo.Notificacao;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
@@ -41,7 +42,7 @@ public class HibernateUtil {
     private static BootstrapServiceRegistry bsr;
     private static MetadataSources smd;
     private static Metadata dm;
-    private static Logger logUt = LogManager.getLogger("Util");
+    private static final Logger logUt = LogManager.getLogger("Util");
 
     public static HibernateUtil getInstance() {
         return INSTANCIA;
@@ -75,6 +76,7 @@ public class HibernateUtil {
             // smd.addAnnotatedClass(Tarefa.class);
             smd.addAnnotatedClass(Usuario.class).
                     addAnnotatedClass(GrupoTarefas.class);
+            smd.addAnnotatedClass(Comentario.class);
             smd.addAnnotatedClass(Tarefa.class);
             //Importante mapear pois se n?o n?o reconhece heran?a
             smd.addAnnotatedClass(TarefaComposta.class);

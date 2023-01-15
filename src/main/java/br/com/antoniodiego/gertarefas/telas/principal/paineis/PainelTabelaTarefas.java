@@ -3,7 +3,6 @@ package br.com.antoniodiego.gertarefas.telas.principal.paineis;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -28,7 +27,7 @@ import org.apache.logging.log4j.Logger;
 import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
-import br.com.antoniodiego.gertarefas.telas.editartarefa.DialogoEditarTarefa;
+import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.DialogoEditarTarefa;
 import br.com.antoniodiego.gertarefas.telas.vercomentarios.DialogoVerComentarios;
 import br.com.antoniodiego.gertarefas.telas.vercomentarios.ModeloComentarios;
 import net.minidev.json.JSONObject;
@@ -45,41 +44,45 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     private ModeloTabelaTarefasLista modeloTabela;
     TableRowSorter<ModeloTabelaTarefasLista> rs;
 
+    /**
+     * É melhor setar esse campo manualmente pelo Matisse, usando a opção custo-
+     * mizar código no menu de contexto
+     */
     private JFrame referenciaJan;
     /**
      *
      */
-    public static final Logger LOG_PAINEL_T = LogManager.getLogger("painel_tabela");
+    public static final Logger LOG_PAINEL_T = LogManager.
+            getLogger("painel_tabela");
 
     /**
      * Creates new form PainelListaTarefas2
+     *
+     * @param dono
      */
     public PainelTabelaTarefas() {
         initComponents();
-        this.referenciaJan = referenciaJan;
+     
         modeloTabela = new ModeloTabelaTarefasLista();
         tabelaTarefas.setModel(modeloTabela);
 
-        List<RowSorter.SortKey> sortKeys = new ArrayList<RowSorter.SortKey>();
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(8, SortOrder.ASCENDING));
 
         rs = new TableRowSorter<>(modeloTabela);
 
         // rs.setSortKeys(sortKeys);
-        rs.setComparator(8, Comparator.nullsLast(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                if (o1 != null && o2 != null) {
-                    return LOG_PAINEL_T.traceExit("Compare n n", o1.compareTo(o2));
-                }
+        rs.setComparator(8, Comparator.nullsLast((Integer o1, Integer o2) -> {
+            if (o1 != null && o2 != null) {
+                return LOG_PAINEL_T.traceExit("Compare n n", o1.compareTo(o2));
+            }
 
-                if (o1 == null && o2 == null) {
-                    return LOG_PAINEL_T.traceExit("2 n", 0);
-                } else if (o1 == null) {
-                    return LOG_PAINEL_T.traceExit("1 n", 0);
-                } else {
-                    return LOG_PAINEL_T.traceExit("2 n", 0);
-                }
+            if (o1 == null && o2 == null) {
+                return LOG_PAINEL_T.traceExit("2 n", 0);
+            } else if (o1 == null) {
+                return LOG_PAINEL_T.traceExit("1 n", 0);
+            } else {
+                return LOG_PAINEL_T.traceExit("2 n", 0);
             }
         }));
         tabelaTarefas.setRowSorter(rs);
@@ -90,33 +93,48 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         for (int i = 0; i < colM.getColumnCount(); i++) {
             col = colM.getColumn(i);
 
-            if (i == 0) {
-                col.setPreferredWidth(50);
-            } else if (i == 1) {
-                col.setPreferredWidth(50);
-            } else if (i == 2) {
-                col.setPreferredWidth(200);
-            } else if (i == 3) {
-                col.setPreferredWidth(80);
-            } else if (i == 4) {
-                col.setPreferredWidth(40);
-
-            } else if (i == 5) {
-                col.setPreferredWidth(80);
-            } else if (i == 6) {
-                col.setPreferredWidth(80);
-            } else if (i == 7) {
-                col.setPreferredWidth(40);
-            } else if (i == 8) {
-                // Posição
-                col.setPreferredWidth(40);
-            } else if (i == 9) {
-                col.setPreferredWidth(100);
-            } else if (i == 10) {
-                col.setPreferredWidth(70);
+            switch (i) {
+                case 0:
+                    col.setPreferredWidth(50);
+                    break;
+                case 1:
+                    col.setPreferredWidth(50);
+                    break;
+                case 2:
+                    col.setPreferredWidth(200);
+                    break;
+                case 3:
+                    col.setPreferredWidth(80);
+                    break;
+                case 4:
+                    col.setPreferredWidth(40);
+                    break;
+                case 5:
+                    col.setPreferredWidth(80);
+                    break;
+                case 6:
+                    col.setPreferredWidth(80);
+                    break;
+                case 7:
+                    col.setPreferredWidth(40);
+                    break;
+                case 8:
+                    // Posição
+                    col.setPreferredWidth(40);
+                    break;
+                case 9:
+                    col.setPreferredWidth(100);
+                    break;
+                case 10:
+                    col.setPreferredWidth(70);
+                    break;
+                default:
+                    break;
             }
         }
 
+         
+          
         File arquivoTam = new File("colunas.json");
         if (arquivoTam.exists()) {
             try {
@@ -137,7 +155,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
                             coluna.setPreferredWidth(config.getAsNumber("width").intValue());
                         } catch (Exception ex) {
-                            ex.printStackTrace();
+                            LOG_PAINEL_T.catching(ex);
                         }
                         // coluna.setModelIndex(config.getAsNumber("index").intValue());
                     });
@@ -150,12 +168,8 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 // leit.append(new String(cbuf, 0, len));
                 // }
                 // fr.close();
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (ParseException ex) {
-                ex.printStackTrace();
+            } catch (FileNotFoundException | ParseException ex) {
+                LOG_PAINEL_T.catching(ex);
             }
         }
     }
@@ -194,11 +208,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         btDescer = new javax.swing.JButton();
         btVerTarefa = new javax.swing.JButton();
         btVerComentarios = new javax.swing.JButton();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
-
-        setMaximumSize(new java.awt.Dimension(500, 65534));
-        setPreferredSize(new java.awt.Dimension(1000, 600));
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
         painelDeBusca.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
         painelDeBusca.setMaximumSize(new java.awt.Dimension(32767, 100));
@@ -220,7 +229,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addComponent(btBuscar)
-                .addContainerGap(588, Short.MAX_VALUE))
+                .addContainerGap(567, Short.MAX_VALUE))
         );
         painelDeBuscaLayout.setVerticalGroup(
             painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,13 +237,12 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 .addGroup(painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscar))
-                .addGap(29, 29, 29))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        add(painelDeBusca);
 
         painelTabela.setLayout(new javax.swing.BoxLayout(painelTabela, javax.swing.BoxLayout.LINE_AXIS));
 
+        tabelaTarefas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabelaTarefas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -261,6 +269,8 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tabelaTarefas.setRowHeight(30);
+        tabelaTarefas.setRowMargin(4);
         scrollPaneTabela.setViewportView(tabelaTarefas);
 
         painelTabela.add(scrollPaneTabela);
@@ -324,8 +334,21 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
         painelTabela.add(jPanel1);
 
-        add(painelTabela);
-        add(filler1);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(painelDeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(painelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(painelDeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(painelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
+                .addGap(1, 1, 1))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btVerComentariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerComentariosActionPerformed
@@ -365,7 +388,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     }
 
     private void btSubirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btSubirActionPerformed
-
         LOG_PAINEL_T.traceEntry();
 
         // A linha escolhida na tabela
@@ -548,7 +570,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     private javax.swing.JButton btVerComentarios;
     private javax.swing.JButton btVerTarefa;
     private javax.swing.JTextField campoTextoBusca;
-    private javax.swing.Box.Filler filler1;
     private javax.swing.ButtonGroup grupoDataAgFiltr;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel painelDeBusca;

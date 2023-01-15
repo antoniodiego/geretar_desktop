@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.antoniodiego.gertarefas.telas.editartarefa;
+package br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
@@ -56,9 +55,9 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
         super(princ, "Nova tarefa", false);
         this.modelo = modelTab;
         initComponents();
+        
+        setLocationRelativeTo(princ);
         // contro = new DialogoNovaTarefaController(this);
-
-        setLocationByPlatform(true);
     }
 
     /**
@@ -206,10 +205,9 @@ public class DialogoEditarTarefa extends javax.swing.JDialog {
                                     .addComponent(campoStatus)
                                     .addComponent(campoPosicao, 0, 139, Short.MAX_VALUE)
                                     .addComponent(campoPrazo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(campoPrioridade, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                                        .addComponent(campoDataAl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                        .addComponent(campoId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(campoPrioridade, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                                    .addComponent(campoDataAl, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(campoId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(6, 6, 6))
                     .addGroup(layout.createSequentialGroup()

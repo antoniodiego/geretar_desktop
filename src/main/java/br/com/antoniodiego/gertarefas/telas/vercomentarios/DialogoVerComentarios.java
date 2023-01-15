@@ -1,5 +1,8 @@
 package br.com.antoniodiego.gertarefas.telas.vercomentarios;
 
+import br.com.antoniodiego.gertarefas.persist.daos.DAO;
+import br.com.antoniodiego.gertarefas.persist.daos.DAOComentario;
+import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,6 +19,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.List;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
 
 /**
  *
@@ -68,109 +73,101 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         grupoDataFazer = new javax.swing.ButtonGroup();
         beanDatePick1 = new br.com.antoniodiego.gertarefas.beans.BeanDatePick();
         campoTitulo = new javax.swing.JTextField();
-        botaoConcluido = new javax.swing.JButton();
-        botaoCancelar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         listaComentarios = new javax.swing.JList<>();
-        canvas1 = new Canv();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        campoComentario = new javax.swing.JTextPane();
+        btAdicionar = new javax.swing.JButton();
+        btLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Comentários");
 
         campoTitulo.setEditable(false);
 
-        botaoConcluido.setText("Salvar");
-        botaoConcluido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoConcluidoActionPerformed(evt);
-            }
-        });
-
-        botaoCancelar.setText("Cancelar");
-        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoCancelarActionPerformed(evt);
-            }
-        });
-
         listaComentarios.setModel(new ModeloComentarios());
         jScrollPane2.setViewportView(listaComentarios);
+
+        jScrollPane1.setViewportView(campoComentario);
+
+        btAdicionar.setText("Adicionar");
+        btAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAdicionarActionPerformed(evt);
+            }
+        });
+
+        btLimpar.setText("Limpar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(botaoConcluido)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoCancelar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(campoTitulo)
-                            .addComponent(jScrollPane2)
-                            .addComponent(canvas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(campoTitulo)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addGap(20, 20, 20))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btAdicionar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btLimpar)
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addComponent(canvas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoConcluido)
-                    .addComponent(botaoCancelar))
-                .addGap(15, 15, 15))
+                    .addComponent(btAdicionar)
+                    .addComponent(btLimpar))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {
-// GEN-FIRST:event_botaoCancelarActionPerformed
-        dispose();
-    }// GEN-LAST:event_botaoCancelarActionPerformed
-
-    private void campoHoraAlActionPerformed(java.awt.event.ActionEvent evt) {
-// GEN-FIRST:event_campoHoraAlActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_campoHoraAlActionPerformed
-
-    private void botaoConcluidoActionPerformed(java.awt.event.ActionEvent evt) 
-    {// GEN-FIRST:event_botaoConcluidoActionPerformed
-        LOG_EDITAR_TAREFA.trace("Salvando tarefa...");
-
-    }// GEN-LAST:event_botaoConcluidoActionPerformed
-
-    public void setTarefa(Tarefa t) {
+ public void setTarefa(Tarefa t) {
         this.tarefa = t;
+        Session s = DAO.getSession();
+        s.getTransaction().begin();
+        Hibernate.initialize(t);
+        s.getTransaction().commit();
+        
         ModeloComentarios modCom = ((ModeloComentarios) listaComentarios.
                 getModel());
 
+      List<Comentario> coment = modCom.getComent();
+      
+      DAOComentario daoT = new DAOComentario();
+      List<Comentario> cmT = daoT.getByTarefa(t);
+      
+      coment.addAll(cmT);
+      
         // List<Reflexao> r = t.getReflexoes();
-        List<Comentario> coment = modCom.getComent();
-
-        Comentario teste = new Comentario();
-        teste.setComentario("Teste 1");
-
-        coment.add(teste);
-
-        Comentario teste2 = new Comentario();
-        teste2.setComentario("Teste 2");
-        coment.add(teste2);
-        int x = 0;
-        while (x < 10) {
-            coment.add(teste2);
-            x++;
-        }
+//        List<Comentario> coment = modCom.getComent();
+//
+//        Comentario teste = new Comentario();
+//        teste.setComentario("Teste 1");
+//
+//        coment.add(teste);
+//
+//        Comentario teste2 = new Comentario();
+//        teste2.setComentario("Teste 2");
+//        coment.add(teste2);
+//        int x = 0;
+//        while (x < 10) {
+//            coment.add(teste2);
+//            x++;
+//        }
 //        r.forEach((relato) -> {
 //            Comentario c = new Comentario();
 //            c.setData(relato.getDataCriacao());
@@ -181,6 +178,30 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
 
         campoTitulo.setText(t.getTitulo());
     }
+ 
+    private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
+        String texto = campoComentario.getText();
+        
+        Comentario coment = new Comentario();
+        coment.setComentario(texto);
+        
+        tarefa.getComentarios().add(coment);
+        coment.setTarefa(tarefa);
+        
+//        DAOComentario daoC = new DAOComentario();
+//        daoC.salva(coment);
+        
+        DAOTarefa daoT = new DAOTarefa();
+        daoT.atualiza(tarefa);
+        
+         ModeloComentarios modCom = ((ModeloComentarios) listaComentarios.
+                getModel());
+         
+         modCom.getComent().add(coment);
+         
+        campoComentario.setText("");
+    }//GEN-LAST:event_btAdicionarActionPerformed
+
 
     private class Canv extends Canvas {
 
@@ -253,17 +274,7 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         });
     }
 
-    //
-    // public DialogoNovaTarefaController getContro() {
-    // return contro;
-    // }
-    public JButton getBotaoCancelar() {
-        return botaoCancelar;
-    }
-
-    public JButton getBotaoConcluido() {
-        return botaoConcluido;
-    }
+  
 
     public JTextField getCampoTitulo() {
         return campoTitulo;
@@ -276,11 +287,12 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private br.com.antoniodiego.gertarefas.beans.BeanDatePick beanDatePick1;
-    private javax.swing.JButton botaoCancelar;
-    private javax.swing.JButton botaoConcluido;
+    private javax.swing.JButton btAdicionar;
+    private javax.swing.JButton btLimpar;
+    private javax.swing.JTextPane campoComentario;
     private javax.swing.JTextField campoTitulo;
-    private java.awt.Canvas canvas1;
     private javax.swing.ButtonGroup grupoDataFazer;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList<Comentario> listaComentarios;
     // End of variables declaration//GEN-END:variables

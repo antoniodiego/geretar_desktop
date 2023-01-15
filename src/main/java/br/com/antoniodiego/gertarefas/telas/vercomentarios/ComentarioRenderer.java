@@ -77,7 +77,7 @@ public class ComentarioRenderer implements ListCellRenderer<Comentario> {
             g2d.setColor(Color.black);
             g2d.draw(retanguloCorpo);
 
-            String s = c.getData().format(DateTimeFormatter.ISO_LOCAL_DATE)
+            String s = c.getDataComentario().format(DateTimeFormatter.ISO_LOCAL_DATE)
                     + c.getHora().format(DateTimeFormatter.ISO_LOCAL_TIME);
             g2d.drawString(s,
                     5, 29);

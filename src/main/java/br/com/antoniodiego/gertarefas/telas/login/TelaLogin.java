@@ -18,7 +18,7 @@ import javax.swing.event.CaretListener;
 
 import br.com.antoniodiego.gertarefas.pojo.Usuario;
 import br.com.antoniodiego.gertarefas.util.HibernateUtil;
-import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipal;
+import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalMatisse;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -44,12 +44,12 @@ public class TelaLogin extends JDialog {
     private JButton botaoLogin;
     private AbstractButton botaoDeletar;
     private JButton botaoNovo;
-    private final JanelaPrincipal pai;
+    private final JanelaPrincipalMatisse pai;
     private JCheckBox chekManter;
     private final DAOUsuario gere;
     private AcaoLogin acLo;
 
-    public TelaLogin(JanelaPrincipal parente, boolean modal) {
+    public TelaLogin(JanelaPrincipalMatisse parente, boolean modal) {
         super(parente, "Entrada", modal);
         this.pai = parente;
         gere = new DAOUsuario(HibernateUtil.getInstance());
@@ -113,11 +113,11 @@ public class TelaLogin extends JDialog {
         //x += 60;
         botaoDeletar = new JButton("Deletar");
         botaoDeletar.setActionCommand("delete_user");
-        botaoDeletar.addActionListener(pai.getControl().getAcGere());
+//        botaoDeletar.addActionListener(pai.getControl().getAcGere());
       
         botaoNovo = new JButton("Novo usu\u00e1rio");
         botaoNovo.setActionCommand("cadastrar");
-        botaoNovo.addActionListener(pai.getControl().getAcGere());
+     //   botaoNovo.addActionListener(pai.getControl().getAcGere());
  
         //TODO: Adcio fechar
         JButton botaoFechar = new JButton("Fechar");
@@ -218,11 +218,11 @@ public class TelaLogin extends JDialog {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                pai.getControl().fazLogin(chekManter.isSelected());
-            } catch (IOException ex) {
-                Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                pai.getControl().fazLogin(chekManter.isSelected());
+//            } catch (IOException ex) {
+//                Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
     }
 }
