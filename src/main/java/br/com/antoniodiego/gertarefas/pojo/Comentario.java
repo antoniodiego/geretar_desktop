@@ -6,6 +6,7 @@ package br.com.antoniodiego.gertarefas.pojo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +23,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "comentarios")
-public class Comentario implements Serializable {
+public class Comentario implements Serializable, Comparable<Comentario> {
 
     private LocalDate dataComentario;
     private LocalTime hora;
@@ -71,13 +72,23 @@ public class Comentario implements Serializable {
     }
 
     @ManyToOne
-     @JoinColumn(name = "id_tarefa")
+    @JoinColumn(name = "id_tarefa")
     public Tarefa getTarefa() {
         return tarefa;
     }
 
     public void setTarefa(Tarefa tarefa) {
         this.tarefa = tarefa;
+    }
+
+    @Override
+    public int compareTo(Comentario o) {
+        LocalDateTime data1 = LocalDateTime.of(this.getDataComentario(),
+                this.getHora());
+        LocalDateTime data2 = LocalDateTime.of(o.getDataComentario(),
+                o.getHora());
+
+        return data1.compareTo(data2);
     }
 
 }

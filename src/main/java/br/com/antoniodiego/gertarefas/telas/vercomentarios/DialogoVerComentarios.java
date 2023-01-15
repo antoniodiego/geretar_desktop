@@ -98,6 +98,11 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         });
 
         btLimpar.setText("Limpar");
+        btLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLimparActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,83 +142,54 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
  public void setTarefa(Tarefa t) {
         this.tarefa = t;
-        Session s = DAO.getSession();
-        s.getTransaction().begin();
-        Hibernate.initialize(t);
-        s.getTransaction().commit();
-        
+
         ModeloComentarios modCom = ((ModeloComentarios) listaComentarios.
                 getModel());
 
-      List<Comentario> coment = modCom.getComent();
-      
-      DAOComentario daoT = new DAOComentario();
-      List<Comentario> cmT = daoT.getByTarefa(t);
-      
-      coment.addAll(cmT);
-      
-        // List<Reflexao> r = t.getReflexoes();
-//        List<Comentario> coment = modCom.getComent();
-//
-//        Comentario teste = new Comentario();
-//        teste.setComentario("Teste 1");
-//
-//        coment.add(teste);
-//
-//        Comentario teste2 = new Comentario();
-//        teste2.setComentario("Teste 2");
-//        coment.add(teste2);
-//        int x = 0;
-//        while (x < 10) {
-//            coment.add(teste2);
-//            x++;
-//        }
-//        r.forEach((relato) -> {
-//            Comentario c = new Comentario();
-//            c.setData(relato.getDataCriacao());
-//            c.setHora(relato.getHora());
-//            c.setComentario(relato.getTexto());
-//            coment.add(c);
-//        });
+        DAOComentario daoT = new DAOComentario();
+        List<Comentario> cmT = daoT.getByTarefa(t);
+
+        modCom.setComentarios(cmT);
 
         campoTitulo.setText(t.getTitulo());
     }
- 
+
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
         String texto = campoComentario.getText();
-        
+
         Comentario coment = new Comentario();
         coment.setComentario(texto);
-        
-        tarefa.getComentarios().add(coment);
-        coment.setTarefa(tarefa);
-        
-//        DAOComentario daoC = new DAOComentario();
-//        daoC.salva(coment);
-        
+
+        Session s = DAO.getSession();
+
+        s.getTransaction().begin();
+        Tarefa tC = s.load(Tarefa.class, tarefa.getId());
+
+        Hibernate.initialize(tC);
+        Hibernate.initialize(tC.getComentarios());
+
+        s.getTransaction().commit();
+
+        setTarefa(tC);
+
+        tC.getComentarios().add(coment);
+        coment.setTarefa(tC);
+
         DAOTarefa daoT = new DAOTarefa();
-        daoT.atualiza(tarefa);
-        
-         ModeloComentarios modCom = ((ModeloComentarios) listaComentarios.
+        daoT.atualiza(tC);
+
+        ModeloComentarios modCom = ((ModeloComentarios) listaComentarios.
                 getModel());
-         
-         modCom.getComent().add(coment);
-         
+
+        modCom.adiciona(coment);
+
         campoComentario.setText("");
     }//GEN-LAST:event_btAdicionarActionPerformed
 
+    private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
+        campoComentario.setText("");
+    }//GEN-LAST:event_btLimparActionPerformed
 
-    private class Canv extends Canvas {
-
-        @Override
-        public void paint(Graphics g) {
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setColor(Color.black);
-
-            g2d.draw(new RoundRectangle2D.Float(10, 0, 100, 100, 10, 10));
-        }
-
-    }
 
     // GEN-LAST:event_btDataActionPerformed
     // GEN-LAST:event_btHoraActionPerformed
@@ -273,8 +249,6 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
             }
         });
     }
-
-  
 
     public JTextField getCampoTitulo() {
         return campoTitulo;

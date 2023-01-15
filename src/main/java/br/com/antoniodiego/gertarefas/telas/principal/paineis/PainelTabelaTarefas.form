@@ -20,7 +20,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="painelDeBusca" min="-2" pref="1000" max="-2" attributes="0"/>
+          <Component id="painelDeBusca" pref="1000" max="32767" attributes="0"/>
           <Component id="painelTabela" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
@@ -117,76 +117,6 @@
                 <Property name="rowHeight" type="int" value="30"/>
                 <Property name="rowMargin" type="int" value="4"/>
               </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="jPanel1">
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btVerComentarios" min="-2" max="-2" attributes="0"/>
-                          <Component id="btSubir" min="-2" max="-2" attributes="0"/>
-                          <Component id="btVerTarefa" min="-2" max="-2" attributes="0"/>
-                          <Component id="btDescer" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btSubir" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btDescer" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btVerTarefa" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btVerComentarios" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="411" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JButton" name="btSubir">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Subir Posi&#xe7;&#xe3;o"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSubirActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btDescer">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Descer"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDescerActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btVerTarefa">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Ver"/>
-                <Property name="toolTipText" type="java.lang.String" value="Ver e editar detalhes da tarefa"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btVerTarefaActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btVerComentarios">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Coment&#xe1;rios"/>
-                <Property name="toolTipText" type="java.lang.String" value="Ver e editar detalhes da tarefa"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btVerComentariosActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>

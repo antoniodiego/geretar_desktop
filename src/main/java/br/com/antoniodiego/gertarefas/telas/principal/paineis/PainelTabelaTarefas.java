@@ -203,11 +203,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         painelTabela = new javax.swing.JPanel();
         scrollPaneTabela = new javax.swing.JScrollPane();
         tabelaTarefas = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        btSubir = new javax.swing.JButton();
-        btDescer = new javax.swing.JButton();
-        btVerTarefa = new javax.swing.JButton();
-        btVerComentarios = new javax.swing.JButton();
 
         painelDeBusca.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
         painelDeBusca.setMaximumSize(new java.awt.Dimension(32767, 100));
@@ -275,70 +270,11 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
         painelTabela.add(scrollPaneTabela);
 
-        btSubir.setText("Subir Posição");
-        btSubir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSubirActionPerformed(evt);
-            }
-        });
-
-        btDescer.setText("Descer");
-        btDescer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDescerActionPerformed(evt);
-            }
-        });
-
-        btVerTarefa.setText("Ver");
-        btVerTarefa.setToolTipText("Ver e editar detalhes da tarefa");
-        btVerTarefa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btVerTarefaActionPerformed(evt);
-            }
-        });
-
-        btVerComentarios.setText("Comentários");
-        btVerComentarios.setToolTipText("Ver e editar detalhes da tarefa");
-        btVerComentarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btVerComentariosActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btVerComentarios)
-                    .addComponent(btSubir)
-                    .addComponent(btVerTarefa)
-                    .addComponent(btDescer))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btSubir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btDescer)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btVerTarefa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btVerComentarios)
-                .addContainerGap(411, Short.MAX_VALUE))
-        );
-
-        painelTabela.add(jPanel1);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelDeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(painelDeBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
             .addComponent(painelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -350,15 +286,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 .addGap(1, 1, 1))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btVerComentariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerComentariosActionPerformed
-        DialogoVerComentarios verComent = new DialogoVerComentarios(referenciaJan,
-                new ModeloComentarios());
-        Tarefa t = modeloTabela.getTarefas().get(tabelaTarefas.
-                convertRowIndexToModel(tabelaTarefas.getSelectedRow()));
-        verComent.setTarefa(t);
-        verComent.setVisible(true);
-    }//GEN-LAST:event_btVerComentariosActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btBuscarActionPerformed
         String termo = campoTextoBusca.getText();
@@ -565,13 +492,8 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscar;
-    private javax.swing.JButton btDescer;
-    private javax.swing.JButton btSubir;
-    private javax.swing.JButton btVerComentarios;
-    private javax.swing.JButton btVerTarefa;
     private javax.swing.JTextField campoTextoBusca;
     private javax.swing.ButtonGroup grupoDataAgFiltr;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel painelDeBusca;
     private javax.swing.JPanel painelTabela;
     private javax.swing.JScrollPane scrollPaneTabela;

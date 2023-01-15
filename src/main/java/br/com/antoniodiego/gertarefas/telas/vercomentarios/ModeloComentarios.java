@@ -5,7 +5,10 @@
 package br.com.antoniodiego.gertarefas.telas.vercomentarios;
 
 import br.com.antoniodiego.gertarefas.pojo.Comentario;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.swing.AbstractListModel;
 
@@ -19,7 +22,7 @@ public class ModeloComentarios extends AbstractListModel {
 
     public ModeloComentarios() {
         coment = new ArrayList();
-        
+
     }
 
     @Override
@@ -27,14 +30,31 @@ public class ModeloComentarios extends AbstractListModel {
         return coment.size();
     }
 
+    public void adiciona(Comentario c) {
+        coment.add(c);
+        int idx = coment.indexOf(c);
+        Collections.sort(coment);
+        fireIntervalAdded(this, idx, idx);
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.coment.clear();
+        this.coment.addAll(comentarios);
+
+        //Ordena pela data
+        Collections.sort(coment);
+
+        fireContentsChanged(this, 0, coment.size() - 1);
+    }
+
     public List<Comentario> getComent() {
+
         return coment;
     }
 
-    
     @Override
     public Object getElementAt(int index) {
         return coment.get(index);
     }
-
+    
 }
