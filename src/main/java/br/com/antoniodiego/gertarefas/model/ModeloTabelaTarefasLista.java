@@ -147,13 +147,16 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 break;
             case 8:
                 FuncoesTarefas.alteraPosicao(tarefaLinha, (int) aValue);
+                tarefaLinha.setDataModif(LocalDateTime.now());
                 ordena();
                 break;
             case 9:
                 tarefaLinha.setComentario((String) aValue);
+                tarefaLinha.setDataModif(LocalDateTime.now());
                 break;
             case 10:
                 tarefaLinha.setStatus((String) aValue);
+                tarefaLinha.setDataModif(LocalDateTime.now());
                 break;
         }
 

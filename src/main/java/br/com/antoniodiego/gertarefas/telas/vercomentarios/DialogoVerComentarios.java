@@ -39,6 +39,7 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
 
     private Tarefa tarefa;
     private final ModeloTabelaTarefasLista modeloLista;
+    private final ModeloComentarios modCom;
 
     /**
      * Creates new form DialogoNovaTarView
@@ -57,6 +58,8 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         setLocationByPlatform(true);
 
         listaComentarios.setCellRenderer(new ComentarioRenderer());
+        modCom = ((ModeloComentarios) listaComentarios.
+                getModel());
     }
 
     /**
@@ -140,15 +143,16 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
  public void setTarefa(Tarefa t) {
-        this.tarefa = t;
+        //Carrega tarefa do banco com nova sessão
+        Session s = DAO.getSession();
 
-        ModeloComentarios modCom = ((ModeloComentarios) listaComentarios.
-                getModel());
+        s.getTransaction().begin();
+        Tarefa tC = s.get(Tarefa.class, t.getId());
+        this.tarefa = tC;
+        atualizaTarefa(t, tarefa);
 
-        DAOComentario daoT = new DAOComentario();
-        List<Comentario> cmT = daoT.getByTarefa(t);
-
-        modCom.setComentarios(cmT);
+        modCom.setComentarios(tC.getComentarios());
+        s.getTransaction().commit();
 
         campoTitulo.setText(t.getTitulo());
     }
@@ -159,25 +163,20 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         Comentario coment = new Comentario();
         coment.setComentario(texto);
 
-        //Sessão para carregar, inicializar coleção e atualizar tarefa
-        Session s = DAO.getSession();
+        tarefa.getComentarios().add(coment);
+        
+        modCom.adiciona(coment);
+        
+        coment.setTarefa(tarefa);
 
-        s.getTransaction().begin();
-        Tarefa tC = s.get(Tarefa.class, tarefa.getId());
+        tarefa.setDataModif(LocalDateTime.now());
 
-        tC.getComentarios().add(coment);
-        coment.setTarefa(tC);
+        //Atualiza linha tabela
+        int idx = modeloLista.getTarefas().indexOf(tarefa);
+        modeloLista.fireTableRowsUpdated(idx, idx);
 
-        tC.setDataModif(LocalDateTime.now());
-
-        s.update(tC);
-
-        atualizaTarefa(tarefa, tC);
-
-        s.getTransaction().commit();
-
-        //Atualiza a tarefa e os comentários exibidos para a versão carregada
-        setTarefa(tC);
+        DAOTarefa daoT = new DAOTarefa();
+        daoT.atualiza(tarefa);
 
         campoComentario.setText("");
     }//GEN-LAST:event_btAdicionarActionPerformed
@@ -189,7 +188,6 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
      */
     public void atualizaTarefa(Tarefa antiga, Tarefa versaoNova) {
         //Faz tarefa ser recarregada
-
         int idx = modeloLista.getTarefas().indexOf(antiga);
 
         modeloLista.getTarefas().set(idx, versaoNova);
