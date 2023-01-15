@@ -37,7 +37,7 @@ public class Principal {
     /**
      * Banco separado
      */
-    public static boolean DESENV = false;
+    public static boolean DESENV = true;
 
     private static final Logger LOG_PRINC = LogManager.getLogger("principal");
 

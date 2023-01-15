@@ -1,5 +1,6 @@
 package br.com.antoniodiego.gertarefas.model;
 
+import br.com.antoniodiego.gertarefas.persist.daos.DAO;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.util.FuncoesTarefas;
@@ -13,6 +14,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
 
 /**
  * * Esse modelo é usado para exibir as tarefas na tabela que fica no centro da
@@ -47,7 +49,6 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
 
     /**
      *
-     * @param controller
      */
     public ModeloTabelaTarefasLista() {
         tarefas = new ArrayList<>();
@@ -118,6 +119,20 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Tarefa tarefaLinha = tarefas.get(rowIndex);
 
+//        LOG_MODELO.debug("Posição: " + tarefaLinha.getPosicao());
+//
+//        Session s = DAO.getSession();
+//
+//        s.getTransaction().begin();
+//        Tarefa tC = s.get(Tarefa.class, tarefaLinha.getId());
+//        s.getTransaction().commit();
+//
+//        tarefaLinha = tC;
+//
+//        LOG_MODELO.debug("Posição carregada: " + tarefaLinha.getPosicao());
+//
+//        this.tarefas.set(rowIndex, tC);
+//        fireTableRowsUpdated(rowIndex, rowIndex);
         switch (columnIndex) {
             case 0:
                 //tarefaLinha.setId((Long) aValue);
@@ -148,6 +163,11 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
             case 8:
                 FuncoesTarefas.alteraPosicao(tarefaLinha, (int) aValue);
                 tarefaLinha.setDataModif(LocalDateTime.now());
+                //atualizar posições no modelo
+
+                DAOTarefa daoT = new DAOTarefa();
+                List<Tarefa> todas = daoT.listaTodas();
+                setTarefas(todas);
                 ordena();
                 break;
             case 9:
@@ -160,8 +180,15 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 break;
         }
 
+        LOG_MODELO.debug("Indíce coluna: " + columnIndex);
+        LOG_MODELO.debug("Atualizando tarefa no banco...");
+        LOG_MODELO.debug("Posição: " + tarefaLinha.getPosicao());
+
         DAOTarefa daoT = new DAOTarefa();
         daoT.atualiza(tarefaLinha);
+
+        int idx = tarefas.indexOf(tarefaLinha);
+        fireTableRowsUpdated(idx, idx);
 
 //        /*Nessa chamada de método a alteração do id pode falhar.
 //        
@@ -199,25 +226,21 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
     }
 
     public void ordena() {
-        Comparator<Tarefa> comp = new Comparator<Tarefa>() {
-            @Override
-            public int compare(Tarefa o1, Tarefa o2) {
+        Comparator<Tarefa> comp = (Tarefa o1, Tarefa o2) -> {
+            if (o1.getPosicao() != null && o2.getPosicao() != null) {
 
-                if (o1.getPosicao() != null && o2.getPosicao() != null) {
-
-                    return LOG_MODELO.traceExit("Compare n n", o1.getPosicao().compareTo(o2.getPosicao()));
-                }
-
-                if (o1.getPosicao() == null && o2.getPosicao() == null) {
-                    return LOG_MODELO.traceExit("2 n", 0);
-                } else if (o1.getPosicao() == null) {
-                    return LOG_MODELO.traceExit("1 n", 1);
-                } else if (o2.getPosicao() == null) {
-                    return LOG_MODELO.traceExit("2 n", -1);
-                }
-
-                return 0;
+                //  return LOG_MODELO.traceExit("Compare n n", o1.getPosicao().compareTo(o2.getPosicao()));
             }
+
+            if (o1.getPosicao() == null && o2.getPosicao() == null) {
+                return LOG_MODELO.traceExit("2 n", 0);
+            } else if (o1.getPosicao() == null) {
+                return LOG_MODELO.traceExit("1 n", 1);
+            } else if (o2.getPosicao() == null) {
+                return LOG_MODELO.traceExit("2 n", -1);
+            }
+
+            return 0;
         };
         this.tarefas.sort(comp);
         fireTableDataChanged();
