@@ -1,3 +1,6 @@
+2
+
+
 Versã 2.4.12
 
 Foi removido o painel do lado esquerdo
