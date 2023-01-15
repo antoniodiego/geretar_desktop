@@ -24,6 +24,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -111,7 +112,7 @@ public abstract class Tarefa implements Externalizable, Transferable,
             = "id_tarefa"))
     private List<Voto> votos;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "reflexoes_de_tarefas", joinColumns
             = @JoinColumn(name = "id_tarefa"))
     private List<Reflexao> reflexoes;
@@ -145,6 +146,12 @@ public abstract class Tarefa implements Externalizable, Transferable,
 
     private String status;
 
+ 
+    @OneToMany(mappedBy = "tarefa", orphanRemoval = true, 
+            cascade = CascadeType.ALL)
+   
+    private List<Comentario> comentarios;
+
     public Tarefa() {
         this("");
     }
@@ -156,6 +163,7 @@ public abstract class Tarefa implements Externalizable, Transferable,
         this.prioridade = 0;
         this.votos = new ArrayList<>();
         this.reflexoes = new ArrayList<>();
+        this.comentarios = new ArrayList<>();
         this.relatorios = new ArrayList<>();
         this.agendamentos = new ArrayList<>();
         this.dataModif = LocalDateTime.now();
@@ -210,7 +218,8 @@ public abstract class Tarefa implements Externalizable, Transferable,
     }
 
     @Override
-    public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+    public Object getTransferData(DataFlavor flavor) throws
+            UnsupportedFlavorException, IOException {
         return this;
     }
 
@@ -278,6 +287,14 @@ public abstract class Tarefa implements Externalizable, Transferable,
 
     public List<Relatorio> getRelatorios() {
         return relatorios;
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
 
     public Notificacao getNotificacao() {

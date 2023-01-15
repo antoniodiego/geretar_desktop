@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.antoniodiego.gertarefas.telas.editartarefa;
+package br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa;
 
 /**
  *
  * @author Antônoio Diego <antoniodiegoluz at gmail.com>
  */
-public class DialogoVerRelatorios extends javax.swing.JDialog {
+public class DialogoNovaRef extends javax.swing.JDialog {
 
     /**
-     * Creates new form DialogoVerRelatorios
+     * Creates new form DialogoNovaRef
      */
-    public DialogoVerRelatorios(java.awt.Frame parent, boolean modal) {
+    public DialogoNovaRef(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -60,20 +60,20 @@ public class DialogoVerRelatorios extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogoVerRelatorios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogoNovaRef.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogoVerRelatorios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogoNovaRef.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogoVerRelatorios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogoNovaRef.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogoVerRelatorios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogoNovaRef.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogoVerRelatorios dialog = new DialogoVerRelatorios(new javax.swing.JFrame(), true);
+                DialogoNovaRef dialog = new DialogoNovaRef(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -59,11 +59,9 @@
                                   <Component id="campoStatus" max="32767" attributes="0"/>
                                   <Component id="campoPosicao" alignment="0" pref="139" max="32767" attributes="0"/>
                                   <Component id="campoPrazo" alignment="0" min="-2" pref="112" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="campoPrioridade" alignment="0" pref="112" max="32767" attributes="0"/>
-                                      <Component id="campoDataAl" alignment="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="campoId" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="campoPrioridade" alignment="0" pref="139" max="32767" attributes="0"/>
+                                  <Component id="campoDataAl" alignment="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="campoId" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.antoniodiego.gertarefas.telas.editartarefa;
+package br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa;
 
 import br.com.antoniodiego.gertarefas.pojo.Relatorio;
 import java.time.LocalDate;

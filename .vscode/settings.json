@@ -1,5 +1,6 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
+    "java.compile.nullAnalysis.mode": "automatic",
     "java.dependency.syncWithFolderExplorer": true,
     "terminal.integrated.scrollback": 200000,
     "java.compile.nullAnalysis.mode": "automatic"

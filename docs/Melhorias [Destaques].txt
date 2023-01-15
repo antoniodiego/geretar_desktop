@@ -1,0 +1,18 @@
+2
+
+
+Versã 2.4.12
+
+Foi removido o painel do lado esquerdo
+Foram feitas melhorias no layout
+
+Agora o programa salva e recupera o tamanho e o estado da janela
+
+A fonte do texto da tabela teve o tamanho aumentado para 14
+
+2.2.7.1
+Corrigido erro que fazia campo data conc ficar editavel sem editar
+
+Corrigido erro ao deletar usu�rio
+Corrido falha que fazia exibir tela login no in�cio no primeiro uso.
+Adicionado op��o de renomear grupo.

@@ -37,7 +37,8 @@ public class Principal {
     /**
      *
      */
-    public static final Logger LOG_ARQUIVO = LogManager.getLogger("saida_para_arquivo");
+    public static final Logger LOG_ARQUIVO = LogManager.
+            getLogger("saida_para_arquivo");
 
     public static final void main(String[] args) {
         System.out.println("main");
@@ -52,6 +53,7 @@ public class Principal {
         JanPrinMatController contPrinc = new JanPrinMatController();
 
         contPrinc.instanciaJanelaPrincipal();
+
         contPrinc.exibeJanelaPrincipal();
         contPrinc.inicializaSistema();
 
@@ -64,14 +66,13 @@ public class Principal {
 
     private static void configuraLogger() {
         System.out.println("Configura loggers");
-        
+
         // Config arq
         LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
         Configuration cf = ctx.getConfiguration();
 
         // LoggerConfig confLogRoot= cf.getLoggerConfig("root");
         // System.out.println("Level Root "+ confLogRoot.getLevel());
-
         // Caminho arquivo
         StringBuilder caminhoArquivoLogger = new StringBuilder("logs/");
 
@@ -84,7 +85,6 @@ public class Principal {
         caminhoArquivoLogger.append(dataAt).append("/");
 
         // Adiciona a data
-
         DateTimeFormatter formataHora = DateTimeFormatter.ofPattern("HH");
 
         // LOG_PRINC.debug("Mes data atual: {}", dataHa.getMonth());
@@ -112,15 +112,12 @@ public class Principal {
         confLogGered.addAppender(arqu, Level.TRACE, null);
 
         // System.out.println("Level Root "+ confLogRoot.getLevel());
-
         System.out.println("Atualizando loggers...");
 
         // confLogRoot.setLevel(Level.ERROR);
-
         ctx.updateLoggers();
 
         // System.out.println("Level Root "+ confLogRoot.getLevel());
-
         LOG_ARQUIVO.debug("Loggers configurados");
         LOG_PRINC.debug("Loggers configurados");
     }

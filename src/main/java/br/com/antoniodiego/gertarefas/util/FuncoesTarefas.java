@@ -18,6 +18,7 @@ import br.com.antoniodiego.gertarefas.pojo.Tarefa;
  * @author Antônio Diego <antoniodiegoluz at gmail.com>
  */
 public class FuncoesTarefas {
+
     /**
      *
      */
@@ -28,6 +29,7 @@ public class FuncoesTarefas {
     }
 
     /**
+     * Não persistea a alteração na tarefa movida
      *
      * @param t
      * @param posicao
@@ -43,18 +45,25 @@ public class FuncoesTarefas {
          */
         Tarefa tarefaPos = daoT.getByPosicao(posicao);
         if (tarefaPos != null) {
+            LOG_PAINEL_T.debug("Posição ocupada por: " + tarefaPos.getTitulo());
+
             // Posição já ocupada
             if (posicao < posAnt) {
+                LOG_PAINEL_T.debug("Nova posição acima da atual");
                 // Posição nova é mais acima que a atual
 
                 // Move a nova tarefa pro final
                 Integer maiorP = daoT.getMaiorPosicao();
+                LOG_PAINEL_T.debug("Movendo para o final... {}", maiorP + 1);
                 t.setPosicao(maiorP + 1);
                 daoT.atualiza(t);
 
                 // Desvia tarefas para baixo da posição anterior pra cima
+                LOG_PAINEL_T.debug("Movendo para baixo de {} a ", posAnt - 1,
+                        posicao);
                 deslocaTarefasBaixo(posAnt - 1, posicao);
 
+                LOG_PAINEL_T.debug("Alterando posição para {}", posicao);
                 t.setPosicao(posicao);
             } else {
                 LOG_PAINEL_T.trace("Mover tarefa para baixo");
@@ -69,8 +78,8 @@ public class FuncoesTarefas {
      * Desloca posição de intervalo de tarefas para baixo no intervalo
      *
      * @param posicaoUltima posição tarefas mais abaixo, de onde deve ser
-     *                      começado o desvio para baixo
-     * @param posicaoCima   Posição da tarefa no topo, que deve descer
+     * começado o desvio para baixo
+     * @param posicaoCima Posição da tarefa no topo, que deve descer
      */
     public static void deslocaTarefasBaixo(int posicaoUltima, int posicaoCima) {
 
@@ -82,9 +91,7 @@ public class FuncoesTarefas {
         // Session sessao = DAOTarefa.getSession();
         // sessao.beginTransaction();
         // for (int i = posicaoUltima; i >= posicaoCima; i--) {
-
         // tarP = daoT.getByPosicaoS(i);
-
         // if (tarP != null) {
         // tarP.setPosicao(i + 1);
         // sessao.update(tarP);
@@ -92,15 +99,11 @@ public class FuncoesTarefas {
         // }
         // }
         // sessao.getTransaction().commit();
-
         // long instanteFinal = System.currentTimeMillis();
         // ;
-
         // long duracaoDeslocamento = instanteFinal - currentMillis;
-
         // LOG_NOVA_TAREFA.debug("Deslocamento levou: {}", duracaoDeslocamento);
         // LOG_NOVA_TAREFA.debug("Deslocamento levou: {}", duracaoDeslocamento / 1000);
-
     }
 
     public static void deslocaTarefasBaixoImp1(int posicaoUltima, int posicaoCima) {
@@ -134,14 +137,14 @@ public class FuncoesTarefas {
 
     /**
      * Desloca posição de intervalo de tarefas para baixo no intervalo
-     * 
+     *
      * Otimizado para não fazer muitas consultas no banco.
-     * 
+     *
      * Ele faz todas as alt na memória e depois atualiza
      *
      * @param posicaoUltima posição tarefas mais abaixo, de onde deve ser
-     *                      começado o desvio para baixo
-     * @param posicaoCima   Posição da tarefa no topo, que deve descer
+     * começado o desvio para baixo
+     * @param posicaoCima Posição da tarefa no topo, que deve descer
      */
     public static void deslocaTarefasBaixoV2(int posicaoUltima, int posicaoCima) {
         LOG_PAINEL_T.traceEntry("Posicao ult: {}. Pos cima: {}", posicaoUltima, posicaoCima);
@@ -155,12 +158,11 @@ public class FuncoesTarefas {
         List<Tarefa> todas = daoT.listaTodas();
         for (int i = posicaoUltima; i >= posicaoCima; i--) {
 
-          //  LOG_PAINEL_T.debug("Pegando: {}", i);
-
+            //  LOG_PAINEL_T.debug("Pegando: {}", i);
             tarP = getByPosicao(todas, i);
 
             if (tarP != null) {
-            //    LOG_PAINEL_T.debug("Movendo: {}", i + 1);
+                //    LOG_PAINEL_T.debug("Movendo: {}", i + 1);
                 tarP.setPosicao(i + 1);
                 //LOG_PAINEL_T.debug("Update");
                 // sessao.update(tarP);

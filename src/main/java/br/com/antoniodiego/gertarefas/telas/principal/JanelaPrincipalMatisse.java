@@ -8,11 +8,10 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import br.com.antoniodiego.gertarefas.telas.novatarefa.DialogoNovaTarView;
 import br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas;
+import br.com.antoniodiego.gertarefas.util.Utilid;
 import javax.swing.JTable;
 import net.minidev.json.JSONObject;
 
@@ -42,11 +41,9 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSplitPane1 = new javax.swing.JSplitPane();
-        jSplitPane2 = new javax.swing.JSplitPane();
+        splitPaneDireito = new javax.swing.JSplitPane();
         painelTabelaTarefas1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas();
-        painelFuncoes1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFuncoes();
-        painelMenuLadoEsquerdo1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelMenuLadoEsquerdo();
+        painelFuncoes1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFuncoes(painelTabelaTarefas1,this);
         barraDeMenus = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         itemNovaTarefa = new javax.swing.JMenuItem();
@@ -73,24 +70,20 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gerente de tarefas");
         setLocationByPlatform(true);
+        setPreferredSize(new java.awt.Dimension(1200, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
-        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
-        jSplitPane1.setOneTouchExpandable(true);
+        splitPaneDireito.setResizeWeight(1.0);
+        splitPaneDireito.setOneTouchExpandable(true);
 
-        jSplitPane2.setResizeWeight(1.0);
-        jSplitPane2.setOneTouchExpandable(true);
-        jSplitPane2.setLeftComponent(painelTabelaTarefas1);
-        jSplitPane2.setRightComponent(painelFuncoes1);
-
-        jSplitPane1.setRightComponent(jSplitPane2);
-        jSplitPane1.setLeftComponent(painelMenuLadoEsquerdo1);
-
-        getContentPane().add(jSplitPane1);
+        painelTabelaTarefas1.setReferenciaJan(this);
+        painelTabelaTarefas1.setPreferredSize(new java.awt.Dimension(800, 600));
+        splitPaneDireito.setLeftComponent(painelTabelaTarefas1);
+        splitPaneDireito.setRightComponent(painelFuncoes1);
 
         menuArquivo.setText("Arquivo");
 
@@ -178,6 +171,23 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
 
         setJMenuBar(barraDeMenus);
 
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(splitPaneDireito, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(splitPaneDireito, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -192,32 +202,26 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_menuExportarComoXMLActionPerformed
 
+
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        TableColumnModel modelC = painelTabelaTarefas1.getTabelaTarefas().getColumnModel();
-        TableColumn col;
 
-        JSONObject js = new JSONObject();
-        JSONObject config;
-        for (int i = 0; i < modelC.getColumnCount(); i++) {
-            col = modelC.getColumn(i);
+        Utilid.persisteInfoTabela(painelTabelaTarefas1.getTabelaTarefas());
 
-            config = new JSONObject();
-            config.put("width", col.getWidth());
-            config.put("index", i);
-            js.put(String.valueOf(col.getIdentifier()), config);
-        }
+        JSONObject objetoProp = new JSONObject();
+        objetoProp.appendField("largura", this.getWidth());
+        objetoProp.appendField("altura", this.getHeight());
+        objetoProp.appendField("estado", this.getExtendedState());
 
-        File arquivoTam = new File("colunas.json");
+        File arquivoProp = new File("propriedades.json");
         FileWriter fw;
         try {
-            fw = new FileWriter(arquivoTam);
-            fw.append(js.toJSONString());
+            fw = new FileWriter(arquivoProp);
+            fw.append(objetoProp.toJSONString());
             fw.flush();
             fw.close();
         } catch (IOException ex) {
             Logger.getLogger(JanelaPrincipalMatisse.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_formWindowClosing
 
     private void miExcluirTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miExcluirTarefaActionPerformed
@@ -229,10 +233,9 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         Tarefa t = painelTabelaTarefas1.getModeloTabela().getTarefas().get(idxModel);
         DAOTarefa daoT = new DAOTarefa();
         daoT.exclui(t);
-        
-       
+
         painelTabelaTarefas1.getModeloTabela().removeTarefa(idxModel);
-        
+
         tabelaTarefas.getSelectionModel().setSelectionInterval(idxEscolhida, idxEscolhida);
     }//GEN-LAST:event_miExcluirTarefaActionPerformed
 
@@ -275,6 +278,16 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         });
     }
 
+    private JanPrinMatController controller;
+
+    public JanPrinMatController getController() {
+        return controller;
+    }
+
+    public void setController(JanPrinMatController controller) {
+        this.controller = controller;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraDeMenus;
@@ -293,16 +306,14 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenu menuEditar;
     private javax.swing.JMenuItem menuExportarComoXML;
     private javax.swing.JMenuItem menuOp;
     private javax.swing.JMenuItem miExcluirTarefa;
     private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFuncoes painelFuncoes1;
-    private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelMenuLadoEsquerdo painelMenuLadoEsquerdo1;
     private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas painelTabelaTarefas1;
     private javax.swing.JPopupMenu.Separator sepMenuEd;
+    private javax.swing.JSplitPane splitPaneDireito;
     // End of variables declaration//GEN-END:variables
 }

@@ -97,11 +97,16 @@ import br.com.antoniodiego.gertarefas.telas.modelos.ModeloArvore;
 import br.com.antoniodiego.gertarefas.telas.modelos.ModeloData;
 import br.com.antoniodiego.gertarefas.telas.modelos.ModeloTabelaTarefa;
 import br.com.antoniodiego.gertarefas.telas.novatarefa.DialogoNovaTarView;
-import br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelAgController;
+
 import br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelListaTarefas;
+import static br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
 import br.com.antoniodiego.gertarefas.util.ConversXML;
 import br.com.antoniodiego.gertarefas.util.ConversXMLD;
 import br.com.antoniodiego.gertarefas.util.HibernateUtil;
+import java.io.FileReader;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 
 /**
  *
@@ -119,9 +124,10 @@ public class JanPrinMatController {
     private File arquiP;
     private Properties proprie;
     /**
-     * Grupo selecionado. Da tarefa atual. Essa váriável guarda o grupo selecionado na árvore se houver um. Se não tiver
-     * um grupo, mas houver uma tarefa selecionada o pai dela é guardado no campo. Se um nó ramo que não for grupo for
-     * selecionado ela deve guardar uma ref para o nó raiz
+     * Grupo selecionado. Da tarefa atual. Essa váriável guarda o grupo
+     * selecionado na árvore se houver um. Se não tiver um grupo, mas houver uma
+     * tarefa selecionada o pai dela é guardado no campo. Se um nó ramo que não
+     * for grupo for selecionado ela deve guardar uma ref para o nó raiz
      */
     private GrupoTarefas grupoDaAtu;
     private Tarefa tarefaExibida;
@@ -157,6 +163,39 @@ public class JanPrinMatController {
 
     public void instanciaJanelaPrincipal() {
         princ = new JanelaPrincipalMatisse();
+
+        princ.setController(this);
+
+        File arquivoProp = new File("propriedades.json");
+
+        if (arquivoProp.exists()) {
+            try {
+                Object res = null;
+
+                try (FileReader fr = new FileReader(arquivoProp)) {
+                    JSONParser js = new JSONParser(JSONParser.ACCEPT_NAN);
+                    res = js.parse(fr);
+                } catch (IOException ex) {
+                    LOG_PAINEL_T.catching(ex);
+                }
+
+                if (res instanceof JSONObject) {
+                    JSONObject jsO = (JSONObject) res;
+
+                    Number largura = jsO.getAsNumber("largura");
+                    Number altura = jsO.getAsNumber("altura");
+                    Number expState = jsO.getAsNumber("estado");
+
+                    princ.setSize(largura.intValue(), altura.intValue());
+                    princ.setExtendedState(expState.intValue());
+
+                }
+
+            } catch (ParseException | NullPointerException ex) {
+                LOG_PAINEL_T.catching(ex);
+            }
+        }
+
     }
 
     public void exibeJanelaPrincipal() {
@@ -192,8 +231,10 @@ public class JanPrinMatController {
              * Faz migração do banco
              * 
              */
-            Flyway fw = Flyway.configure().baselineOnMigrate(true).baselineVersion("0")
-                    .dataSource(HibernateUtil.determinaURIBanco(), "SA", "").load();
+            Flyway fw = Flyway.configure().baselineOnMigrate(true).
+                    baselineVersion("0")
+                    .dataSource(HibernateUtil.determinaURIBanco(), "SA", "").
+                    load();
 
             try {
                 fw.migrate();
@@ -201,7 +242,8 @@ public class JanPrinMatController {
                 if (ex.getCause() instanceof SQLException) {
                     SQLException excSQL = (SQLException) ex.getCause();
                     if (excSQL.getCause() instanceof HsqlException) {
-                        HsqlException excHSQL = (HsqlException) excSQL.getCause();
+                        HsqlException excHSQL = (HsqlException) excSQL.
+                                getCause();
                         LOG_CONTR_PRINC.trace(excHSQL.getErrorCode());
                         LOG_CONTR_PRINC.trace(excHSQL.getLevel());
                         LOG_CONTR_PRINC.trace(excHSQL.getMessage());
@@ -227,14 +269,7 @@ public class JanPrinMatController {
            * A partir daqui já deve ser possível fazer consulta do banco de dados.
             Seria interessante poder fazer isso mexendo apenas nos models.
              */
-            DAOTarefa daoTarefa = new DAOTarefa();
-            List<Tarefa> tarefas = daoTarefa.listaTodas();
-
-            princ.getPainelTarefas().getModeloTabela().setTarefas(tarefas);
-            princ.getPainelTarefas().getModeloTabela().ordena();
-            //  princ.getPainelTarefas().getRs().sort();
-
-            LOG_CONTR_PRINC.trace(tarefas.size() + " Tarefas carregadas no modelo da tabela");
+            carregaTarefas();
 
             /*
              * Aqui deve ser bom se com com o serv de sinc
@@ -316,12 +351,47 @@ public class JanPrinMatController {
         }
     }
 
+    /**
+     * Carrega tarefas do banco e exibe na tela
+     */
+    public void carregaTarefas() {
+        DAOTarefa daoTarefa = new DAOTarefa();
+        List<Tarefa> tarefas = daoTarefa.listaTodas();
+
+        princ.getPainelTarefas().getModeloTabela().setTarefas(tarefas);
+        princ.getPainelTarefas().getModeloTabela().ordena();
+        //  princ.getPainelTarefas().getRs().sort();
+
+        LOG_CONTR_PRINC.trace(tarefas.size() + " Tarefas carregadas no"
+                + " modelo da tabela");
+    }
+
+    /**
+     *
+     * @param antiga Versão antiga [atual no modelo]
+     * @param versaoNova
+     */
+    public void atualizaTarefa(Tarefa antiga, Tarefa versaoNova) {
+        //Faz tarefa ser recarregada
+
+        ModeloTabelaTarefasLista modelo = princ.getPainelTarefas()
+                .getModeloTabela();
+        int idx = modelo.getTarefas().indexOf(antiga);
+
+        modelo.getTarefas().set(idx, versaoNova);
+        
+        modelo.fireTableRowsUpdated(idx, idx);
+
+    }
+
     private void configuraIconeBandeja() {
         if (SystemTray.isSupported()) {
             SystemTray st = SystemTray.getSystemTray();
-            ImageIcon imageIcGer = new ImageIcon(JanelaPrincipal.class.getResource("/imagens/icone lapis.png"));
+            ImageIcon imageIcGer = new ImageIcon(JanelaPrincipalMatisse.class.
+                    getResource("/imagens/icone lapis.png"));
 
-            iconeGeretar = new TrayIcon(imageIcGer.getImage(), "Gerenciador de tarefas " + Constantes.VERS);
+            iconeGeretar = new TrayIcon(imageIcGer.getImage(), "Gerenciador de"
+                    + " tarefas " + Constantes.VERS);
 
             PopupMenu menuPopUp = new PopupMenu();
             MenuItem sair = new MenuItem("Sair");
@@ -546,8 +616,7 @@ public class JanPrinMatController {
 
     }
 
-    private PainelAgController contrPA;
-
+    // private PainelAgController contrPA;
     private void confPainelAg() {
         modAg = new ModeloTabAgend();
 
@@ -805,7 +874,7 @@ public class JanPrinMatController {
             try {
                 uriInfo = new URI("http://localhost:8015/sinc/info");
             } catch (URISyntaxException ex) {
-                java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+//                java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             LocalDateTime dataUlSincServ = templ.getForObject(uriInfo, LocalDateTime.class);
@@ -888,7 +957,8 @@ public class JanPrinMatController {
     }
 
     /**
-     * Atualiza conte\u00eddo da janela de acordo com os grupos e tarefas existentes no banco.
+     * Atualiza conte\u00eddo da janela de acordo com os grupos e tarefas
+     * existentes no banco.
      */
     public void exibeGrupos() {
         iniciaGrupoRaiz();
@@ -911,7 +981,8 @@ public class JanPrinMatController {
     }
 
     /**
-     * Aqui o usuário que fez login é definido no sistema. Nesse momento os grupos e tarefas dele são exi na árvore
+     * Aqui o usuário que fez login é definido no sistema. Nesse momento os
+     * grupos e tarefas dele são exi na árvore
      *
      * @param usuario
      */
@@ -964,7 +1035,7 @@ public class JanPrinMatController {
     }
 
     public void gravaProp() throws FileNotFoundException, IOException {
-        try ( FileOutputStream sai = new FileOutputStream(arquiP)) {
+        try (FileOutputStream sai = new FileOutputStream(arquiP)) {
             this.proprie.store(sai, "arqu conf");
         }
     }
@@ -1588,7 +1659,8 @@ public class JanPrinMatController {
     }
 
     /**
-     * Gera dados XML contendo todos os grupos e tarefas e o envia para o c?rrego especificado.
+     * Gera dados XML contendo todos os grupos e tarefas e o envia para o
+     * c?rrego especificado.
      *
      * @param saida
      */

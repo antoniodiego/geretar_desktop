@@ -1,5 +1,6 @@
 package br.com.antoniodiego.gertarefas.pojo;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import javax.persistence.Column;
@@ -10,9 +11,8 @@ import javax.persistence.Embeddable;
  * @author Antônoio Diego <antoniodiegoluz at gmail.com>
  */
 @Embeddable
-public class Relatorio {
+public class Relatorio implements Serializable {
 
-    @Column(name = "data_criacao")
     private LocalDate dataCriacao;
     private LocalTime hora;
     private String texto;
