@@ -119,7 +119,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Tarefa tarefaLinha = tarefas.get(rowIndex);
 
-//        LOG_MODELO.debug("Posição: " + tarefaLinha.getPosicao());
+        LOG_MODELO.debug("Posição: " + tarefaLinha.getPosicao());
 //
 //        Session s = DAO.getSession();
 //
@@ -165,7 +165,9 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 tarefaLinha.setDataModif(LocalDateTime.now());
                 //atualizar posições no modelo
 
+                LOG_MODELO.debug("Recarregando tarefas...");
                 DAOTarefa daoT = new DAOTarefa();
+                daoT.atualiza(tarefaLinha);
                 List<Tarefa> todas = daoT.listaTodas();
                 setTarefas(todas);
                 ordena();
@@ -229,15 +231,17 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
         Comparator<Tarefa> comp = (Tarefa o1, Tarefa o2) -> {
             if (o1.getPosicao() != null && o2.getPosicao() != null) {
 
-                //  return LOG_MODELO.traceExit("Compare n n", o1.getPosicao().compareTo(o2.getPosicao()));
+                int resultComp = o1.getPosicao().compareTo(o2.getPosicao());
+                return resultComp;
+                //LOG_MODELO.traceExit("Compare n n", resultComp);
             }
 
             if (o1.getPosicao() == null && o2.getPosicao() == null) {
-                return LOG_MODELO.traceExit("2 n", 0);
+                return 0;//LOG_MODELO.traceExit("2 n", 0);
             } else if (o1.getPosicao() == null) {
-                return LOG_MODELO.traceExit("1 n", 1);
+                return 1;//LOG_MODELO.traceExit("1 n", 1);
             } else if (o2.getPosicao() == null) {
-                return LOG_MODELO.traceExit("2 n", -1);
+                return -1;//LOG_MODELO.traceExit("2 n", -1);
             }
 
             return 0;
