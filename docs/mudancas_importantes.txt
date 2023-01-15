@@ -3,6 +3,10 @@ Criado: 30/12/22
 Nesse arquivo espera-se colocar as alterações mais importantes que foram sofri-
 das pelo programa.
 
+2.4.14
+
+Otimizações e correções de bugs na hora de alterar a posição de tarefas
+
 Houve o alargamento das linhas da tabela
 
 Versão 2.4.13

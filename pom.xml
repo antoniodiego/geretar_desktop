@@ -5,7 +5,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <groupId>br.antoniodiego</groupId>
 
     <artifactId>Gertar_Ma_NB</artifactId>
-    <version>2.4.13-beta</version>
+    <version>2.4.14-beta</version>
     <packaging>jar</packaging>
     <name>Gerenciador de tarefas - Lista - J8 - Swing - Git</name>
     <profiles>
