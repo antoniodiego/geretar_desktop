@@ -8,11 +8,10 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import br.com.antoniodiego.gertarefas.telas.novatarefa.DialogoNovaTarView;
 import br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas;
+import br.com.antoniodiego.gertarefas.util.Utilid;
 import javax.swing.JTable;
 import net.minidev.json.JSONObject;
 
@@ -203,41 +202,18 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_menuExportarComoXMLActionPerformed
 
-    
-    
+
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        TableColumnModel modelC = painelTabelaTarefas1.getTabelaTarefas().getColumnModel();
-        TableColumn col;
 
-        JSONObject js = new JSONObject();
-        JSONObject config;
-        for (int i = 0; i < modelC.getColumnCount(); i++) {
-            col = modelC.getColumn(i);
-
-            config = new JSONObject();
-            config.put("width", col.getWidth());
-            config.put("index", i);
-            js.put(String.valueOf(col.getIdentifier()), config);
-        }
-
-        File arquivoTam = new File("colunas.json");
-        FileWriter fw;
-        try {
-            fw = new FileWriter(arquivoTam);
-            fw.append(js.toJSONString());
-            fw.flush();
-            fw.close();
-        } catch (IOException ex) {
-            Logger.getLogger(JanelaPrincipalMatisse.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Utilid.persisteInfoTabela(painelTabelaTarefas1.getTabelaTarefas());
 
         JSONObject objetoProp = new JSONObject();
         objetoProp.appendField("largura", this.getWidth());
         objetoProp.appendField("altura", this.getHeight());
-objetoProp.appendField("estado", this.getExtendedState());
+        objetoProp.appendField("estado", this.getExtendedState());
 
         File arquivoProp = new File("propriedades.json");
-
+        FileWriter fw;
         try {
             fw = new FileWriter(arquivoProp);
             fw.append(objetoProp.toJSONString());
@@ -312,7 +288,7 @@ objetoProp.appendField("estado", this.getExtendedState());
         this.controller = controller;
     }
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraDeMenus;
     private javax.swing.JMenuItem itemNovaTarefa;

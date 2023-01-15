@@ -1,8 +1,5 @@
 package br.com.antoniodiego.gertarefas.telas.principal.paineis;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -28,11 +25,7 @@ import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.DialogoEditarTarefa;
-import br.com.antoniodiego.gertarefas.telas.vercomentarios.DialogoVerComentarios;
-import br.com.antoniodiego.gertarefas.telas.vercomentarios.ModeloComentarios;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
-import net.minidev.json.parser.ParseException;
+import br.com.antoniodiego.gertarefas.util.Utilid;
 
 /**
  * O painel expõe o modelo da tabela de tarefas para que os da
@@ -62,8 +55,8 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
      */
     public PainelTabelaTarefas() {
         initComponents();
-     
-        modeloTabela = new ModeloTabelaTarefasLista();
+
+        modeloTabela = new ModeloTabelaTarefasLista(tabelaTarefas);
         tabelaTarefas.setModel(modeloTabela);
 
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
@@ -133,45 +126,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
             }
         }
 
-         
-          
-        File arquivoTam = new File("colunas.json");
-        if (arquivoTam.exists()) {
-            try {
-                FileReader fr = new FileReader(arquivoTam);
-                JSONParser js = new JSONParser(JSONParser.ACCEPT_NAN);
-                Object res = js.parse(fr);
-
-                if (res instanceof JSONObject) {
-                    JSONObject jsO = (JSONObject) res;
-
-                    jsO.entrySet().forEach((e) -> {
-                        LOG_PAINEL_T.trace("Key: {}", e.getKey());
-
-                        try {
-                            TableColumn coluna = tabelaTarefas.getColumn(e.getKey());
-                            LOG_PAINEL_T.debug("Alterando tam coluna " + e.getKey());
-                            JSONObject config = (JSONObject) jsO.get(e.getKey());
-
-                            coluna.setPreferredWidth(config.getAsNumber("width").intValue());
-                        } catch (Exception ex) {
-                            LOG_PAINEL_T.catching(ex);
-                        }
-                        // coluna.setModelIndex(config.getAsNumber("index").intValue());
-                    });
-                }
-
-                // StringBuilder leit = new StringBuilder();
-                // char[] cbuf = new char[1024];
-                // int len = 0;
-                // while ((len = fr.read(cbuf)) != -1) {
-                // leit.append(new String(cbuf, 0, len));
-                // }
-                // fr.close();
-            } catch (FileNotFoundException | ParseException ex) {
-                LOG_PAINEL_T.catching(ex);
-            }
-        }
+        Utilid.carregaInfoTabela(tabelaTarefas);
     }
 
     public JFrame getReferenciaJan() {

@@ -369,6 +369,7 @@ public class JanPrinMatController {
     /**
      *
      * @param antiga Versão antiga [atual no modelo]
+     * @param versaoNova
      */
     public void atualizaTarefa(Tarefa antiga, Tarefa versaoNova) {
         //Faz tarefa ser recarregada

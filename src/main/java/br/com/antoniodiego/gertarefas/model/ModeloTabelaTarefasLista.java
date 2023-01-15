@@ -1,20 +1,28 @@
 package br.com.antoniodiego.gertarefas.model;
 
-import br.com.antoniodiego.gertarefas.persist.daos.DAO;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
+import static br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
 import br.com.antoniodiego.gertarefas.util.FuncoesTarefas;
+import br.com.antoniodiego.gertarefas.util.Utilid;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import javax.swing.JTable;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
 
 /**
  * * Esse modelo é usado para exibir as tarefas na tabela que fica no centro da
@@ -39,20 +47,22 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
     public static final Class[] CLASSES_COLUNAS = new Class[]{Long.class,
         Long.class,
         String.class,
-        LocalDate.class, Integer.class, LocalDate.class, LocalDateTime.class, Boolean.class, Integer.class, String.class, String.class};
+        LocalDate.class, Integer.class, LocalDate.class, LocalDateTime.class,
+        Boolean.class, Integer.class, String.class, String.class};
 
     private List<Tarefa> tarefas;
     //  private final JanelaPrincipalController contr;
     public static final Boolean[] EDITAVEL = new Boolean[]{false, true, true,
         false,
         true, true, false, true, true, true, true};
+    private final JTable tabelaTarefas;
 
     /**
      *
      */
-    public ModeloTabelaTarefasLista() {
+    public ModeloTabelaTarefasLista(JTable tabelaTarefas) {
         tarefas = new ArrayList<>();
-//        //  this.contr = controller;
+        this.tabelaTarefas = tabelaTarefas;
     }
 
     @Override
@@ -164,13 +174,16 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 FuncoesTarefas.alteraPosicao(tarefaLinha, (int) aValue);
                 tarefaLinha.setDataModif(LocalDateTime.now());
                 //atualizar posições no modelo
+              
 
                 LOG_MODELO.debug("Recarregando tarefas...");
                 DAOTarefa daoT = new DAOTarefa();
                 daoT.atualiza(tarefaLinha);
+
                 List<Tarefa> todas = daoT.listaTodas();
                 setTarefas(todas);
                 ordena();
+
                 break;
             case 9:
                 tarefaLinha.setComentario((String) aValue);
@@ -189,9 +202,12 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
         DAOTarefa daoT = new DAOTarefa();
         daoT.atualiza(tarefaLinha);
 
-        int idx = tarefas.indexOf(tarefaLinha);
-        fireTableRowsUpdated(idx, idx);
+      //  int idx = tarefas.indexOf(tarefaLinha);
 
+//        Utilid.persisteInfoTabela(tabelaTarefas);
+//       
+//
+//        Utilid.carregaInfoTabela(tabelaTarefas);
 //        /*Nessa chamada de método a alteração do id pode falhar.
 //        
 //         */
@@ -215,12 +231,16 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
 
     public void setTarefas(List<Tarefa> tarefas) {
         this.tarefas = tarefas;
+        //  Utilid.persisteInfoTabela(tabelaTarefas);
         fireTableDataChanged();
+        //  Utilid.carregaInfoTabela(tabelaTarefas);
+
     }
 
     public void ordena(Comparator<Tarefa> comp) {
         this.tarefas.sort(comp);
         fireTableDataChanged();
+        //   Utilid.carregaInfoTabela(tabelaTarefas);
     }
 
     public List<Tarefa> getTarefas() {
@@ -248,6 +268,8 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
         };
         this.tarefas.sort(comp);
         fireTableDataChanged();
+        //Utilid.carregaInfoTabela(tabelaTarefas);
+
     }
 
     /**
@@ -263,4 +285,5 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
         ordena();
         fireTableDataChanged();
     }
+
 }

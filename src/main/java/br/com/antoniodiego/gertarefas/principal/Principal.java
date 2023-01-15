@@ -15,13 +15,6 @@ import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 
 import br.com.antoniodiego.gertarefas.telas.principal.JanPrinMatController;
-import static br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import javax.swing.table.TableColumn;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
-import net.minidev.json.parser.ParseException;
 
 /**
  * Ponto de entrada do programa
@@ -37,7 +30,7 @@ public class Principal {
     /**
      * Banco separado
      */
-    public static boolean DESENV = true;
+    public static boolean DESENV = false;
 
     private static final Logger LOG_PRINC = LogManager.getLogger("principal");
 
@@ -60,7 +53,7 @@ public class Principal {
         JanPrinMatController contPrinc = new JanPrinMatController();
 
         contPrinc.instanciaJanelaPrincipal();
-        
+
         contPrinc.exibeJanelaPrincipal();
         contPrinc.inicializaSistema();
 
@@ -73,14 +66,13 @@ public class Principal {
 
     private static void configuraLogger() {
         System.out.println("Configura loggers");
-        
+
         // Config arq
         LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
         Configuration cf = ctx.getConfiguration();
 
         // LoggerConfig confLogRoot= cf.getLoggerConfig("root");
         // System.out.println("Level Root "+ confLogRoot.getLevel());
-
         // Caminho arquivo
         StringBuilder caminhoArquivoLogger = new StringBuilder("logs/");
 
@@ -93,7 +85,6 @@ public class Principal {
         caminhoArquivoLogger.append(dataAt).append("/");
 
         // Adiciona a data
-
         DateTimeFormatter formataHora = DateTimeFormatter.ofPattern("HH");
 
         // LOG_PRINC.debug("Mes data atual: {}", dataHa.getMonth());
@@ -121,15 +112,12 @@ public class Principal {
         confLogGered.addAppender(arqu, Level.TRACE, null);
 
         // System.out.println("Level Root "+ confLogRoot.getLevel());
-
         System.out.println("Atualizando loggers...");
 
         // confLogRoot.setLevel(Level.ERROR);
-
         ctx.updateLoggers();
 
         // System.out.println("Level Root "+ confLogRoot.getLevel());
-
         LOG_ARQUIVO.debug("Loggers configurados");
         LOG_PRINC.debug("Loggers configurados");
     }
