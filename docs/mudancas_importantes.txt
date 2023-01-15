@@ -1,0 +1,7 @@
+Criado: 30/12/22
+
+Nesse arquivo espera-se colocar as alterações mais importantes que foram sofri-
+das pelo programa.
+
+Houve o alargamento das linhas da tabela
+

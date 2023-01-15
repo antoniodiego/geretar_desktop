@@ -7,11 +7,8 @@ package teste;
 
 import br.com.antoniodiego.gertarefas.Constantes;
 import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
-import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
 import br.com.antoniodiego.gertarefas.pojo.TarefaCoordenada;
-
-import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,7 +17,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,12 +27,17 @@ import org.junit.Test;
  */
 public class TesteJUnit {
 
-     private Logger logTe;
+    //private static ConversXMLD cxd;
+    private Logger logTe;
 
     public TesteJUnit() {
         logTe = LogManager.getLogger();
     }
 
+    @BeforeClass
+    public static void setUpClass() {
+   //     cxd = new ConversXMLD();
+    }
 
     @AfterClass
     public static void tearDownClass() {

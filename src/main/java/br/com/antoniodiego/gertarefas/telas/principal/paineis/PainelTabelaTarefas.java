@@ -28,6 +28,8 @@ import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.DialogoEditarTarefa;
+import br.com.antoniodiego.gertarefas.telas.vercomentarios.DialogoVerComentarios;
+import br.com.antoniodiego.gertarefas.telas.vercomentarios.ModeloComentarios;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
@@ -272,7 +274,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelDeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(painelDeBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
             .addComponent(painelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(

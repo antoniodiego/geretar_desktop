@@ -20,7 +20,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="painelDeBusca" min="-2" pref="1000" max="-2" attributes="0"/>
+          <Component id="painelDeBusca" pref="1000" max="32767" attributes="0"/>
           <Component id="painelTabela" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>

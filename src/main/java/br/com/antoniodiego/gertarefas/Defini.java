@@ -18,7 +18,7 @@ public class Defini {
      *
      * O estado de desenv deve ser configurado na classe Principal
      */
-    public static final Estado ESTADO = Estado.TESTE;
+    public static final Estado ESTADO = Estado.PRODUCAO;
 
     public enum Estado {
         TESTE, DEBUG, PRODUCAO;

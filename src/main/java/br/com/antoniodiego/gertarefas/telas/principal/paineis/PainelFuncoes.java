@@ -10,6 +10,8 @@ import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.DialogoEditarTarefa;
 import static br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
+import br.com.antoniodiego.gertarefas.telas.vercomentarios.DialogoVerComentarios;
+import br.com.antoniodiego.gertarefas.telas.vercomentarios.ModeloComentarios;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -62,6 +64,7 @@ public class PainelFuncoes extends javax.swing.JPanel {
         btSubir = new javax.swing.JButton();
         btDescer = new javax.swing.JButton();
         btVerTarefa = new javax.swing.JButton();
+        btVerComentarios = new javax.swing.JButton();
 
         btAumentPrio.setText("Prioridade +");
         btAumentPrio.setToolTipText("Aumentar a prioridade da tarefa");
@@ -101,22 +104,27 @@ public class PainelFuncoes extends javax.swing.JPanel {
             }
         });
 
+        btVerComentarios.setText("Comentários");
+        btVerComentarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btVerComentariosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btDiminuiPrio, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btAumentPrio, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btDescer, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btVerTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btSubir, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                    .addComponent(btDiminuiPrio, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                    .addComponent(btAumentPrio, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                    .addComponent(btDescer, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                    .addComponent(btVerTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                    .addComponent(btVerComentarios, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,7 +139,9 @@ public class PainelFuncoes extends javax.swing.JPanel {
                 .addComponent(btDescer)
                 .addGap(18, 18, 18)
                 .addComponent(btVerTarefa)
-                .addGap(170, 170, 170))
+                .addGap(18, 18, 18)
+                .addComponent(btVerComentarios)
+                .addGap(129, 129, 129))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -325,12 +335,22 @@ public class PainelFuncoes extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btDiminuiPrioActionPerformed
 
+    private void btVerComentariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerComentariosActionPerformed
+        DialogoVerComentarios verComent = new DialogoVerComentarios(dono,
+                new ModeloComentarios());
+        Tarefa t = modeloTabela.getTarefas().get(tabelaTarefas.
+                convertRowIndexToModel(tabelaTarefas.getSelectedRow()));
+        verComent.setTarefa(t);
+        verComent.setVisible(true);
+    }//GEN-LAST:event_btVerComentariosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAumentPrio;
     private javax.swing.JButton btDescer;
     private javax.swing.JButton btDiminuiPrio;
     private javax.swing.JButton btSubir;
+    private javax.swing.JButton btVerComentarios;
     private javax.swing.JButton btVerTarefa;
     // End of variables declaration//GEN-END:variables
 }
