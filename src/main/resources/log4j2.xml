@@ -27,7 +27,8 @@ and open the template in the editor.
         <Logger name="painel_tabela" level="TRACE" />
         <Logger name="funcoes" level="TRACE" />
         <Logger name="log_modelo" level="TRACE" />
-           
+        <Logger name="coment_renderer" level="TRACE" />
+        
         <Logger name="saida_para_arquivo" level="TRACE" additivity="false">
             <AppenderRef ref="arquivo" />
         </Logger>
