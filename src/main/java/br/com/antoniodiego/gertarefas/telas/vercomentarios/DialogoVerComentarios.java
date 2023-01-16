@@ -2,10 +2,8 @@ package br.com.antoniodiego.gertarefas.telas.vercomentarios;
 
 import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAO;
-import br.com.antoniodiego.gertarefas.persist.daos.DAOComentario;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import javax.swing.ButtonGroup;
-import javax.swing.JTextField;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,8 +12,7 @@ import br.com.antoniodiego.gertarefas.pojo.Comentario;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalMatisse;
 import java.time.LocalDateTime;
-import java.util.List;
-import org.hibernate.Hibernate;
+import javax.swing.JTextArea;
 import org.hibernate.Session;
 
 /**
@@ -74,18 +71,20 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
 
         grupoDataFazer = new javax.swing.ButtonGroup();
         beanDatePick1 = new br.com.antoniodiego.gertarefas.beans.BeanDatePick();
-        campoTitulo = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         listaComentarios = new javax.swing.JList<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         campoComentario = new javax.swing.JTextPane();
         btAdicionar = new javax.swing.JButton();
         btLimpar = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        campoTitulo = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Comentários");
-
-        campoTitulo.setEditable(false);
 
         listaComentarios.setModel(new ModeloComentarios());
         jScrollPane2.setViewportView(listaComentarios);
@@ -106,38 +105,62 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
             }
         });
 
+        campoTitulo.setEditable(false);
+        campoTitulo.setColumns(20);
+        campoTitulo.setLineWrap(true);
+        campoTitulo.setRows(5);
+        jScrollPane3.setViewportView(campoTitulo);
+
+        jLabel1.setText("Tarefa:");
+
+        jLabel2.setText("Comentários:");
+
+        jLabel3.setText("Novo comentário:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(campoTitulo)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addGap(20, 20, 20))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btAdicionar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btLimpar)
-                .addGap(29, 29, 29))
+                .addGap(25, 25, 25))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addGap(4, 4, 4)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btAdicionar)
                     .addComponent(btLimpar))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
 
         pack();
@@ -164,9 +187,9 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         coment.setComentario(texto);
 
         tarefa.getComentarios().add(coment);
-        
+
         modCom.adiciona(coment);
-        
+
         coment.setTarefa(tarefa);
 
         tarefa.setDataModif(LocalDateTime.now());
@@ -257,7 +280,7 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         });
     }
 
-    public JTextField getCampoTitulo() {
+    public JTextArea getCampoTitulo() {
         return campoTitulo;
     }
 
@@ -271,10 +294,14 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
     private javax.swing.JButton btAdicionar;
     private javax.swing.JButton btLimpar;
     private javax.swing.JTextPane campoComentario;
-    private javax.swing.JTextField campoTitulo;
+    private javax.swing.JTextArea campoTitulo;
     private javax.swing.ButtonGroup grupoDataFazer;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList<Comentario> listaComentarios;
     // End of variables declaration//GEN-END:variables
 }
