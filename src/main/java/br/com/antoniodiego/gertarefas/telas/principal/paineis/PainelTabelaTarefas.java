@@ -24,7 +24,8 @@ import org.apache.logging.log4j.Logger;
 import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
-import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.DialogoEditarTarefa;
+import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.
+        DialogoEditarTarefa;
 import br.com.antoniodiego.gertarefas.util.Utilid;
 
 /**
@@ -238,7 +239,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(painelDeBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(painelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
                 .addGap(1, 1, 1))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -410,13 +411,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         modeloSelecao.setSelectionInterval(idxTabela, idxTabela);
     }// GEN-LAST:event_btDescerActionPerformed
 
-    private void btVerTarefaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btVerTarefaActionPerformed
-        // TODO: JFrame jane princ
-        DialogoEditarTarefa dialogEditar = new DialogoEditarTarefa(referenciaJan, modeloTabela);
-        Tarefa t = modeloTabela.getTarefas().get(tabelaTarefas.convertRowIndexToModel(tabelaTarefas.getSelectedRow()));
-        dialogEditar.setTarefa(t);
-        dialogEditar.setVisible(true);
-    }// GEN-LAST:event_btVerTarefaActionPerformed
 
     public JTable getTabelaTarefas() {
         return tabelaTarefas;
