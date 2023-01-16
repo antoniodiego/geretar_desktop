@@ -3,6 +3,18 @@ Criado: 30/12/22
 Nesse arquivo espera-se colocar as alterações mais importantes que foram sofri-
 das pelo programa.
 
+2.4.15
+
+Barra de ferramentas
+
+Atalho para criar nova tarefa (Ctrl+N)
+
+Melhorias no desenho de comentários das tarefas
+
+Melhorias no layout da tela de criação de tarefas
+
+Mudança no LookAndFeel. Agora é Nimbus
+
 2.4.14
 
 Otimizações e correções de bugs na hora de alterar a posição de tarefas
