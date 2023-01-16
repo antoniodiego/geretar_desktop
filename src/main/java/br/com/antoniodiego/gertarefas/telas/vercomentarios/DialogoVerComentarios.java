@@ -36,7 +36,7 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
 
     private Tarefa tarefa;
     private final ModeloTabelaTarefasLista modeloLista;
-    private final ModeloComentarios modCom;
+    //   private final ModeloComentarios modCom;
 
     /**
      * Creates new form DialogoNovaTarView
@@ -54,9 +54,9 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
 
         setLocationByPlatform(true);
 
-        listaComentarios.setCellRenderer(new ComentarioRenderer());
-        modCom = ((ModeloComentarios) listaComentarios.
-                getModel());
+        //  listaComentarios.setCellRenderer(new ComentarioRenderer());
+//        modCom = ((ModeloComentarios) listaComentarios.
+//                getModel());
     }
 
     /**
@@ -71,8 +71,6 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
 
         grupoDataFazer = new javax.swing.ButtonGroup();
         beanDatePick1 = new br.com.antoniodiego.gertarefas.beans.BeanDatePick();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        listaComentarios = new javax.swing.JList<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         campoComentario = new javax.swing.JTextPane();
         btAdicionar = new javax.swing.JButton();
@@ -82,12 +80,11 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        painelComentarios = new br.com.antoniodiego.gertarefas.telas.vercomentarios.PainelComentarios();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Comentários");
-
-        listaComentarios.setModel(new ModeloComentarios());
-        jScrollPane2.setViewportView(listaComentarios);
 
         jScrollPane1.setViewportView(campoComentario);
 
@@ -117,6 +114,19 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
 
         jLabel3.setText("Novo comentário:");
 
+        javax.swing.GroupLayout painelComentariosLayout = new javax.swing.GroupLayout(painelComentarios);
+        painelComentarios.setLayout(painelComentariosLayout);
+        painelComentariosLayout.setHorizontalGroup(
+            painelComentariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        painelComentariosLayout.setVerticalGroup(
+            painelComentariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jScrollPane4.setViewportView(painelComentarios);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,14 +141,14 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -150,8 +160,8 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addGap(4, 4, 4)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -174,7 +184,8 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         this.tarefa = tC;
         atualizaTarefa(t, tarefa);
 
-        modCom.setComentarios(tC.getComentarios());
+        painelComentarios.setComent(tC.getComentarios());
+        //   modCom.setComentarios(tC.getComentarios());
         s.getTransaction().commit();
 
         campoTitulo.setText(t.getTitulo());
@@ -188,7 +199,8 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
 
         tarefa.getComentarios().add(coment);
 
-        modCom.adiciona(coment);
+        painelComentarios.add(coment);
+        // modCom.adiciona(coment);
 
         coment.setTarefa(tarefa);
 
@@ -300,8 +312,8 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JList<Comentario> listaComentarios;
+    private javax.swing.JScrollPane jScrollPane4;
+    private br.com.antoniodiego.gertarefas.telas.vercomentarios.PainelComentarios painelComentarios;
     // End of variables declaration//GEN-END:variables
 }
