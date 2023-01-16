@@ -30,6 +30,7 @@ import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
 import br.com.antoniodiego.gertarefas.util.FuncoesTarefas;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -46,7 +47,7 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
      *
      */
     public static final Logger LOG_NOVA_TAREFA = LogManager.getLogger("nova_tarefa");
-    
+
     private final ModeloTabelaTarefasLista modelo;
     private final SpinnerNumberModel modeloSpinnerPosicao;
 
@@ -59,7 +60,7 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
     public DialogoNovaTarView(JFrame princ, ModeloTabelaTarefasLista modelTab) {
         super(princ, "Nova tarefa", false);
         this.modelo = modelTab;
-        
+
         initComponents();
         // contro = new DialogoNovaTarefaController(this);
         modeloSpinnerPosicao = new SpinnerNumberModel(0, 0, 2000, 1);
@@ -74,17 +75,12 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         grupoDataFazer = new javax.swing.ButtonGroup();
         beanDatePick1 = new br.com.antoniodiego.gertarefas.beans.BeanDatePick();
         dateComponentFormatter1 = new org.jdatepicker.impl.DateComponentFormatter();
-        canpoTitulo = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaDEsc = new javax.swing.JTable();
-        botAdic = new javax.swing.JButton();
-        bRem = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -106,26 +102,15 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
         campoHoraAl = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
         spinnerPosicao = new javax.swing.JSpinner();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        campoTitulo = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        campoComentario = new javax.swing.JTextArea();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nova tarefa");
         setLocationByPlatform(true);
-
-        tabelaDEsc.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null },
-                        { null, null, null, null }
-                },
-                new String[] {
-                        "Title 1", "Title 2", "Title 3", "Title 4"
-                }));
-        jScrollPane1.setViewportView(tabelaDEsc);
-
-        botAdic.setText("Adicionar");
-
-        bRem.setText("Remover");
 
         btSalvar.setText("Salvar");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -141,7 +126,7 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setText("Título(opc):");
+        jLabel4.setText("Tarefa:");
 
         jLabel2.setText("ID:");
 
@@ -153,11 +138,13 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 277, Short.MAX_VALUE));
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 208, Short.MAX_VALUE)
+        );
         jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 41, Short.MAX_VALUE));
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 47, Short.MAX_VALUE)
+        );
 
         jPanel2.add(jPanel1);
 
@@ -168,8 +155,7 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
         rbEscolh.setText("Escolher");
         jPanel2.add(rbEscolh);
 
-        comboDataFaz.setModel(
-                new javax.swing.DefaultComboBoxModel<>(new String[] { "Hoje", "Amanhã", "Depois de amanhã" }));
+        comboDataFaz.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hoje", "Amanhã", "Depois de amanhã" }));
         jPanel2.add(comboDataFaz);
 
         rotuloPriori.setText("Prioridade:");
@@ -181,16 +167,18 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
-                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(0, 193, Short.MAX_VALUE)));
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addGap(0, 124, Short.MAX_VALUE))
+        );
         jPanel4Layout.setVerticalGroup(
-                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel5)
-                                .addContainerGap()));
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addContainerGap())
+        );
 
         jPanel2.add(jPanel4);
 
@@ -203,21 +191,20 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(campoDataAl, javax.swing.GroupLayout.PREFERRED_SIZE, 118,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(34, 34, 34)
-                                .addComponent(campoHoraAl, javax.swing.GroupLayout.PREFERRED_SIZE, 73,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 52, Short.MAX_VALUE)));
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(campoDataAl, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(campoHoraAl, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
+        );
         jPanel3Layout.setVerticalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(campoDataAl, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(campoHoraAl, javax.swing.GroupLayout.PREFERRED_SIZE, 25,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)));
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(campoDataAl, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(campoHoraAl, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         jPanel2.add(jPanel3);
 
@@ -225,104 +212,76 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
         jPanel2.add(jLabel3);
         jPanel2.add(spinnerPosicao);
 
+        campoTitulo.setColumns(20);
+        campoTitulo.setLineWrap(true);
+        campoTitulo.setRows(5);
+        campoTitulo.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(campoTitulo);
+
+        campoComentario.setColumns(20);
+        campoComentario.setLineWrap(true);
+        campoComentario.setRows(5);
+        jScrollPane1.setViewportView(campoComentario);
+
+        jLabel6.setText("Comentários:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
-                                                                .createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(
-                                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(jLabel4)
-                                                                        .addComponent(jLabel2))
-                                                                .addPreferredGap(
-                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                        Short.MAX_VALUE)
-                                                                .addGroup(layout.createParallelGroup(
-                                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(canpoTitulo,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                209,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(campoId,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                49,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
-                                                                .createSequentialGroup()
-                                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                                .addGroup(layout.createParallelGroup(
-                                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addComponent(jScrollPane1,
-                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                375,
-                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addGroup(
-                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                                layout.createSequentialGroup()
-                                                                                        .addComponent(btSalvar)
-                                                                                        .addPreferredGap(
-                                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                                        .addComponent(botaoCancelar))
-                                                                        .addGroup(
-                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                                layout.createSequentialGroup()
-                                                                                        .addComponent(botAdic)
-                                                                                        .addPreferredGap(
-                                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                                        .addComponent(bRem)))))
-                                                .addGap(20, 20, 20))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 555,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap(49, Short.MAX_VALUE)))));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(49, 49, 49)
+                                .addComponent(campoId, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 257, Short.MAX_VALUE)
+                                .addComponent(btSalvar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(botaoCancelar)))
+                        .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(12, 12, 12))))
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(canpoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel4))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(1, 1, 1)
-                                                .addGroup(layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(jLabel2)
-                                                        .addComponent(campoId, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 84,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(botAdic)
-                                                        .addComponent(bRem))
-                                                .addGap(117, 117, 117)
-                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 260,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 100, Short.MAX_VALUE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
-                                                .createSequentialGroup()
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(btSalvar)
-                                                        .addComponent(botaoCancelar))
-                                                .addGap(15, 15, 15)))));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(campoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoCancelar))
+                    .addComponent(btSalvar, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(21, 21, 21))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -333,20 +292,21 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btSalvarActionPerformed
         LOG_NOVA_TAREFA.trace("Salvando tarefa...");
-        
+
         LoggingParaArquivo loggingParaArquivo = LoggingParaArquivo.getInstancia();
 
         // Ao criar nova
         // Obtem uma instância da tarefa
         TarefaComposta novaTarefa = new TarefaComposta();
-        String tit = canpoTitulo.getText();
+        String tit = campoTitulo.getText();
         novaTarefa.setTitulo(tit);
+        novaTarefa.setComentario(campoComentario.getText());
         // obs: redund
         novaTarefa.setDataCriacao(LocalDate.now());
 
         // novaTarefa.setPrioridade(modeloCampoPro.getNumber().intValue());
         String idStr = campoId.getText();
-        
+
         for (int i = 0; i < idStr.length(); i++) {
             if (!Character.isDigit(idStr.charAt(i))) {
                 JOptionPane.showMessageDialog(this, "Id inválido", "Erro",
@@ -354,15 +314,15 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
                 return;
             }
         }
-        
+
         if (idStr.isEmpty()) {
             idStr = "0";
         }
-        
+
         Long idNum = Long.parseLong(idStr);
-        
+
         DAOTarefa daoT = new DAOTarefa();
-        
+
         if (daoT.getByIdPers(idNum) != null) {
             Long maiorIdPers = daoT.getMaiorIDPers();
             novaTarefa.setIdPers(maiorIdPers + 1);
@@ -375,18 +335,17 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
          */
         int posicao = modeloSpinnerPosicao.getNumber().intValue();
         novaTarefa.setPosicao(posicao);
-        
-        
+
         long currentMillis = System.currentTimeMillis();
         // Fazer desvio de tarefas para baixo partindo da posição 0
         FuncoesTarefas.deslocaTarefasBaixo(posicao);
-        
+
         long instanteFinal = System.currentTimeMillis();;
-        
+
         long duracaoDeslocamento = instanteFinal - currentMillis;
-        
+
         try {
-            LOG_NOVA_TAREFA.debug("Deslocamento levou: {}", duracaoDeslocamento );
+            LOG_NOVA_TAREFA.debug("Deslocamento levou: {}", duracaoDeslocamento);
             LOG_NOVA_TAREFA.debug("Deslocamento levou: {}", duracaoDeslocamento / 1000);
             loggingParaArquivo.loga("Deslocamento levou: " + (duracaoDeslocamento / 1000));
         } catch (IOException ex) {
@@ -404,13 +363,13 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
         // Integer maiorP = daoT.getMaiorPosicao();
         // novaTarefa.setPosicao(maiorP + 1);
         daoT.salva(novaTarefa);
-        
+
         LOG_ARQUIVO.trace("[CRIADA] Foi salva a tarefa de título '{}' e id '{}'. id pers: '{}', comentário: '{}'"
                 + ", posicao: '{}'", novaTarefa.getTitulo(),
                 novaTarefa.getId(), novaTarefa.getIdPers(), novaTarefa.getComentario(), novaTarefa.getPosicao());
-        
+
         try {
-            
+
             loggingParaArquivo.loga(
                     "[CRIADA] Foi salva a tarefa de título '%s' e id '%s'. id pers: '%s', comentário: '%s'"
                     + ", posicao: '%s'",
@@ -420,7 +379,7 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
         dispose();
 
         /*
@@ -435,9 +394,9 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
          * 
          */
         LOG_NOVA_TAREFA.trace("Adic tar na janela principal");
-        
+
         modelo.recarregaTarefasBanco();
-        
+
         LOG_NOVA_TAREFA.trace("Após adic tar na janela principal");
     }// GEN-LAST:event_btSalvarActionPerformed
 
@@ -460,24 +419,18 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                System.out.println("LAF: "+info.getName());
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogoNovaTarView.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogoNovaTarView.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogoNovaTarView.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DialogoNovaTarView.class.getName()).log(java.util.logging.Level.SEVERE,
                     null, ex);
         }
+        // </editor-fold>
+        
         // </editor-fold>
 
         /* Create and display the dialog */
@@ -494,7 +447,7 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
             }
         });
     }
-    
+
     public JFormattedTextField getCampoId() {
         return campoId;
     }
@@ -503,79 +456,66 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
     // return contro;
     // }
 
-    public JButton getbRem() {
-        return bRem;
-    }
-    
-    public JButton getBotAdic() {
-        return botAdic;
-    }
-    
     public JButton getBotaoCancelar() {
         return botaoCancelar;
     }
-    
+
     public JButton getBotaoConcluido() {
         return btSalvar;
     }
-    
+
     public JRadioButton getBtDig() {
         return btDig;
     }
-    
+
     public BeanDatePick getCampoDataAl() {
         return campoDataAl;
     }
-    
+
     public BeanDatePick getCampoDataFazer() {
         return campoDataFaz;
     }
-    
+
     public JSpinner getCampoPrioridade() {
         return campoPrioridade;
     }
-    
-    public JTextField getCampoTitulo() {
-        return canpoTitulo;
+
+    public JTextArea getCampoTitulo() {
+        return campoTitulo;
     }
-    
+
     public JComboBox<String> getComboDataFaz() {
         return comboDataFaz;
     }
-    
+
     public ButtonGroup getGrupoDataFazer() {
         return grupoDataFazer;
     }
-    
+
     public JRadioButton getRbEscolh() {
         return rbEscolh;
     }
-    
+
     public JLabel getRotuloPriori() {
         return rotuloPriori;
     }
-    
-    public JTable getTabelaDesc() {
-        return tabelaDEsc;
-    }
-    
+
     public JFormattedTextField getCampoHoraAl() {
         return campoHoraAl;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bRem;
     private br.com.antoniodiego.gertarefas.beans.BeanDatePick beanDatePick1;
-    private javax.swing.JButton botAdic;
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JRadioButton btDig;
     private javax.swing.JButton btSalvar;
+    private javax.swing.JTextArea campoComentario;
     private br.com.antoniodiego.gertarefas.beans.BeanDatePick campoDataAl;
     private br.com.antoniodiego.gertarefas.beans.BeanDatePick campoDataFaz;
     private javax.swing.JFormattedTextField campoHoraAl;
     private javax.swing.JFormattedTextField campoId;
     private javax.swing.JSpinner campoPrioridade;
-    private javax.swing.JTextField canpoTitulo;
+    private javax.swing.JTextArea campoTitulo;
     private javax.swing.JComboBox<String> comboDataFaz;
     private org.jdatepicker.impl.DateComponentFormatter dateComponentFormatter1;
     private javax.swing.ButtonGroup grupoDataFazer;
@@ -584,14 +524,15 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JRadioButton rbEscolh;
     private javax.swing.JLabel rotuloPriori;
     private javax.swing.JSpinner spinnerPosicao;
-    private javax.swing.JTable tabelaDEsc;
     // End of variables declaration//GEN-END:variables
 }
