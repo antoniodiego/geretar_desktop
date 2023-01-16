@@ -142,9 +142,9 @@ public class ComponenteComentario extends Panel {
         g2d.setFont(f);
         g2d.setColor(foreg);
         g2d.drawString(s,
-                marginLeft + 5, 29);
+                marginLeft + 5, 12+fm.getAscent());
 
-        int yBaseline = 30 + fm.getAscent();
+        int yBaseline = 34 + fm.getAscent();
         //    g2d.drawLine(10, yBaseline, largura, yBaseline);
 
 //        System.out.println(g2d.getFont());
