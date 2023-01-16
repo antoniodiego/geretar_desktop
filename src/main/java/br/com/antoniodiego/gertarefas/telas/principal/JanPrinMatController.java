@@ -137,7 +137,8 @@ public class JanPrinMatController {
 
     private JanelaPrincipalMatisse view;
     private JTree arvoreTarefas;
-    public static final Logger LOG_CONTR_PRINC = LogManager.getLogger("Controller_Principal");
+    public static final Logger LOG_CONTR_PRINC = LogManager.
+            getLogger("Controller_Principal");
     private AcaoBackup acaoBackup;
     private AcaoExcluirGrupo acaoExG;
     private AcaoRecortar acaoRec;
