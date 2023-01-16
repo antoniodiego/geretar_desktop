@@ -8,8 +8,11 @@ import br.com.antoniodiego.gertarefas.pojo.Comentario;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import javax.swing.Scrollable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,10 +20,10 @@ import org.apache.logging.log4j.Logger;
  *
  * @author anton
  */
-public class PainelComentarios extends javax.swing.JPanel {
+public class PainelComentarios extends javax.swing.JPanel implements Scrollable {
 
     private List<Comentario> coment;
-    private List<ComponenteComentario> subComponentes;
+    private final List<ComponenteComentario> subComponentes;
     public static final Logger LOG_C_RENDERER = LogManager.
             getLogger("painel_c");
 
@@ -39,32 +42,48 @@ public class PainelComentarios extends javax.swing.JPanel {
     public void setComent(List<Comentario> coment) {
         LOG_C_RENDERER.debug("Set c");
 
+        LOG_C_RENDERER.debug("W: " + getWidth());
+
         this.coment = coment;
+        Collections.sort(coment);
 
         int altura = 10;
 
-        Comentario c = coment.get(0);
-     //   for (Comentario c : coment) {
+        // coment = coment.subList(0, 3);
+        for (Comentario c : coment) {
             ComponenteComentario cc = new ComponenteComentario(0, c);
             cc.setaAltura(getWidth());
-            subComponentes.add(cc);
+            //   subComponentes.add(cc);
 
-            altura += cc.getHeight();
-       // }
+            altura += cc.getHeight() + 10;
+        }
 
         this.setPreferredSize(new Dimension(getWidth(), altura));
         System.out.println("Altura painel: " + altura);
         revalidate();
+        repaint();
     }
 
     public void add(Comentario c) {
-        ComponenteComentario cc = new ComponenteComentario(0, c);
-        subComponentes.add(cc);
+        this.coment.add(c);
 
-        this.setPreferredSize(new Dimension(getWidth(), getHeight() + cc.getHeight()));
+        Collections.sort(coment);
+
+        ComponenteComentario cc = new ComponenteComentario(0, c);
+        cc.setaAltura(getWidth());
+        //  subComponentes.add(cc);
+
+        this.setPreferredSize(new Dimension(getWidth(), getHeight()
+                + cc.getHeight() + 10));
         //System.out.println("Altura painel: " + altura);
         revalidate();
         repaint();
+    }
+
+    @Override
+    public void setBounds(int x, int y, int width, int height) {
+        super.setBounds(x, y, width, height);
+        LOG_C_RENDERER.debug("S b painel , larg {}: ", width);
     }
 
     /**
@@ -80,7 +99,7 @@ public class PainelComentarios extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 366, Short.MAX_VALUE)
+            .addGap(0, 345, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,19 +112,46 @@ public class PainelComentarios extends javax.swing.JPanel {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
 
-        g.setColor(Color.GREEN);
-        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+        LOG_C_RENDERER.debug("Largura pc: " + getWidth());
 
+//        g.setColor(Color.GREEN);
+//        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
         int yC = 10;
         Graphics gC;
-        for (ComponenteComentario c : subComponentes) {
+        for (Comentario com : coment) {
+            ComponenteComentario c = new ComponenteComentario(0, com);
             System.out.println("Des : " + c);
             c.setaAltura(getWidth());
             c.setBounds(0, yC, getWidth(), c.getHeight());
             gC = g.create(0, yC, c.getWidth(), c.getHeight());
             c.paint(gC);
-            yC = +c.getHeight() + 10;
+            yC += c.getHeight() + 10;
         }
+    }
+
+    @Override
+    public Dimension getPreferredScrollableViewportSize() {
+        return new Dimension(400, getHeight());
+    }
+
+    @Override
+    public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportWidth() {
+        return true;
+    }
+
+    @Override
+    public boolean getScrollableTracksViewportHeight() {
+        return false;
     }
 
 
