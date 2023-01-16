@@ -167,6 +167,21 @@ public class JanPrinMatController {
 
         princ.setController(this);
 
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                System.out.println("LAF: " + info.getName());
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException
+                | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DialogoNovaTarView.class.
+                    getName()).log(java.util.logging.Level.SEVERE,
+                            null, ex);
+        }
+
         File arquivoProp = new File("propriedades.json");
 
         if (arquivoProp.exists()) {
@@ -380,7 +395,7 @@ public class JanPrinMatController {
         int idx = modelo.getTarefas().indexOf(antiga);
 
         modelo.getTarefas().set(idx, versaoNova);
-        
+
         modelo.fireTableRowsUpdated(idx, idx);
 
     }

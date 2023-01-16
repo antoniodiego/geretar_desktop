@@ -41,12 +41,14 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
     /**
      *
      */
-    public static final Logger LOG_ARQUIVO = LogManager.getLogger("saida_para_arquivo");
+    public static final Logger LOG_ARQUIVO = LogManager.
+            getLogger("saida_para_arquivo");
 
     /**
      *
      */
-    public static final Logger LOG_NOVA_TAREFA = LogManager.getLogger("nova_tarefa");
+    public static final Logger LOG_NOVA_TAREFA = LogManager.
+            getLogger("nova_tarefa");
 
     private final ModeloTabelaTarefasLista modelo;
     private final SpinnerNumberModel modeloSpinnerPosicao;
@@ -66,6 +68,9 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
         modeloSpinnerPosicao = new SpinnerNumberModel(0, 0, 2000, 1);
         spinnerPosicao.setModel(modeloSpinnerPosicao);
         getRootPane().setDefaultButton(btSalvar);
+
+        setLocationRelativeTo(princ);
+        //setLocationByPlatform(true);
     }
 
     /**
@@ -110,7 +115,6 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nova tarefa");
-        setLocationByPlatform(true);
 
         btSalvar.setText("Salvar");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -223,7 +227,7 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
         campoComentario.setRows(5);
         jScrollPane1.setViewportView(campoComentario);
 
-        jLabel6.setText("Comentários:");
+        jLabel6.setText("Mais detalhes:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -419,7 +423,7 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                System.out.println("LAF: "+info.getName());
+                System.out.println("LAF: " + info.getName());
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
@@ -430,7 +434,7 @@ public class DialogoNovaTarView extends javax.swing.JDialog {
                     null, ex);
         }
         // </editor-fold>
-        
+
         // </editor-fold>
 
         /* Create and display the dialog */

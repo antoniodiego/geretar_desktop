@@ -2,15 +2,16 @@ package br.com.antoniodiego.gertarefas.telas.principal;
 
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
+import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.DialogoEditarTarefa;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 import br.com.antoniodiego.gertarefas.telas.novatarefa.DialogoNovaTarView;
 import br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas;
+import br.com.antoniodiego.gertarefas.telas.vercomentarios.DialogoVerComentarios;
 import br.com.antoniodiego.gertarefas.util.Utilid;
 import javax.swing.JTable;
 import net.minidev.json.JSONObject;
@@ -44,23 +45,24 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         splitPaneDireito = new javax.swing.JSplitPane();
         painelTabelaTarefas1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas();
         painelFuncoes1 = new br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFuncoes(painelTabelaTarefas1,this);
+        jToolBar1 = new javax.swing.JToolBar();
+        btNovaTarefa = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        btVer = new javax.swing.JButton();
+        btComentarios = new javax.swing.JButton();
         barraDeMenus = new javax.swing.JMenuBar();
         menuArquivo = new javax.swing.JMenu();
         itemNovaTarefa = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
         miExcluirTarefa = new javax.swing.JMenuItem();
+        menuVer = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         menuExportarComoXML = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem5 = new javax.swing.JMenuItem();
         menuEditar = new javax.swing.JMenu();
         sepMenuEd = new javax.swing.JPopupMenu.Separator();
         menuOp = new javax.swing.JMenuItem();
@@ -85,8 +87,45 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         splitPaneDireito.setLeftComponent(painelTabelaTarefas1);
         splitPaneDireito.setRightComponent(painelFuncoes1);
 
+        jToolBar1.setRollover(true);
+
+        btNovaTarefa.setText("Nova tarefa");
+        btNovaTarefa.setFocusable(false);
+        btNovaTarefa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btNovaTarefa.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btNovaTarefa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNovaTarefaActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btNovaTarefa);
+        jToolBar1.add(jSeparator2);
+
+        btVer.setText("Ver");
+        btVer.setFocusable(false);
+        btVer.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btVer.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btVerActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btVer);
+
+        btComentarios.setText("Comentários");
+        btComentarios.setFocusable(false);
+        btComentarios.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btComentarios.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btComentarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btComentariosActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btComentarios);
+
         menuArquivo.setText("Arquivo");
 
+        itemNovaTarefa.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemNovaTarefa.setText("Nova tarefa");
         itemNovaTarefa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,32 +134,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         });
         menuArquivo.add(itemNovaTarefa);
 
-        jMenuItem2.setText("Novo grupo");
-        menuArquivo.add(jMenuItem2);
-
-        jMenuItem3.setText("Agendar");
-        menuArquivo.add(jMenuItem3);
-
-        jMenuItem4.setText("Ver detalhes");
-        menuArquivo.add(jMenuItem4);
-
-        jMenuItem5.setText("Excluir tudo");
-        menuArquivo.add(jMenuItem5);
-
-        jMenuItem6.setText("Trocar usuário");
-        menuArquivo.add(jMenuItem6);
-
-        jMenuItem7.setText("Sair");
-        menuArquivo.add(jMenuItem7);
-
-        jMenuItem8.setText("jMenuItem8");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
-            }
-        });
-        menuArquivo.add(jMenuItem8);
-
+        miExcluirTarefa.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
         miExcluirTarefa.setText("Excluir tarefa");
         miExcluirTarefa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,6 +142,17 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
             }
         });
         menuArquivo.add(miExcluirTarefa);
+
+        menuVer.setText("Ver detalhes");
+        menuVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuVerActionPerformed(evt);
+            }
+        });
+        menuArquivo.add(menuVer);
+
+        jMenuItem7.setText("Sair");
+        menuArquivo.add(jMenuItem7);
 
         jMenuItem10.setText("Reiniciar banco");
         menuArquivo.add(jMenuItem10);
@@ -149,9 +174,11 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
 
         jMenuItem14.setText("Importar de XML");
         menuArquivo.add(jMenuItem14);
+        menuArquivo.add(jSeparator1);
 
-        jMenuItem15.setText("jMenuItem15");
-        menuArquivo.add(jMenuItem15);
+        jMenuItem5.setForeground(new java.awt.Color(255, 0, 0));
+        jMenuItem5.setText("Excluir tudo");
+        menuArquivo.add(jMenuItem5);
 
         barraDeMenus.add(menuArquivo);
 
@@ -177,30 +204,25 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(splitPaneDireito, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(splitPaneDireito, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, 0)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(splitPaneDireito, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(splitPaneDireito, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void itemNovaTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNovaTarefaActionPerformed
-        JanPrinMatController.LOG_CONTR_PRINC.trace("Item nova tar");
-
-        DialogoNovaTarView dialogoNovaTar = new DialogoNovaTarView(this, painelTabelaTarefas1.getModeloTabela());
-        dialogoNovaTar.setVisible(true);
-    }//GEN-LAST:event_itemNovaTarefaActionPerformed
-
-    private void menuExportarComoXMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExportarComoXMLActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuExportarComoXMLActionPerformed
 
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -224,12 +246,24 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void btNovaTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovaTarefaActionPerformed
+        JanPrinMatController.LOG_CONTR_PRINC.trace("Item nova tar");
+
+        DialogoNovaTarView dialogoNovaTar = new DialogoNovaTarView(this,
+                painelTabelaTarefas1.getModeloTabela());
+        dialogoNovaTar.setVisible(true);
+    }//GEN-LAST:event_btNovaTarefaActionPerformed
+
+    private void menuExportarComoXMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExportarComoXMLActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuExportarComoXMLActionPerformed
+
     private void miExcluirTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miExcluirTarefaActionPerformed
         JTable tabelaTarefas = painelTabelaTarefas1.getTabelaTarefas();
         int idxEscolhida = tabelaTarefas.getSelectedRow();
         int idxModel = tabelaTarefas.convertRowIndexToModel(idxEscolhida);
 
-//Exclui do banco
+        //Exclui do banco
         Tarefa t = painelTabelaTarefas1.getModeloTabela().getTarefas().get(idxModel);
         DAOTarefa daoT = new DAOTarefa();
         daoT.exclui(t);
@@ -239,9 +273,40 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         tabelaTarefas.getSelectionModel().setSelectionInterval(idxEscolhida, idxEscolhida);
     }//GEN-LAST:event_miExcluirTarefaActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    private void itemNovaTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNovaTarefaActionPerformed
+        JanPrinMatController.LOG_CONTR_PRINC.trace("Item nova tar");
+
+        DialogoNovaTarView dialogoNovaTar = new DialogoNovaTarView(this, 
+                painelTabelaTarefas1.getModeloTabela());
+        dialogoNovaTar.setVisible(true);
+    }//GEN-LAST:event_itemNovaTarefaActionPerformed
+
+    private void menuVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVerActionPerformed
+
+    }//GEN-LAST:event_menuVerActionPerformed
+
+    private void btVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerActionPerformed
+        DialogoEditarTarefa dialogEditar = new DialogoEditarTarefa(this,
+                painelTabelaTarefas1.getModeloTabela());
+        Tarefa t = painelTabelaTarefas1.getModeloTabela().getTarefas().
+                get(painelTabelaTarefas1.
+                        getTabelaTarefas().
+                        convertRowIndexToModel(painelTabelaTarefas1.
+                                getTabelaTarefas().getSelectedRow()));
+        dialogEditar.setTarefa(t);
+        dialogEditar.setVisible(true);
+    }//GEN-LAST:event_btVerActionPerformed
+
+    private void btComentariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btComentariosActionPerformed
+        DialogoVerComentarios verComent = new DialogoVerComentarios(this,
+                painelTabelaTarefas1.getModeloTabela());
+        Tarefa t = painelTabelaTarefas1.getModeloTabela().getTarefas().
+                get(painelTabelaTarefas1.getTabelaTarefas().
+                        convertRowIndexToModel(painelTabelaTarefas1.
+                                getTabelaTarefas().getSelectedRow()));
+        verComent.setTarefa(t);
+        verComent.setVisible(true);
+    }//GEN-LAST:event_btComentariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,6 +356,9 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraDeMenus;
+    private javax.swing.JButton btComentarios;
+    private javax.swing.JButton btNovaTarefa;
+    private javax.swing.JButton btVer;
     private javax.swing.JMenuItem itemNovaTarefa;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -298,18 +366,16 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenu menuArquivo;
     private javax.swing.JMenu menuEditar;
     private javax.swing.JMenuItem menuExportarComoXML;
     private javax.swing.JMenuItem menuOp;
+    private javax.swing.JMenuItem menuVer;
     private javax.swing.JMenuItem miExcluirTarefa;
     private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelFuncoes painelFuncoes1;
     private br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas painelTabelaTarefas1;
