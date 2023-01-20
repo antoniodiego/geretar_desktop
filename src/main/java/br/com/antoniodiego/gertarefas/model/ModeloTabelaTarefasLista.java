@@ -59,6 +59,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
 
     /**
      *
+     * @param tabelaTarefas
      */
     public ModeloTabelaTarefasLista(JTable tabelaTarefas) {
         tarefas = new ArrayList<>();

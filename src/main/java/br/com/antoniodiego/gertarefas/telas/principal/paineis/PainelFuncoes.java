@@ -12,9 +12,9 @@ import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.DialogoEditarT
 import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalMatisse;
 import static br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
 import br.com.antoniodiego.gertarefas.telas.vercomentarios.DialogoVerComentarios;
-import br.com.antoniodiego.gertarefas.telas.vercomentarios.ModeloComentarios;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -40,9 +40,8 @@ public class PainelFuncoes extends javax.swing.JPanel {
      *
      * @param painelTabelaTarefas
      * @param dono Referência à janela principal, pode ser mais generalizada
-     * para
-     * um JFrame, mas é importante passar uma ref da janela principal para o
-     * diálogo comentários. Ao menos uma ref para o modelo da tabela 
+     * para um JFrame, mas é importante passar uma ref da janela principal para
+     * o diálogo comentários. Ao menos uma ref para o modelo da tabela
      */
     public PainelFuncoes(PainelTabelaTarefas painelTabelaTarefas,
             JanelaPrincipalMatisse dono) {
@@ -157,16 +156,26 @@ public class PainelFuncoes extends javax.swing.JPanel {
         // A linha escolhida na tabela
         int linhaSel = tabelaTarefas.getSelectedRow();
 
+        LOG_PAINEL_T.debug("Linha tab: " + linhaSel);
+
         // Posição da tarefa no modelo
         int posicaoSelModelo = tabelaTarefas.convertRowIndexToModel(linhaSel);
 
-        Tarefa tarefaMover = modeloTabela.getTarefas().get(posicaoSelModelo);
+        LOG_PAINEL_T.debug("Posição: " + posicaoSelModelo);
 
-        tarefaMover.aumentaPrio();
+        Tarefa tarefaAlterar = modeloTabela.getTarefas().get(posicaoSelModelo);
+
+        LOG_PAINEL_T.debug("Tarefa akterada: " + tarefaAlterar.getTitulo());
+
+        tarefaAlterar.aumentaPrio();
         DAOTarefa daoT = new DAOTarefa();
-        daoT.atualiza(tarefaMover);
+        daoT.atualiza(tarefaAlterar);
 
-        modeloTabela.fireTableRowsUpdated(linhaSel, linhaSel);
+        LOG_PAINEL_T.debug("Fire atualizado: " + linhaSel);
+
+        int idxCol = tabelaTarefas.getColumn("Prioridade").getModelIndex();
+        modeloTabela.fireTableCellUpdated(linhaSel, idxCol);
+        ((TableRowSorter) tabelaTarefas.getRowSorter()).sort();
     }//GEN-LAST:event_btAumentPrioActionPerformed
 
     private void btSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSubirActionPerformed
@@ -325,23 +334,33 @@ public class PainelFuncoes extends javax.swing.JPanel {
 //        ModeloTabelaTarefasLista modeloTabela = painelTabelaTarefas.getModeloTabela();
         // A linha escolhida na tabela
         int linhaSel = tabelaTarefas.getSelectedRow();
+        LOG_PAINEL_T.debug("Linha tab: " + linhaSel);
 
         // Posição da tarefa no modelo
         int posicaoSelModelo = tabelaTarefas.convertRowIndexToModel(linhaSel);
 
+        LOG_PAINEL_T.debug("Posiçaõ sel mod: " + posicaoSelModelo);
+
         Tarefa tarefaMover = modeloTabela.getTarefas().get(posicaoSelModelo);
+        LOG_PAINEL_T.debug("Prioridade: " + tarefaMover.getPrioridade());
+
+        LOG_PAINEL_T.debug("Tarefa mover: " + tarefaMover.getTitulo());
 
         tarefaMover.diminuiPrio();
         DAOTarefa daoT = new DAOTarefa();
         daoT.atualiza(tarefaMover);
 
-        modeloTabela.fireTableRowsUpdated(linhaSel, linhaSel);
+        LOG_PAINEL_T.debug("Nova prioridade: " + tarefaMover.getPrioridade());
 
+        //  modeloTabela.fireTableRowsUpdated(linhaSel, linhaSel);
+        int idxCol = tabelaTarefas.getColumn("Prioridade").getModelIndex();
+        modeloTabela.fireTableCellUpdated(linhaSel, idxCol);
+        ((TableRowSorter) tabelaTarefas.getRowSorter()).sort();
     }//GEN-LAST:event_btDiminuiPrioActionPerformed
 
     private void btVerComentariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerComentariosActionPerformed
         DialogoVerComentarios verComent = new DialogoVerComentarios(dono,
-               modeloTabela);
+                modeloTabela);
         Tarefa t = modeloTabela.getTarefas().get(tabelaTarefas.
                 convertRowIndexToModel(tabelaTarefas.getSelectedRow()));
         verComent.setTarefa(t);

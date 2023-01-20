@@ -60,26 +60,33 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         modeloTabela = new ModeloTabelaTarefasLista(tabelaTarefas);
         tabelaTarefas.setModel(modeloTabela);
 
-        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
-        sortKeys.add(new RowSorter.SortKey(8, SortOrder.ASCENDING));
+        tabelaTarefas.setAutoCreateRowSorter(true);
+        
+//        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+//        sortKeys.add(new RowSorter.SortKey(8, SortOrder.ASCENDING));
+//
+//        rs = new TableRowSorter<>(modeloTabela);
+//
+//        rs.setSortKeys(sortKeys);
+//        
+//        rs.setComparator(8, Comparator.nullsLast((Integer o1, Integer o2) -> {
+//            if (o1 != null && o2 != null) {
+//                return LOG_PAINEL_T.traceExit("Compare n n", o1.compareTo(o2));
+//            }
+//
+//            if (o1 == null && o2 == null) {
+//                return LOG_PAINEL_T.traceExit("2 n", 0);
+//            } else if (o1 == null) {
+//                return LOG_PAINEL_T.traceExit("1 n", 0);
+//            } else {
+//                return LOG_PAINEL_T.traceExit("2 n", 0);
+//            }
+//        }));
+//        
+//        
+//        
+//        tabelaTarefas.setRowSorter(rs);
 
-        rs = new TableRowSorter<>(modeloTabela);
-
-        // rs.setSortKeys(sortKeys);
-        rs.setComparator(8, Comparator.nullsLast((Integer o1, Integer o2) -> {
-            if (o1 != null && o2 != null) {
-                return LOG_PAINEL_T.traceExit("Compare n n", o1.compareTo(o2));
-            }
-
-            if (o1 == null && o2 == null) {
-                return LOG_PAINEL_T.traceExit("2 n", 0);
-            } else if (o1 == null) {
-                return LOG_PAINEL_T.traceExit("1 n", 0);
-            } else {
-                return LOG_PAINEL_T.traceExit("2 n", 0);
-            }
-        }));
-        tabelaTarefas.setRowSorter(rs);
 
         TableColumnModel colM = tabelaTarefas.getColumnModel();
 

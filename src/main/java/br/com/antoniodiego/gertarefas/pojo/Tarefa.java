@@ -146,10 +146,9 @@ public abstract class Tarefa implements Externalizable, Transferable,
 
     private String status;
 
- 
-    @OneToMany(mappedBy = "tarefa", orphanRemoval = true, 
+    @OneToMany(mappedBy = "tarefa", orphanRemoval = true,
             cascade = CascadeType.ALL)
-   
+
     private List<Comentario> comentarios;
 
     public Tarefa() {
@@ -315,11 +314,11 @@ public abstract class Tarefa implements Externalizable, Transferable,
     }
 
     public void aumentaPrio() {
-        this.prioridade++;
+        ++this.prioridade;
     }
 
     public void diminuiPrio() {
-        this.prioridade--;
+        --this.prioridade;
     }
 
     public LocalDateTime getDataModif() {
