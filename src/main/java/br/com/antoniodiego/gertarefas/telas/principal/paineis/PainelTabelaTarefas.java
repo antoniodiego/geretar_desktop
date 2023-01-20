@@ -1,7 +1,5 @@
 package br.com.antoniodiego.gertarefas.telas.principal.paineis;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -12,8 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
@@ -24,9 +20,10 @@ import org.apache.logging.log4j.Logger;
 import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
-import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.
-        DialogoEditarTarefa;
 import br.com.antoniodiego.gertarefas.util.Utilid;
+import java.util.Arrays;
+import javax.swing.RowSorter.SortKey;
+import javax.swing.SortOrder;
 
 /**
  * O painel expõe o modelo da tabela de tarefas para que os da
@@ -61,9 +58,14 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         tabelaTarefas.setModel(modeloTabela);
 
         tabelaTarefas.setAutoCreateRowSorter(true);
+
+        TableRowSorter<ModeloTabelaTarefasLista> rowS = (TableRowSorter<ModeloTabelaTarefasLista>) tabelaTarefas.getRowSorter();
+        
+        SortKey sk = new TableRowSorter.SortKey(8, SortOrder.ASCENDING);
+        rowS.setSortKeys(Arrays.asList(sk));
         
 //        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
-//        sortKeys.add(new RowSorter.SortKey(8, SortOrder.ASCENDING));
+//        sortKeys.add();
 //
 //        rs = new TableRowSorter<>(modeloTabela);
 //
@@ -86,7 +88,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 //        
 //        
 //        tabelaTarefas.setRowSorter(rs);
-
 
         TableColumnModel colM = tabelaTarefas.getColumnModel();
 
@@ -417,7 +418,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
          */
         modeloSelecao.setSelectionInterval(idxTabela, idxTabela);
     }// GEN-LAST:event_btDescerActionPerformed
-
 
     public JTable getTabelaTarefas() {
         return tabelaTarefas;
