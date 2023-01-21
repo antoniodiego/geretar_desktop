@@ -160,6 +160,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 break;
             case 4:
                 tarefaLinha.setPrioridade((Integer) aValue);
+                tarefaLinha.setDataModif(LocalDateTime.now());
                 break;
             case 5:
                 tarefaLinha.setDataFazer((LocalDate) aValue);
@@ -175,7 +176,6 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 FuncoesTarefas.alteraPosicao(tarefaLinha, (int) aValue);
                 tarefaLinha.setDataModif(LocalDateTime.now());
                 //atualizar posições no modelo
-              
 
                 LOG_MODELO.debug("Recarregando tarefas...");
                 DAOTarefa daoT = new DAOTarefa();
@@ -203,8 +203,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
         DAOTarefa daoT = new DAOTarefa();
         daoT.atualiza(tarefaLinha);
 
-      //  int idx = tarefas.indexOf(tarefaLinha);
-
+        //  int idx = tarefas.indexOf(tarefaLinha);
 //        Utilid.persisteInfoTabela(tabelaTarefas);
 //       
 //

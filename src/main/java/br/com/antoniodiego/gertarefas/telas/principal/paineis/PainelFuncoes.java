@@ -209,10 +209,9 @@ public class PainelFuncoes extends javax.swing.JPanel {
         Integer posicaoAt = tarefaMover.getPosicao();
         LOG_PAINEL_T.debug("Pos at {}", posicaoAt);
 
-        modeloTabela.fireTableRowsUpdated(posicaoSelModelo, posicaoSelModelo);
-
         // Muda a pos da que está na frente pra dela
         Tarefa tLogoFrente = daoT.getByPosicao(posicaoAt - 1);
+        LOG_PAINEL_T.debug("Tarefa a frente: " + tLogoFrente);
 
         if (tLogoFrente == null) {
             //Não tem antes. Simplismente mudar
@@ -221,14 +220,17 @@ public class PainelFuncoes extends javax.swing.JPanel {
             tarefaMover.setDataModif(LocalDateTime.now());
 
             daoT.atualiza(tarefaMover);
+
+            ((TableRowSorter) tabelaTarefas.getRowSorter()).sort();
             return;
         }
 
         int posicaoAnt = modeloTabela.getTarefas().indexOf(tLogoFrente);
-        LOG_PAINEL_T.debug("Posição tarefa: " + posicaoAnt);
-        LOG_PAINEL_T.debug("Posição a frente: " + tLogoFrente);
-        //     modeloTabela.getTarefas().get(posicaoSelModelo - 1);/
+        LOG_PAINEL_T.debug("Posição tarefa ant: " + posicaoAnt);
 
+        tLogoFrente = modeloTabela.getTarefas().get(posicaoAnt);
+
+        //     modeloTabela.getTarefas().get(posicaoSelModelo - 1);/
         LOG_PAINEL_T.debug("T acima {} em {}", tLogoFrente.getTitulo(), posicaoAt - 1);
 
         tLogoFrente.setPosicao(posicaoAt);
@@ -239,6 +241,8 @@ public class PainelFuncoes extends javax.swing.JPanel {
         LOG_PAINEL_T.debug("Próx m {}", posSucMaior);
         tarefaMover.setPosicao(posSucMaior);
         tarefaMover.setDataModif(LocalDateTime.now());
+
+        modeloTabela.fireTableRowsUpdated(posicaoSelModelo, posicaoSelModelo);
 
         daoT.atualiza(tarefaMover);
 
@@ -253,7 +257,8 @@ public class PainelFuncoes extends javax.swing.JPanel {
         daoT.atualiza(tarefaMover);
 
         // modeloTabela.setTarefas(daoT.listaTodas());
-        modeloTabela.ordena();
+        //modeloTabela.ordena();
+        ((TableRowSorter) tabelaTarefas.getRowSorter()).sort();
 
         /**
          * Após a ordenação a seleção é perdida
@@ -264,6 +269,7 @@ public class PainelFuncoes extends javax.swing.JPanel {
         /**
          * Importante não ser duplicada
          */
+        LOG_PAINEL_T.debug(("mudando sel"));
         int idxNovoModelo = modeloTabela.getTarefas().indexOf(tarefaMover);
 
         LOG_PAINEL_T.debug("Novo índice tarefa modelo: {}", idxNovoModelo);

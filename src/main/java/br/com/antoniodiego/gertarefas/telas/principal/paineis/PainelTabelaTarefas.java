@@ -20,6 +20,8 @@ import org.apache.logging.log4j.Logger;
 import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
+import br.com.antoniodiego.gertarefas.telas.renderers.LocalDateRenderer;
+import br.com.antoniodiego.gertarefas.telas.renderers.LocalDateTimeRenderer;
 import br.com.antoniodiego.gertarefas.util.Utilid;
 import java.util.Arrays;
 import javax.swing.RowSorter.SortKey;
@@ -59,11 +61,12 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
         tabelaTarefas.setAutoCreateRowSorter(true);
 
-        TableRowSorter<ModeloTabelaTarefasLista> rowS = (TableRowSorter<ModeloTabelaTarefasLista>) tabelaTarefas.getRowSorter();
-        
+        TableRowSorter<ModeloTabelaTarefasLista> rowS = 
+                (TableRowSorter<ModeloTabelaTarefasLista>) tabelaTarefas.getRowSorter();
+
         SortKey sk = new TableRowSorter.SortKey(8, SortOrder.ASCENDING);
         rowS.setSortKeys(Arrays.asList(sk));
-        
+
 //        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
 //        sortKeys.add();
 //
@@ -88,7 +91,6 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 //        
 //        
 //        tabelaTarefas.setRowSorter(rs);
-
         TableColumnModel colM = tabelaTarefas.getColumnModel();
 
         TableColumn col;
@@ -107,15 +109,18 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                     break;
                 case 3:
                     col.setPreferredWidth(80);
+                    col.setCellRenderer(new LocalDateRenderer());
                     break;
                 case 4:
                     col.setPreferredWidth(40);
                     break;
                 case 5:
                     col.setPreferredWidth(80);
+                    col.setCellRenderer(new LocalDateRenderer());
                     break;
                 case 6:
                     col.setPreferredWidth(80);
+                    col.setCellRenderer(new LocalDateTimeRenderer());
                     break;
                 case 7:
                     col.setPreferredWidth(40);

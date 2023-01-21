@@ -6,13 +6,14 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import br.com.antoniodiego.gertarefas.Constantes;
+import java.time.format.FormatStyle;
 
-public class DeseData extends DefaultTableCellRenderer {
+public class LocalDateRenderer extends DefaultTableCellRenderer {
 
-    private final DateTimeFormatter fd;//SimpleDateFormat fd;
+    private final DateTimeFormatter formatter;
 
-    public DeseData() {
-        fd = DateTimeFormatter.ofPattern("dd/MM/yyyy",Constantes.LOCAL_BR);//SimpleDateFormat("dd/MM/yyyy");
+    public LocalDateRenderer() {
+        formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
     }
 
     /**
@@ -22,9 +23,8 @@ public class DeseData extends DefaultTableCellRenderer {
 
     @Override
     protected void setValue(Object novoValor) {
-   
         LocalDate d = (LocalDate) novoValor;
-        setText((d == null) ? "" : fd.format(d));
+        setText((d == null) ? "" : d.format(formatter));
     }
 
 }

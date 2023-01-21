@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -377,18 +378,22 @@ public abstract class Tarefa implements Externalizable, Transferable,
         this.dataFazer = (LocalDate) in.readObject();
     }
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (obj == this) {
-//            return true;
-//        }
-//        if(obj==null||obj.getClass()!=this.getClass())return false;
-//        Tarefa t = (Tarefa) obj;
-//        return Objects.equals(this.titulo, t.titulo);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(titulo);
-//    }
+    @Override
+    public boolean equals(Object obj) {
+        System.out.println("Equals: " + obj
+                + " " + (this));
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Tarefa t = (Tarefa) obj;
+        return Objects.equals(t.getId(), this.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo);
+    }
 }
