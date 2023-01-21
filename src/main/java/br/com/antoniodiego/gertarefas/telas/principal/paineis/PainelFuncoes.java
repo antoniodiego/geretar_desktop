@@ -12,6 +12,7 @@ import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.DialogoEditarT
 import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalMatisse;
 import static br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
 import br.com.antoniodiego.gertarefas.telas.vercomentarios.DialogoVerComentarios;
+import java.time.LocalDateTime;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableRowSorter;
@@ -168,6 +169,7 @@ public class PainelFuncoes extends javax.swing.JPanel {
         LOG_PAINEL_T.debug("Tarefa akterada: " + tarefaAlterar.getTitulo());
 
         tarefaAlterar.aumentaPrio();
+        tarefaAlterar.setDataModif(LocalDateTime.now());
         DAOTarefa daoT = new DAOTarefa();
         daoT.atualiza(tarefaAlterar);
 
@@ -175,6 +177,10 @@ public class PainelFuncoes extends javax.swing.JPanel {
 
         int idxCol = tabelaTarefas.getColumn("Prioridade").getModelIndex();
         modeloTabela.fireTableCellUpdated(linhaSel, idxCol);
+
+        int idxColM = tabelaTarefas.getColumn("Data modif").getModelIndex();
+
+        modeloTabela.fireTableCellUpdated(linhaSel, idxColM);
         ((TableRowSorter) tabelaTarefas.getRowSorter()).sort();
     }//GEN-LAST:event_btAumentPrioActionPerformed
 
@@ -203,23 +209,38 @@ public class PainelFuncoes extends javax.swing.JPanel {
         Integer posicaoAt = tarefaMover.getPosicao();
         LOG_PAINEL_T.debug("Pos at {}", posicaoAt);
 
-        Integer posSucMaior = daoT.getMaiorPosicao() + 1;
-        LOG_PAINEL_T.debug("Próx m {}", posSucMaior);
-        tarefaMover.setPosicao(posSucMaior);
-        daoT.atualiza(tarefaMover);
+        modeloTabela.fireTableRowsUpdated(posicaoSelModelo, posicaoSelModelo);
 
         // Muda a pos da que está na frente pra dela
-        Tarefa tLogoFrente = modeloTabela.getTarefas().get(posicaoSelModelo - 1);// daoT.getByPosicao(posicaoAt - 1);
+        Tarefa tLogoFrente = daoT.getByPosicao(posicaoAt - 1);
 
         if (tLogoFrente == null) {
+            //Não tem antes. Simplismente mudar
+
+            tarefaMover.setPosicao(posicaoAt - 1);
+            tarefaMover.setDataModif(LocalDateTime.now());
+
+            daoT.atualiza(tarefaMover);
             return;
         }
+
+        int posicaoAnt = modeloTabela.getTarefas().indexOf(tLogoFrente);
+        LOG_PAINEL_T.debug("Posição tarefa: " + posicaoAnt);
+        LOG_PAINEL_T.debug("Posição a frente: " + tLogoFrente);
+        //     modeloTabela.getTarefas().get(posicaoSelModelo - 1);/
 
         LOG_PAINEL_T.debug("T acima {} em {}", tLogoFrente.getTitulo(), posicaoAt - 1);
 
         tLogoFrente.setPosicao(posicaoAt);
 
         LOG_PAINEL_T.debug("Pos {} alt para {}", tLogoFrente.getTitulo(), posicaoAt);
+
+        Integer posSucMaior = daoT.getMaiorPosicao() + 1;
+        LOG_PAINEL_T.debug("Próx m {}", posSucMaior);
+        tarefaMover.setPosicao(posSucMaior);
+        tarefaMover.setDataModif(LocalDateTime.now());
+
+        daoT.atualiza(tarefaMover);
 
         /*
          * Aqui seria importante recarregar a tarefa do banco na tabela da janela
@@ -278,6 +299,7 @@ public class PainelFuncoes extends javax.swing.JPanel {
         DAOTarefa daoT = new DAOTarefa();
 
         tarefasDescer.setPosicao(daoT.getMaiorPosicao() + 1);
+        tarefasDescer.setDataModif(LocalDateTime.now());
         daoT.atualiza(tarefasDescer);
 
         LOG_PAINEL_T.debug("Tarefa movida para o fim. Pos: " + tarefasDescer.getPosicao());
@@ -347,6 +369,7 @@ public class PainelFuncoes extends javax.swing.JPanel {
         LOG_PAINEL_T.debug("Tarefa mover: " + tarefaMover.getTitulo());
 
         tarefaMover.diminuiPrio();
+        tarefaMover.setDataModif(LocalDateTime.now());
         DAOTarefa daoT = new DAOTarefa();
         daoT.atualiza(tarefaMover);
 
@@ -354,7 +377,9 @@ public class PainelFuncoes extends javax.swing.JPanel {
 
         //  modeloTabela.fireTableRowsUpdated(linhaSel, linhaSel);
         int idxCol = tabelaTarefas.getColumn("Prioridade").getModelIndex();
+        int idxColM = tabelaTarefas.getColumn("Data modif").getModelIndex();
         modeloTabela.fireTableCellUpdated(linhaSel, idxCol);
+        modeloTabela.fireTableCellUpdated(linhaSel, idxColM);
         ((TableRowSorter) tabelaTarefas.getRowSorter()).sort();
     }//GEN-LAST:event_btDiminuiPrioActionPerformed
 
