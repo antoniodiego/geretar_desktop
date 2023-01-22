@@ -12,7 +12,11 @@ import br.com.antoniodiego.gertarefas.pojo.Comentario;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalMatisse;
 import java.time.LocalDateTime;
+import javax.swing.BoundedRangeModel;
 import javax.swing.JTextArea;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.plaf.basic.BasicMenuUI;
 import org.hibernate.Session;
 
 /**
@@ -56,14 +60,23 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
 
         System.out.println(rotTar.getFont());
         System.out.println(campoTitulo.getFont());
-        
-           System.out.println(rotTar.getForeground());
+
+        System.out.println(rotTar.getForeground());
         System.out.println(campoTitulo.getForeground());
-        
+
         System.out.println(painelComentarios.getWidth());
         System.out.println(painelComentarios.getPreferredSize());
         System.out.println(spPainelC.getWidth());
         System.out.println(spPainelC.getViewport().getWidth());
+
+        BoundedRangeModel model = spPainelC.getVerticalScrollBar().getModel();
+        model.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                System.out.println("Val: " + model.getValue());
+                System.out.println("Max: " + model.getMaximum());
+            }
+        });
         //  listaComentarios.setCellRenderer(new ComentarioRenderer());
 //        modCom = ((ModeloComentarios) listaComentarios.
 //                getModel());
@@ -221,6 +234,10 @@ public class DialogoVerComentarios extends javax.swing.JDialog {
         //Atualiza linha tabela
         int idx = modeloLista.getTarefas().indexOf(tarefa);
         modeloLista.fireTableRowsUpdated(idx, idx);
+       
+//
+//        int maximum = model.getMaximum();
+//        model.setValue(maximum + 50);
 
         DAOTarefa daoT = new DAOTarefa();
         daoT.atualiza(tarefa);

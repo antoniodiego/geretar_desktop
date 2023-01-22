@@ -9,6 +9,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,10 +20,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
+ * Usa a mesma lista de comentários da tarefa
  *
  * @author anton
  */
-public class PainelComentarios extends javax.swing.JPanel implements Scrollable {
+public class PainelComentarios extends javax.swing.JPanel implements Scrollable, MouseMotionListener {
 
     private List<Comentario> coment;
     private final List<ComponenteComentario> subComponentes;
@@ -35,23 +39,35 @@ public class PainelComentarios extends javax.swing.JPanel implements Scrollable 
         initComponents();
 
         subComponentes = new ArrayList<>();
-
+        this.coment = new ArrayList<>();
         //  setSize(getWidth(), 500);
+
+        //     addMouseListener(new Adap());
+        // addMouseMotionListener(this);
     }
 
+    /**
+     *  * Usa a mesma lista de comentários da tarefa
+     *
+     * @param coment
+     */
     public void setComent(List<Comentario> coment) {
         LOG_C_RENDERER.debug("Set c");
 
         LOG_C_RENDERER.debug("W: " + getWidth());
 
+        //TODO: Usar a mesma lista da tarefa
+        //   this.coment.clear();
+        //    this.coment.addAll(coment);
         this.coment = coment;
         Collections.sort(coment);
 
         int altura = 10;
 
         // coment = coment.subList(0, 3);
+         ComponenteComentario cc;
         for (Comentario c : coment) {
-            ComponenteComentario cc = new ComponenteComentario(0, c);
+           cc = new ComponenteComentario(0, c);
             cc.setaAltura(getWidth());
             //   subComponentes.add(cc);
 
@@ -59,13 +75,21 @@ public class PainelComentarios extends javax.swing.JPanel implements Scrollable 
         }
 
         this.setPreferredSize(new Dimension(getWidth(), altura));
-        System.out.println("Altura painel: " + altura);
+        LOG_C_RENDERER.debug("Altura painel: " + altura);
+
         revalidate();
         repaint();
+
+        this.scrollRectToVisible(new Rectangle(0, altura + 50, getWidth(), 50));
     }
 
     public void add(Comentario c) {
-        this.coment.add(c);
+        LOG_C_RENDERER.traceEntry();
+
+        //  if (!coment.contains(c)) {
+        //   this.coment.add(c);
+        //    }
+        LOG_C_RENDERER.debug("Total coment: " + coment.size());
 
         Collections.sort(coment);
 
@@ -76,8 +100,14 @@ public class PainelComentarios extends javax.swing.JPanel implements Scrollable 
         this.setPreferredSize(new Dimension(getWidth(), getHeight()
                 + cc.getHeight() + 10));
         //System.out.println("Altura painel: " + altura);
+
+        cc.setLocation(0, getHeight()
+                + cc.getHeight() + 10 + 50);
+
         revalidate();
         repaint();
+
+        this.scrollRectToVisible(cc.getBounds());
     }
 
     @Override
@@ -114,13 +144,14 @@ public class PainelComentarios extends javax.swing.JPanel implements Scrollable 
 
         LOG_C_RENDERER.debug("Largura pc: " + getWidth());
 
+        System.out.println("Desen " + coment.size() + " comentários");
 //        g.setColor(Color.GREEN);
 //        g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
         int yC = 10;
         Graphics gC;
         for (Comentario com : coment) {
             ComponenteComentario c = new ComponenteComentario(0, com);
-            System.out.println("Des : " + c);
+            System.out.println("Des : " + c + " pos y " + yC);
             c.setaAltura(getWidth());
             c.setBounds(0, yC, getWidth(), c.getHeight());
             gC = g.create(0, yC, c.getWidth(), c.getHeight());
@@ -136,12 +167,12 @@ public class PainelComentarios extends javax.swing.JPanel implements Scrollable 
 
     @Override
     public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return 50;
     }
 
     @Override
     public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return 50;
     }
 
     @Override
@@ -154,6 +185,36 @@ public class PainelComentarios extends javax.swing.JPanel implements Scrollable 
         return false;
     }
 
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        System.out.println("mouse dra list: " + e.getPoint());
+        Rectangle c = new Rectangle(e.getPoint(), new Dimension(1, 1));
+        scrollRectToVisible(c);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        System.out.println("mouse mov list: " + e.getPoint());
+        Rectangle c = new Rectangle(e.getPoint(), new Dimension(1, 1));
+        scrollRectToVisible(c);
+    }
+
+    private class Adap extends MouseAdapter {
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            System.out.println("mouse mov ad");
+            Rectangle c = new Rectangle(e.getPoint(), new Dimension(1, 1));
+            scrollRectToVisible(c);
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            System.out.println("mouse dra ad");
+            Rectangle c = new Rectangle(e.getPoint(), new Dimension(1, 1));
+            scrollRectToVisible(c);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

@@ -91,4 +91,9 @@ public class Comentario implements Serializable, Comparable<Comentario> {
         return data1.compareTo(data2);
     }
 
+    @Override
+    public String toString() {
+        return this.comentario;
+    }
+
 }

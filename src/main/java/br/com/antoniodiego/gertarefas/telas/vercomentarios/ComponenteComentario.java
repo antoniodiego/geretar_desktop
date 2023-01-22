@@ -150,7 +150,7 @@ public class ComponenteComentario extends Panel {
 //        System.out.println(g2d.getFont());
 //        System.out.println(g2d.getFont().getStyle());
         for (String linha : linhasComent) {
-            System.out.println("Desenhando: " + linha);
+            System.out.println("Desenhando linha: " + linha);
 
             g2d.drawString(linha, marginLeft + 5,
                     yBaseline);

@@ -50,7 +50,7 @@ public class ComentarioRenderer implements ListCellRenderer<Comentario> {
 
         CardComentario cp = new CardComentario(index, value);
 
-//        System.out.println("Desenhando");
+        System.out.println("getComponente: " + value);
 //
 //        System.out.println("Tam: " + cp.getWidth() + " " + cp.getHeight());
 //        String comentario = value.getComentario();
@@ -136,7 +136,7 @@ public class ComentarioRenderer implements ListCellRenderer<Comentario> {
                     x, y);
 
             setaAltura(width);
-            
+
             super.setBounds(x, y, width, height);
         }
 

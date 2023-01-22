@@ -226,7 +226,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
 
     public void removeTarefa(int idx) {
         tarefas.remove(idx);
-        fireTableRowsInserted(idx, idx);
+        fireTableRowsDeleted(idx, idx);
     }
 
     public void setTarefas(List<Tarefa> tarefas) {
