@@ -372,7 +372,7 @@ public class JanPrinMatController {
      */
     public void carregaTarefas() {
         DAOTarefa daoTarefa = new DAOTarefa();
-        List<Tarefa> tarefas = daoTarefa.listaTodas();
+        List<Tarefa> tarefas = daoTarefa.getByConcluida(false);
 
         princ.getPainelTarefas().getModeloTabela().setTarefas(tarefas);
         princ.getPainelTarefas().getModeloTabela().ordena();

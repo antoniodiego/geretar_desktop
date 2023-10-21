@@ -76,6 +76,46 @@ public class DAOTarefa extends DAO {
         return tarefas;
     }
 
+    /**
+     *
+     * @param concluida
+     * @return
+     */
+    //TODO Poderia ser bom adicionar novos estados
+    public List<Tarefa> getByConcluida(Boolean concluida) {
+        getSession().beginTransaction();
+        TypedQuery<Tarefa> queryTarefas = getSession().
+                createQuery("SELECT t FROM TarefaComposta t WHERE "
+                        + "t.concluida = :concluida", Tarefa.class).
+                setParameter("concluida", concluida);
+
+        List<Tarefa> tarefas = queryTarefas.getResultList();
+
+        getSession().getTransaction().commit();
+        return tarefas;
+    }
+
+    /**
+     *
+     * @param titulo
+     * @param concluida
+     * @return
+     */
+    //TODO Poderia ser bom adicionar novos estados
+    public List<Tarefa> getByTituloAndConcluida(String titulo, Boolean concluida) {
+        getSession().beginTransaction();
+        TypedQuery<Tarefa> queryTarefas = getSession().
+                createQuery("SELECT t FROM TarefaComposta t WHERE "
+                        + "t.concluida = :concluida AND t.titulo LIKE :titulo", Tarefa.class).
+                setParameter("concluida", concluida)
+                .setParameter("titulo", "%" + titulo + "%");
+
+        List<Tarefa> tarefas = queryTarefas.getResultList();
+
+        getSession().getTransaction().commit();
+        return tarefas;
+    }
+
     public List<Tarefa> listaTodasSemCommit() {
         // getSession().beginTransaction();
         TypedQuery<Tarefa> queryTarefas = getSession().
@@ -86,7 +126,7 @@ public class DAOTarefa extends DAO {
         // getSession().getTransaction().commit();
         return tarefas;
     }
-    
+
 //    public Tarefa getCarregada(Tarefa t) {
 //        getSession().beginTransaction();
 //       
@@ -107,7 +147,6 @@ public class DAOTarefa extends DAO {
 //        }
 //
 //    }
-
     public Tarefa getByIdPers(Long idPers) {
         getSession().beginTransaction();
         TypedQuery<Tarefa> queryTarefas = getSession().

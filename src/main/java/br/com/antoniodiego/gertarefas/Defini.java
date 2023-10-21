@@ -9,7 +9,7 @@ public class Defini {
     /**
      *
      */
-    public static final String STRING_VER = "2.4.11-beta";
+    public static final String STRING_VER = "2.4.15-beta";
 
     /**
      * Importante

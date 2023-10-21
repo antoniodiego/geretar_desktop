@@ -23,7 +23,7 @@ public interface Constantes {
      * Versão do aplicativo
      */
 
-    public static final String VERS = "2.4.11-beta";
+    public static final String VERS = "2.4.15-beta";
     public static final Locale LOCAL_BR = new Locale("pt", "BR");
     public static final DateTimeFormatter FORMATADOR_DATA_BR_T
             = DateTimeFormatter.ofPattern("dd/MM/u", LOCAL_BR);
