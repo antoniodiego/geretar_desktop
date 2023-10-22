@@ -17,6 +17,7 @@ import javax.swing.JTable;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableRowSorter;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
@@ -202,6 +203,8 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
 
         DAOTarefa daoT = new DAOTarefa();
         daoT.atualiza(tarefaLinha);
+
+        ((TableRowSorter) tabelaTarefas.getRowSorter()).sort();
 
         //  int idx = tarefas.indexOf(tarefaLinha);
 //        Utilid.persisteInfoTabela(tabelaTarefas);
