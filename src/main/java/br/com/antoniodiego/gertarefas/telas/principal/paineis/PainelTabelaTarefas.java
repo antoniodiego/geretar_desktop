@@ -169,11 +169,11 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         painelDeBusca = new javax.swing.JPanel();
         btBuscar = new javax.swing.JButton();
         campoTextoBusca = new javax.swing.JTextField();
+        checkResolvidas = new javax.swing.JCheckBox();
         painelTabela = new javax.swing.JPanel();
         scrollPaneTabela = new javax.swing.JScrollPane();
         tabelaTarefas = new javax.swing.JTable();
 
-        painelDeBusca.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar"));
         painelDeBusca.setMaximumSize(new java.awt.Dimension(32767, 100));
         painelDeBusca.setPreferredSize(new java.awt.Dimension(20, 50));
 
@@ -184,15 +184,20 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
             }
         });
 
+        checkResolvidas.setText("Resolvidas");
+
         javax.swing.GroupLayout painelDeBuscaLayout = new javax.swing.GroupLayout(painelDeBusca);
         painelDeBusca.setLayout(painelDeBuscaLayout);
         painelDeBuscaLayout.setHorizontalGroup(
             painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDeBuscaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(btBuscar)
+                .addGroup(painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelDeBuscaLayout.createSequentialGroup()
+                        .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(btBuscar))
+                    .addComponent(checkResolvidas))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelDeBuscaLayout.setVerticalGroup(
@@ -202,7 +207,8 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
                 .addGroup(painelDeBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoTextoBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscar))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(checkResolvidas))
         );
 
         painelTabela.setLayout(new javax.swing.BoxLayout(painelTabela, javax.swing.BoxLayout.LINE_AXIS));
@@ -259,7 +265,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btBuscarActionPerformed
         String termo = campoTextoBusca.getText();
-        filtraTarefasLPorTit(termo, false);
+        filtraTarefasLPorTit(termo, !checkResolvidas.isSelected());
     }// GEN-LAST:event_btBuscarActionPerformed
 
     /**
@@ -270,17 +276,13 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     private void filtraTarefasLPorTit(String termo, boolean naoFeitas) {
         // TODO OBS Esse proc parece lento
         DAOTarefa daoT = new DAOTarefa();
-        List<Tarefa> todasAsTar = daoT.listaTodas();
+        List<Tarefa> todasAsTar = daoT.getByTituloAndConcluida(termo, !naoFeitas);
+//
+//        Stream<Tarefa> st = todasAsTar.stream();
+//
+//        st = st.filter(t -> t.getTitulo().toLowerCase().contains(termo.toLowerCase()));
 
-        Stream<Tarefa> st = todasAsTar.stream();
-
-        st = st.filter(t -> t.getTitulo().toLowerCase().contains(termo.toLowerCase()));
-
-        if (naoFeitas) {
-            st = st.filter(t -> t.isConcluida() == false);
-        }
-
-        modeloTabela.setTarefas(st.collect(Collectors.toList()));
+        modeloTabela.setTarefas(todasAsTar);//st.collect(Collectors.toList()));
         modeloTabela.ordena();
     }
 
@@ -455,6 +457,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscar;
     private javax.swing.JTextField campoTextoBusca;
+    private javax.swing.JCheckBox checkResolvidas;
     private javax.swing.ButtonGroup grupoDataAgFiltr;
     private javax.swing.JPanel painelDeBusca;
     private javax.swing.JPanel painelTabela;
