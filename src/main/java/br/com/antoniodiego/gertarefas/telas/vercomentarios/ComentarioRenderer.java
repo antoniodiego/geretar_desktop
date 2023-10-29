@@ -31,7 +31,8 @@ import org.davidmoten.text.utils.WordWrap;
  */
 public class ComentarioRenderer implements ListCellRenderer<Comentario> {
 
-    Font f = new Font("Segoe UI", Font.PLAIN, 12);
+    private Font fonteComentario = new Font("Segoe UI", Font.PLAIN, 14);
+     private Font fonteCabecalho = new Font("Segoe UI", Font.BOLD, 14);
     public static final Logger LOG_C_RENDERER = LogManager.
             getLogger("coment_renderer");
 
@@ -72,7 +73,7 @@ public class ComentarioRenderer implements ListCellRenderer<Comentario> {
 //        int alturaRetangulo = 10 + 20 + alturaRegiao + 10;
 //        
 //        cp.setPreferredSize(new Dimension(200, alturaRetangulo));
-        cp.setFont(f);
+        cp.setFont(fonteCabecalho);
 
         return cp;
     }
@@ -85,7 +86,7 @@ public class ComentarioRenderer implements ListCellRenderer<Comentario> {
 
         public CardComentario(int index, Comentario c) {
             this.c = c;
-            setFont(f);
+            setFont(fonteCabecalho);
         }
 
         int marginLeft = 10;
@@ -108,7 +109,7 @@ public class ComentarioRenderer implements ListCellRenderer<Comentario> {
 
             System.out.println("Largura setB: " + (largura - 10));
 
-            FontMetrics fm = getFontMetrics(f);
+            FontMetrics fm = getFontMetrics(fonteCabecalho);
             List<String> linhasComent = WordWrap.from(comentario).
                     breakWords(true).
                     maxWidth(largura - 10).stringWidth((str) -> {
@@ -162,7 +163,7 @@ public class ComentarioRenderer implements ListCellRenderer<Comentario> {
             String comentario = c.getComentario();
 
             System.out.println("Largura paint: " + (largura - 10));
-            FontMetrics fm = getFontMetrics(f);
+            FontMetrics fm = getFontMetrics(fonteComentario);
             List<String> linhasComent = WordWrap.from(comentario).
                     breakWords(true).
                     maxWidth(largura - 10).stringWidth((str) -> {
@@ -189,7 +190,8 @@ public class ComentarioRenderer implements ListCellRenderer<Comentario> {
                     format(DateTimeFormatter.ISO_LOCAL_DATE)
                     + "  " + c.getHora().
                             format(DateTimeFormatter.ISO_LOCAL_TIME);
-            g2d.setFont(f);
+            
+            g2d.setFont(fonteCabecalho);
             g2d.drawString(s,
                     marginLeft + 5, 29);
 

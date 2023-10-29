@@ -12,9 +12,9 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Panel;
-import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,7 +30,9 @@ public class ComponenteComentario extends Panel {
 
     Comentario c;
 
-    Font f = new Font("Dialog", Font.PLAIN, 12);
+    Font fonteComentario = new Font("Arial", Font.PLAIN, 14);
+    Font fonteCabecalho = new Font("Dialog", Font.BOLD, 14);
+
     Color foreg = new Color(51, 51, 51);
 
     public static final Logger LOG_C_RENDERER = LogManager.
@@ -38,7 +40,7 @@ public class ComponenteComentario extends Panel {
 
     public ComponenteComentario(int index, Comentario c) {
         this.c = c;
-        setFont(f);
+        setFont(fonteComentario);
 
     }
 
@@ -56,7 +58,7 @@ public class ComponenteComentario extends Panel {
 
         System.out.println("Largura setA: " + (largura - 10));
 
-        FontMetrics fm = getFontMetrics(f);
+        FontMetrics fm = getFontMetrics(fonteComentario);
         List<String> linhasComent = WordWrap.from(comentario).
                 breakWords(true).
                 maxWidth(largura - 10).stringWidth((str) -> {
@@ -112,7 +114,7 @@ public class ComponenteComentario extends Panel {
         String comentario = c.getComentario();
 
         System.out.println("Largura paint: " + (largura - 10));
-        FontMetrics fm = getFontMetrics(f);
+        FontMetrics fm = getFontMetrics(fonteComentario);
         List<String> linhasComent = WordWrap.from(comentario).
                 breakWords(true).
                 maxWidth(largura - 10).stringWidth((str) -> {
@@ -136,19 +138,20 @@ public class ComponenteComentario extends Panel {
         g2d.draw(retanguloCorpo);
 
         String s = c.getDataComentario().
-                format(DateTimeFormatter.ISO_LOCAL_DATE)
+                format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
                 + "  " + c.getHora().
-                        format(DateTimeFormatter.ISO_LOCAL_TIME);
-        g2d.setFont(f);
+                        format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM));
+        g2d.setFont(fonteCabecalho);
         g2d.setColor(foreg);
         g2d.drawString(s,
-                marginLeft + 5, 12+fm.getAscent());
+                marginLeft + 5, 12 + fm.getAscent());
 
         int yBaseline = 34 + fm.getAscent();
         //    g2d.drawLine(10, yBaseline, largura, yBaseline);
 
 //        System.out.println(g2d.getFont());
 //        System.out.println(g2d.getFont().getStyle());
+        g2d.setFont(fonteComentario);
         for (String linha : linhasComent) {
             System.out.println("Desenhando linha: " + linha);
 
