@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.antoniodiego.gertarefas.telas.principal.paineis;
 
 import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
+import br.com.antoniodiego.gertarefas.telas.detalhes.FrameDetalhes;
 import br.com.antoniodiego.gertarefas.telas.dialogos.editartarefa.DialogoEditarTarefa;
 import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalMatisse;
 import static br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
@@ -69,6 +66,9 @@ public class PainelFuncoes extends javax.swing.JPanel {
         btDescer = new javax.swing.JButton();
         btVerTarefa = new javax.swing.JButton();
         btVerComentarios = new javax.swing.JButton();
+        btDetalhes = new javax.swing.JButton();
+
+        setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         btAumentPrio.setText("Prioridade +");
         btAumentPrio.setToolTipText("Aumentar a prioridade da tarefa");
@@ -115,6 +115,13 @@ public class PainelFuncoes extends javax.swing.JPanel {
             }
         });
 
+        btDetalhes.setText("Detalhes");
+        btDetalhes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDetalhesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,7 +134,8 @@ public class PainelFuncoes extends javax.swing.JPanel {
                     .addComponent(btAumentPrio, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
                     .addComponent(btDescer, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
                     .addComponent(btVerTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                    .addComponent(btVerComentarios, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btVerComentarios, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btDetalhes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -145,7 +153,9 @@ public class PainelFuncoes extends javax.swing.JPanel {
                 .addComponent(btAumentPrio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btDiminuiPrio)
-                .addContainerGap(135, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btDetalhes)
+                .addContainerGap(100, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -398,10 +408,19 @@ public class PainelFuncoes extends javax.swing.JPanel {
         verComent.setVisible(true);
     }//GEN-LAST:event_btVerComentariosActionPerformed
 
+    private void btDetalhesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDetalhesActionPerformed
+        FrameDetalhes frameD = new FrameDetalhes();
+        Tarefa t = modeloTabela.getTarefas().get(tabelaTarefas.convertRowIndexToModel(tabelaTarefas.getSelectedRow()));
+        frameD.setTarefa(t);
+        
+        frameD.setVisible(true);
+    }//GEN-LAST:event_btDetalhesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAumentPrio;
     private javax.swing.JButton btDescer;
+    private javax.swing.JButton btDetalhes;
     private javax.swing.JButton btDiminuiPrio;
     private javax.swing.JButton btSubir;
     private javax.swing.JButton btVerComentarios;

@@ -174,6 +174,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         scrollPaneTabela = new javax.swing.JScrollPane();
         tabelaTarefas = new javax.swing.JTable();
 
+        painelDeBusca.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         painelDeBusca.setMaximumSize(new java.awt.Dimension(32767, 100));
         painelDeBusca.setPreferredSize(new java.awt.Dimension(20, 50));
 
@@ -213,7 +214,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
 
         painelTabela.setLayout(new javax.swing.BoxLayout(painelTabela, javax.swing.BoxLayout.LINE_AXIS));
 
-        tabelaTarefas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabelaTarefas.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         tabelaTarefas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},

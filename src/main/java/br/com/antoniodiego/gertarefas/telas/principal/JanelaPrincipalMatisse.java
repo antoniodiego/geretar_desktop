@@ -88,6 +88,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         splitPaneDireito.setRightComponent(painelFuncoes1);
 
         jToolBar1.setRollover(true);
+        jToolBar1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         btNovaTarefa.setText("Nova tarefa");
         btNovaTarefa.setFocusable(false);
@@ -123,7 +124,10 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         });
         jToolBar1.add(btComentarios);
 
+        barraDeMenus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         menuArquivo.setText("Arquivo");
+        menuArquivo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         itemNovaTarefa.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemNovaTarefa.setText("Nova tarefa");
@@ -206,9 +210,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(splitPaneDireito, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(0, 0, 0)))
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -217,7 +219,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(splitPaneDireito, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
+                .addComponent(splitPaneDireito, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
