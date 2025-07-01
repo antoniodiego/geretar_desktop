@@ -1,0 +1,34 @@
+{
+    "sourceFile": "README.md",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1751340937836,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1751340944937,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,5 +2,8 @@\n #Gerenciador de tarefas\n \n Há modelos de classe UML na pasta docs\n \n+## Dados importantes\n \n+\n+\n"
+                },
+                {
+                    "date": 1751340962250,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,5 +5,5 @@\n \n ## Dados importantes\n \n \n-\n+O projeto deve usar Java 8 e deve ser distribuido como um Jar\n"
+                },
+                {
+                    "date": 1751340970756,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,6 +4,5 @@\n Há modelos de classe UML na pasta docs\n \n ## Dados importantes\n \n-\n-O projeto deve usar Java 8 e deve ser distribuido como um Jar\n+O projeto deve usar Java 8 e deve ser distribuido como um JAR\n"
+                },
+                {
+                    "date": 1751340991136,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,5 +4,5 @@\n Há modelos de classe UML na pasta docs\n \n ## Dados importantes\n \n-O projeto deve usar Java 8  e deve ser distribuido como um JAR\n+O projeto deve usar Java 8 e e deve ser distribuido como um JAR\n"
+                }
+            ],
+            "date": 1751340937836,
+            "name": "Commit-0",
+            "content": "\n#Gerenciador de tarefas\n\nHá modelos de classe UML na pasta docs\n\n\n"
+        }
+    ]
+}

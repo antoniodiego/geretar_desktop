@@ -1,10 +1,12 @@
 package br.com.antoniodiego.gertarefas.model;
 
-import br.com.antoniodiego.gertarefas.persist.daos.DAOTarefa;
+import br.com.antoniodiego.gertarefas.persist.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
-import static br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
-import br.com.antoniodiego.gertarefas.util.FuncoesTarefas;
+import br.com.antoniodiego.gertarefas.service.TarefaService;
 import br.com.antoniodiego.gertarefas.util.Utilid;
+
+import static br.com.antoniodiego.gertarefas.ui.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -174,7 +176,7 @@ public class ModeloTabelaTarefasLista extends AbstractTableModel {
                 tarefaLinha.setDataModif(LocalDateTime.now());
                 break;
             case 8:
-                FuncoesTarefas.alteraPosicao(tarefaLinha, (int) aValue);
+                TarefaService.alteraPosicao(tarefaLinha, (int) aValue);
                 tarefaLinha.setDataModif(LocalDateTime.now());
                 //atualizar posições no modelo
 

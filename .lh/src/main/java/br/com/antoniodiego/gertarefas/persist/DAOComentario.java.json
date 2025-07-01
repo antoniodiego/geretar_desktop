@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/persist/DAOComentario.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751341836233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751341836233,
+            "name": "Commit-0",
+            "content": "/*\n * To change this license header, choose License Headers in Project Properties.\n * To change this template file, choose Tools | Templates\n * and open the template in the editor.\n */\npackage br.com.antoniodiego.gertarefas.persist;\n\nimport br.com.antoniodiego.gertarefas.pojo.Comentario;\nimport br.com.antoniodiego.gertarefas.pojo.Tarefa;\nimport java.util.List;\nimport javax.persistence.RollbackException;\nimport javax.persistence.TypedQuery;\nimport org.apache.logging.log4j.LogManager;\nimport org.apache.logging.log4j.Logger;\nimport org.hibernate.Session;\nimport org.hibernate.query.Query;\n\n/**\n *\n * @author Antônio Diego <antoniodiegoluz at gmail.com>\n */\npublic class DAOComentario extends DAO {\n\n    public static final Logger LOG_DAO_T = LogManager.getLogger(\"dao_tarefas\");\n\n    public List<Comentario> getByTarefa(Tarefa t) {\n        Session ses = getSession();\n        ses.beginTransaction();\n        Query<Comentario> query = ses.createQuery(\"select c from Comentario c\"\n                + \" where c.tarefa = :tarefa\");\n\n        query.setParameter(\"tarefa\", t);\n        \n        List<Comentario> coment = query.list();\n\n        ses.getTransaction().commit();\n        \n        return coment;\n    }\n\n    public void exclui(Tarefa t) {\n        Session ses = getSession();\n        ses.beginTransaction();\n        ses.delete(t);\n\n        try {\n            ses.getTransaction().commit();\n        } catch (RollbackException ex) {\n            ses.getTransaction().rollback();\n        } catch (IllegalStateException ex) {\n\n        }\n    }\n}\n"
+        }
+    ]
+}

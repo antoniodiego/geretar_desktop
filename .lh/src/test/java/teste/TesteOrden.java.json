@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/test/java/teste/TesteOrden.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751341609023,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751341609023,
+            "name": "Commit-0",
+            "content": "/*\n * To change this license header, choose License Headers in Project Properties.\n * To change this template file, choose Tools | Templates\n * and open the template in the editor.\n */\npackage teste;\n\nimport java.time.LocalDate;\nimport java.util.ArrayList;\nimport java.util.List;\n\nimport org.junit.After;\nimport org.junit.AfterClass;\nimport org.junit.Before;\nimport org.junit.BeforeClass;\nimport org.junit.Test;\n\nimport br.com.antoniodiego.gertarefas.pojo.Tarefa;\nimport br.com.antoniodiego.gertarefas.pojo.TarefaComposta;\nimport br.com.antoniodiego.gertarefas.util.Constantes;\n\n/**\n *\n * @author Ant?nio Diego <your.name at your.org>\n */\npublic class TesteOrden {\n\n    public TesteOrden() {\n    \n    }\n\n    @BeforeClass\n    public static void setUpClass() {\n     \n    }\n\n    @AfterClass\n    public static void tearDownClass() {\n    }\n\n    @Before\n    public void setUp() {\n    }\n\n    @After\n    public void tearDown() {\n    }\n\n    // TODO add test methods here.\n    // The methods must be annotated with annotation @Test. For example:\n    //\n    // @Test\n    // public void hello() {}\n    @Test\n    public void testOrd() {\n        List<Tarefa> ts = new ArrayList<>();\n\n        TarefaComposta c = new TarefaComposta();\n        c.setPrioridade(2);\n        ts.add(c);\n\n        TarefaComposta t2 = new TarefaComposta();\n        t2.setPrioridade(0);\n        ts.add(t2);\n\n        TarefaComposta t3 = new TarefaComposta();\n        t3.setPrioridade(3);\n        ts.add(t3);\n\n//        ts.sort(new JanelaPrincipalController.ComparaTarPrio());\n\n        ts.forEach((t) -> {\n            System.out.println(t.getPrioridade());\n        });\n    }\n\n    @Test\n    public void testaExp() {\n\n    }\n\n    @Test\n    public void testaImSun() {\n\n    }\n\n    @Test\n    public void testF() {\n        LocalDate d = LocalDate.now();\n        System.out.println(Constantes.FORMATADOR_DATA_BR_T.format(d));\n    }\n\n}\n"
+        }
+    ]
+}

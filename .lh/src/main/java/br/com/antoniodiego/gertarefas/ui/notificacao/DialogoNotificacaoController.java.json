@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/ui/notificacao/DialogoNotificacaoController.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751340800143,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751340800143,
+            "name": "Commit-0",
+            "content": "/*\n * To change this license header, choose License Headers in Project Properties.\n * To change this template file, choose Tools | Templates\n * and open the template in the editor.\n */\npackage br.com.antoniodiego.gertarefas.ui.notificacao;\n\nimport java.awt.Frame;\nimport java.awt.event.ActionEvent;\nimport javax.swing.AbstractAction;\n\nimport br.com.antoniodiego.gertarefas.ui.adiar.DialogoAdiar;\n\n/**\n *\n * @author Antônoio Diego <antoniodiegoluz at gmail.com>\n */\npublic class DialogoNotificacaoController {\n\n    private DialogoNotificacao dialogoNotif;\n    private final Frame princ;\n\n    /**\n     *\n     * @param princ\n     * @param dNotif\n     */\n    public DialogoNotificacaoController(Frame princ, DialogoNotificacao dNotif) {\n        this.princ = princ;\n        this.dialogoNotif = dNotif;\n\n        dNotif.getRotuloNotif().setText(dNotif.getTarefa().getTitulo());\n\n        dNotif.getBtConcluida().setAction(new AcaoConcluida());\n        dNotif.getBtAdiar().setAction(new AcaoAdiar());\n        dNotif.getBtOk().setAction(new AcaoOK());\n    }\n\n    private class AcaoOK extends AbstractAction {\n\n        public AcaoOK() {\n            super(\"OK\");\n        }\n\n        @Override\n        public void actionPerformed(ActionEvent e) {\n            dialogoNotif.dispose();\n        }\n    }\n\n    private class AcaoAdiar extends AbstractAction {\n\n        public AcaoAdiar() {\n            super(\"Adiar\");\n        }\n\n        @Override\n        public void actionPerformed(ActionEvent e) {\n            DialogoAdiar da = new DialogoAdiar(princ, false);\n            da.setVisible(true);\n        }\n    }\n\n    private class AcaoConcluida extends AbstractAction {\n\n        public AcaoConcluida() {\n            super(\"Conclúida\");\n        }\n\n        @Override\n        public void actionPerformed(ActionEvent e) {\n            dialogoNotif.getTarefa().setConcluida(true);\n            dialogoNotif.dispose();\n        }\n    }\n\n}\n"
+        }
+    ]
+}

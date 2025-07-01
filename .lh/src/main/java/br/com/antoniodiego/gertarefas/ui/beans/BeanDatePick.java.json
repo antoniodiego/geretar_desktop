@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/ui/beans/BeanDatePick.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751341800718,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751341800718,
+            "name": "Commit-0",
+            "content": "/*\n * To change this license header, choose License Headers in Project Properties.\n * To change this template file, choose Tools | Templates\n * and open the template in the editor.\n */\npackage br.com.antoniodiego.gertarefas.ui.beans;\n\nimport java.util.Properties;\n\nimport javax.swing.JFormattedTextField;\n\nimport org.jdatepicker.impl.JDatePanelImpl;\nimport org.jdatepicker.impl.JDatePickerImpl;\n\nimport br.com.antoniodiego.gertarefas.ui.modelos.FormatDatePick;\nimport br.com.antoniodiego.gertarefas.ui.modelos.ModeloData;\n\n/**\n *\n * @author Antônoio Diego <antoniodiegoluz at gmail.com>\n */\npublic class BeanDatePick extends JDatePickerImpl {\n\n   // private JDatePanelImpl painelDataAl;\n\n    private ModeloData modelo;\n    \n    public BeanDatePick() {\n        this(new JDatePanelImpl(new ModeloData(), new Properties()), new FormatDatePick());\n        this.modelo = (ModeloData) this.getModel();\n    }\n\n    public BeanDatePick(JDatePanelImpl datePanel, JFormattedTextField.AbstractFormatter formatter) {\n        super(datePanel, formatter);\n    }\n\n    public ModeloData getModeloDef() {\n        return modelo;\n    } \n}\n"
+        }
+    ]
+}

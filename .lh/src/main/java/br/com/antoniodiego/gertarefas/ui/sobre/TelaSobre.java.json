@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/ui/sobre/TelaSobre.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1751340800158,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1751341609145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n import javax.swing.JDialog;\n import javax.swing.JTextArea;\n \n-import br.com.antoniodiego.gertarefas.Constantes;\n+import br.com.antoniodiego.gertarefas.util.Constantes;\n \n /**\n  *\n  * @author Ant?nio Diego\n"
+                }
+            ],
+            "date": 1751340800158,
+            "name": "Commit-0",
+            "content": "package br.com.antoniodiego.gertarefas.ui.sobre;\n\nimport java.awt.Frame;\n\nimport javax.swing.JDialog;\nimport javax.swing.JTextArea;\n\nimport br.com.antoniodiego.gertarefas.Constantes;\n\n/**\n *\n * @author Ant?nio Diego\n */\npublic class TelaSobre extends JDialog {\n\n    /**\n     *\n     */\n    private static final long serialVersionUID = 1L;\n\n    public TelaSobre(Frame pai) {\n        super(pai);\n        constroi();\n    }\n\n    private void constroi() {\n        setTitle(\"Sobre\");\n        setLocationByPlatform(true);\n        setLocationRelativeTo(this.getOwner());\n        JTextArea areaSobre = new JTextArea();\n        StringBuilder texto = new StringBuilder(\"Gerenciador de Tarefas\\n\");\n        texto.append(\"Vers\\u00E3o: \").append(Constantes.VERS).append(\"\\n\");\n        texto.append(\"Feito por: Ant\\u00F4nio Diego\\n\");\n        texto.append(\"E-mail: antoniodiegoluz@gmail.com\\n\");\n        texto.append(\"Usu\\u00e1rio padr\\u00e3o: \" + Constantes.NOME_USR_PADR + \"\\n Senha: \" + Constantes.SENHA_PADR + \"\\n\");\n      //  texto.append(\"Usu\\u00e1rio atual: \").append(((JanelaPrincipal) this.getOwner()).getControl().getUsuario().getNome());\n        //areaSobre.setText(\"Gerenciador de Tarefas\\n\\nFeito por: \");\n        areaSobre.setText(texto.toString());\n        areaSobre.setEditable(false);\n        add(areaSobre);\n\n        pack();\n    }\n}\n"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/service/BackupService.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1751341896567,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1751342008013,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,11 @@\n package br.com.antoniodiego.gertarefas.service;\r\n \r\n+import org.springframework.stereotype.Service;\r\n+\r\n+@Service\r\n public class BackupService {\r\n-    \r\n+\r\n+    public void backup() {\r\n+        // TODO: Implementar\r\n+    }\r\n }\r\n"
+                }
+            ],
+            "date": 1751341896567,
+            "name": "Commit-0",
+            "content": "package br.com.antoniodiego.gertarefas.service;\r\n\r\npublic class BackupService {\r\n    \r\n}\r\n"
+        }
+    ]
+}

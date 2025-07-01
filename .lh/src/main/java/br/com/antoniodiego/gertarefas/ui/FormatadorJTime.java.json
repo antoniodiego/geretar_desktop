@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/ui/FormatadorJTime.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1751340800146,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1751341609038,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,17 +4,18 @@\n  * and open the template in the editor.\n  */\n package br.com.antoniodiego.gertarefas.ui;\n \n-import br.com.antoniodiego.gertarefas.Constantes;\n import java.text.ParseException;\n import java.time.LocalDate;\n import java.time.LocalTime;\n import java.time.format.DateTimeFormatter;\n import java.time.format.DateTimeFormatterBuilder;\n import java.time.temporal.TemporalAccessor;\n import javax.swing.JFormattedTextField;\n \n+import br.com.antoniodiego.gertarefas.util.Constantes;\n+\n /**\n  * Formatador de datas da API Java Time\n  *\n  * @author Antônio Diego- Comp:Antônio Diego <your.name at your.org>\n"
+                }
+            ],
+            "date": 1751340800146,
+            "name": "Commit-0",
+            "content": "/*\n * To change this license header, choose License Headers in Project Properties.\n * To change this template file, choose Tools | Templates\n * and open the template in the editor.\n */\npackage br.com.antoniodiego.gertarefas.ui;\n\nimport br.com.antoniodiego.gertarefas.Constantes;\nimport java.text.ParseException;\nimport java.time.LocalDate;\nimport java.time.LocalTime;\nimport java.time.format.DateTimeFormatter;\nimport java.time.format.DateTimeFormatterBuilder;\nimport java.time.temporal.TemporalAccessor;\nimport javax.swing.JFormattedTextField;\n\n/**\n * Formatador de datas da API Java Time\n *\n * @author Antônio Diego- Comp:Antônio Diego <your.name at your.org>\n */\npublic class FormatadorJTime extends JFormattedTextField.AbstractFormatter {\n\n    private final DateTimeFormatter fhd;\n    private final boolean tempo;\n\n    public FormatadorJTime(boolean tempo) {\n        this.tempo = tempo;\n        DateTimeFormatterBuilder cons = new DateTimeFormatterBuilder();\n        if (tempo) {\n            cons.appendPattern(\"kk:mm\");\n        } else {\n            cons.appendPattern(\"dd/MM/u\");\n        }\n        fhd = cons.toFormatter(Constantes.LOCAL_BR);\n    }\n\n    @Override\n    public Object stringToValue(String text) throws ParseException {\n        if (text.isEmpty()) {\n            return null;\n        }\n        TemporalAccessor ta = fhd.parse(text);\n        if (tempo) {\n            return LocalTime.from(ta);\n        } else {\n            return LocalDate.from(ta);\n        }\n    }\n\n    @Override\n    public String valueToString(Object value) throws ParseException {\n        TemporalAccessor t = (TemporalAccessor) value;\n        return t == null ? \"\" : fhd.format(t);\n    }\n\n}\n"
+        }
+    ]
+}

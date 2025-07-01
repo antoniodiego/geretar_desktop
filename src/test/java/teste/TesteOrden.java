@@ -15,9 +15,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.antoniodiego.gertarefas.Constantes;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
+import br.com.antoniodiego.gertarefas.util.Constantes;
 
 /**
  *
