@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/ui/modelos/FormatDatePick.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751340800150,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751340800150,
+            "name": "Commit-0",
+            "content": "/*\n * To change this license header, choose License Headers in Project Properties.\n * To change this template file, choose Tools | Templates\n * and open the template in the editor.\n */\npackage br.com.antoniodiego.gertarefas.ui.modelos;\n\nimport java.text.DateFormat;\nimport java.text.ParseException;\nimport java.time.format.DateTimeFormatter;\nimport java.time.format.FormatStyle;\nimport java.util.Date;\nimport java.util.GregorianCalendar;\nimport java.util.Locale;\nimport javax.swing.JFormattedTextField;\n\n/**\n *\n * @author Antônoio Diego <antoniodiegoluz at gmail.com>\n */\npublic class FormatDatePick extends JFormattedTextField.AbstractFormatter{\n    \n        private DateTimeFormatter df = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);\n        private Locale lcBrasil = new Locale(\"pt\", \"BR\");\n        private DateFormat dfB = DateFormat.getDateInstance(DateFormat.SHORT, lcBrasil);\n\n        @Override\n        public Object stringToValue(String text) throws ParseException {\n            Date data = dfB.parse(text);\n            GregorianCalendar gc = new GregorianCalendar(lcBrasil);\n            gc.setTime(data);\n            return gc;\n        }\n\n        @Override\n        public String valueToString(Object value) throws ParseException {\n            GregorianCalendar gc = (GregorianCalendar) value;\n            if(gc== null){\n                return \"\";\n            }\n            Date data = gc.getTime();\n            return dfB.format(data);\n        }\n\n}\n"
+        }
+    ]
+}

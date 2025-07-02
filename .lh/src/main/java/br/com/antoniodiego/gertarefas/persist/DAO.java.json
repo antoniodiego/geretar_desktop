@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/persist/DAO.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751341836230,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751341836230,
+            "name": "Commit-0",
+            "content": "/*\n * To change this license header, choose License Headers in Project Properties.\n * To change this template file, choose Tools | Templates\n * and open the template in the editor.\n */\npackage br.com.antoniodiego.gertarefas.persist;\n\nimport br.com.antoniodiego.gertarefas.pojo.Tarefa;\nimport br.com.antoniodiego.gertarefas.util.HibernateUtil;\nimport org.hibernate.Session;\n\n/**\n *\n * @author Antônio Diego <antoniodiegoluz at gmail.com>\n */\npublic class DAO {\n\n    public static Session getSession() {\n        return HibernateUtil.getInstance().getSessionFactory().getCurrentSession();\n    }\n\n    public void salva(Object o) {\n        Session ses = getSession();\n        ses.beginTransaction();\n        ses.save(o);\n        ses.getTransaction().commit();\n    }\n\n    public void atualiza(Tarefa o) {\n        Session ses = getSession();\n        ses.beginTransaction();\n        ses.update(o);\n        ses.getTransaction().commit();\n    }\n}\n"
+        }
+    ]
+}

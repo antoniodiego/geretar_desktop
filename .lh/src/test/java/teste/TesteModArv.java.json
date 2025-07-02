@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/test/java/teste/TesteModArv.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751340800142,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751340800142,
+            "name": "Commit-0",
+            "content": "/*\n * To change this license header, choose License Headers in Project Properties.\n * To change this template file, choose Tools | Templates\n * and open the template in the editor.\n */\npackage teste;\n\nimport javax.swing.tree.TreePath;\n\nimport org.junit.After;\nimport org.junit.AfterClass;\nimport org.junit.Assert;\nimport org.junit.Before;\nimport org.junit.BeforeClass;\nimport org.junit.Test;\n\nimport br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;\nimport br.com.antoniodiego.gertarefas.ui.modelos.ModeloArvore;\n\n/**\n *\n * @author Antônio Diego <your.name at your.org>\n */\npublic class TesteModArv {\n\n    private ModeloArvore mdA;\n\n    public TesteModArv() {\n        mdA = new ModeloArvore();\n    }\n\n    @BeforeClass\n    public static void setUpClass() {\n\n    }\n\n    @AfterClass\n    public static void tearDownClass() {\n    }\n\n    @Before\n    public void setUp() {\n    }\n\n    @After\n    public void tearDown() {\n    }\n\n    // TODO add test methods here.\n    // The methods must be annotated with annotation @Test. For example:\n    //\n    // @Test\n    // public void hello() {}\n    @Test\n    public void teataGerC() {\n        GrupoTarefas ul = new GrupoTarefas(\"Ul\");\n        GrupoTarefas me = new GrupoTarefas(\"Me\");\n        GrupoTarefas ra = new GrupoTarefas(\"Ra\");\n\n        me.add(ul);\n        ra.add(me);\n\n        TreePath cam = mdA.geraCam(ul);\n        Assert.assertEquals(3, cam.getPathCount());\n        Assert.assertEquals(ra,cam.getPathComponent(0)\n        );\n         Assert.assertEquals(me,cam.getPathComponent(1)\n        );\n          Assert.assertEquals(ul,cam.getPathComponent(2)\n        );\n    }\n}\n"
+        }
+    ]
+}

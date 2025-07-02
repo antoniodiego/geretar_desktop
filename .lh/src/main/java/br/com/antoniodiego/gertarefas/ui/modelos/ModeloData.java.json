@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/ui/modelos/ModeloData.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751340800153,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751340800153,
+            "name": "Commit-0",
+            "content": "/*\n * To change this license header, choose License Headers in Project Properties.\n * To change this template file, choose Tools | Templates\n * and open the template in the editor.\n */\npackage br.com.antoniodiego.gertarefas.ui.modelos;\n\nimport java.time.Instant;\nimport java.time.LocalDate;\nimport java.time.LocalDateTime;\nimport java.time.ZoneId;\nimport java.time.ZoneOffset;\nimport java.time.format.DateTimeFormatter;\nimport java.time.temporal.ChronoField;\nimport java.time.temporal.TemporalField;\nimport java.util.Calendar;\nimport java.util.Date;\nimport org.apache.logging.log4j.LogManager;\nimport org.apache.logging.log4j.Logger;\nimport org.jdatepicker.AbstractDateModel;\n\n/**\n *\n * @author Antônoio Diego <antoniodiegoluz at gmail.com>\n */\npublic class ModeloData extends AbstractDateModel<LocalDate> {\n\n    public static final Logger LOG_MOD_DATA = LogManager.getLogger(ModeloData.class);\n\n    @Override\n    protected Calendar toCalendar(LocalDate from) {\n        LOG_MOD_DATA.traceEntry(from.format(DateTimeFormatter.ISO_DATE));\n\n        Calendar c = Calendar.getInstance();\n        //    LocalDateTime dtMeiaNoite = from.atTime(0, 0,0);\n\n        //  LOG_MOD_DATA.debug(\"Data com hora: \" + dtMeiaNoite.format(DateTimeFormatter.ISO_DATE));\n        //  LOG_MOD_DATA.debug(\"Data \" + dtMeiaNoite.getDayOfMonth());\n        //   Instant inst = dtMeiaNoite.toInstant(ZoneOffset.ofHours(-3));\n        c.set(from.getYear(), from.getMonthValue()-1, from.getDayOfMonth(), 0, 0, 0);\n        //  c.setTime(Date.from(inst));\n\n        LOG_MOD_DATA.debug(\"Data c: \" + c.get(Calendar.DAY_OF_MONTH));\n\n        return c;\n    }\n\n    @Override\n    protected LocalDate fromCalendar(Calendar from) {\n        LOG_MOD_DATA.traceEntry(String.valueOf(from.get(Calendar.DAY_OF_MONTH)));\n\n        Instant ins = from.toInstant();\n\n        LocalDateTime tempoED = LocalDateTime.ofInstant(ins, ZoneId.systemDefault());\n\n        LOG_MOD_DATA.debug(tempoED.getDayOfMonth());\n\n        LocalDate ret = tempoED.toLocalDate();\n\n        LOG_MOD_DATA.debug(ret.getDayOfMonth());\n\n        return ret;\n    }\n}\n"
+        }
+    ]
+}

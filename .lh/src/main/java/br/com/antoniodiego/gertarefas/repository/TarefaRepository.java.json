@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/repository/TarefaRepository.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751341742457,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751341742457,
+            "name": "Commit-0",
+            "content": "package br.com.antoniodiego.gertarefas.repository;\r\n\r\npublic class TarefaRepository {\r\n    \r\n}\r\n"
+        }
+    ]
+}

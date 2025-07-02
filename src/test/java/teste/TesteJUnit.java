@@ -5,10 +5,11 @@
  */
 package teste;
 
-import br.com.antoniodiego.gertarefas.Constantes;
 import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
 import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
 import br.com.antoniodiego.gertarefas.pojo.TarefaCoordenada;
+import br.com.antoniodiego.gertarefas.util.Constantes;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

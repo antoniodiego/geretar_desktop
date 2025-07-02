@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/ui/principal/painelagen/ModeloTabAgend.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751340800156,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751340800156,
+            "name": "Commit-0",
+            "content": "/*\n * To change this license header, choose License Headers in Project Properties.\n * To change this template file, choose Tools | Templates\n * and open the template in the editor.\n */\npackage br.com.antoniodiego.gertarefas.ui.principal.painelagen;\n\nimport br.com.antoniodiego.gertarefas.pojo.Tarefa;\nimport java.util.ArrayList;\nimport java.util.Comparator;\nimport java.util.List;\nimport javax.swing.table.AbstractTableModel;\n\n/**\n *\n * @author Ant�noio Diego <antoniodiegoluz at gmail.com>\n */\npublic class ModeloTabAgend extends AbstractTableModel {\n\n    private static final String[] COLUNAS = new String[]{\"T�tulo\", \"Data de cria��o\"};\n\n    private List<Tarefa> tarefas;\n\n    public ModeloTabAgend() {\n        tarefas = new ArrayList<>();\n    }\n\n    @Override\n    public int getRowCount() {\n        return tarefas.size();\n    }\n\n    @Override\n    public String getColumnName(int column) {\n        return COLUNAS[column];\n    }\n\n    @Override\n    public int getColumnCount() {\n        return COLUNAS.length;\n    }\n\n    @Override\n    public Object getValueAt(int rowIndex, int columnIndex) {\n        Tarefa tarefaLinha = tarefas.get(rowIndex);\n        switch (columnIndex) {\n            case 0:\n                return tarefaLinha.getTitulo();\n            case 1:\n                return tarefaLinha.getDataCriacao();\n            default:\n                //TODO: poderia ser lan uma excessão\n                return null;\n        }\n    }\n\n    public void setTarefas(List<Tarefa> tarefas) {\n        this.tarefas = tarefas;\n        fireTableDataChanged();\n    }\n\n    public void ordena(Comparator<Tarefa> comp) {\n        this.tarefas.sort(comp);\n        fireTableDataChanged();\n    }\n\n    public List<Tarefa> getTarefas() {\n        return tarefas;\n    }\n    \n}\n"
+        }
+    ]
+}

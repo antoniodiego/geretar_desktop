@@ -15,7 +15,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
-import br.com.antoniodiego.gertarefas.telas.modelos.ModeloArvore;
+import br.com.antoniodiego.gertarefas.ui.modelos.ModeloArvore;
 
 /**
  *

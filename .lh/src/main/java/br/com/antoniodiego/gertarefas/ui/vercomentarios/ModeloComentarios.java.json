@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/ui/vercomentarios/ModeloComentarios.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751340800159,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751340800159,
+            "name": "Commit-0",
+            "content": "/*\n * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license\n * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template\n */\npackage br.com.antoniodiego.gertarefas.ui.vercomentarios;\n\nimport br.com.antoniodiego.gertarefas.pojo.Comentario;\nimport java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.List;\nimport javax.swing.AbstractListModel;\n\n/**\n *\n * @author anton\n */\npublic class ModeloComentarios extends AbstractListModel {\n\n    private final List<Comentario> coment;\n\n    public ModeloComentarios() {\n        coment = new ArrayList();\n\n    }\n\n    @Override\n    public int getSize() {\n        return coment.size();\n    }\n\n    public void adiciona(Comentario c) {\n        coment.add(c);\n        int idx = coment.indexOf(c);\n        Collections.sort(coment);\n        fireIntervalAdded(this, idx, idx);\n    }\n\n    public void setComentarios(List<Comentario> comentarios) {\n        this.coment.clear();\n        this.coment.addAll(comentarios);\n\n        //Ordena pela data\n        Collections.sort(coment);\n\n        fireContentsChanged(this, 0, coment.size() - 1);\n    }\n\n    public List<Comentario> getComent() {\n\n        return coment;\n    }\n\n    @Override\n    public Object getElementAt(int index) {\n        return coment.get(index);\n    }\n    \n}\n"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/ui/renderers/LocalDateRenderer.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1751340800157,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1751341609038,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,10 @@\n import java.time.format.DateTimeFormatter;\n \n import javax.swing.table.DefaultTableCellRenderer;\n \n-import br.com.antoniodiego.gertarefas.Constantes;\n+import br.com.antoniodiego.gertarefas.util.Constantes;\n+\n import java.time.format.FormatStyle;\n \n public class LocalDateRenderer extends DefaultTableCellRenderer {\n \n"
+                }
+            ],
+            "date": 1751340800157,
+            "name": "Commit-0",
+            "content": "package br.com.antoniodiego.gertarefas.ui.renderers;\n\nimport java.time.LocalDate;\nimport java.time.format.DateTimeFormatter;\n\nimport javax.swing.table.DefaultTableCellRenderer;\n\nimport br.com.antoniodiego.gertarefas.Constantes;\nimport java.time.format.FormatStyle;\n\npublic class LocalDateRenderer extends DefaultTableCellRenderer {\n\n    private final DateTimeFormatter formatter;\n\n    public LocalDateRenderer() {\n        formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);\n    }\n\n    /**\n     *\n     */\n    private static final long serialVersionUID = 1L;\n\n    @Override\n    protected void setValue(Object novoValor) {\n        LocalDate d = (LocalDate) novoValor;\n        setText((d == null) ? \"\" : d.format(formatter));\n    }\n\n}\n"
+        }
+    ]
+}

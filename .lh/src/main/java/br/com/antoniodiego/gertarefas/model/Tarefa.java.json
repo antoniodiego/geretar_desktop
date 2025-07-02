@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/model/Tarefa.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751341448353,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751341448353,
+            "name": "Commit-0",
+            "content": "package br.com.antoniodiego.gertarefas.model;\r\n\r\nimport java.awt.datatransfer.Clipboard;\r\nimport java.awt.datatransfer.ClipboardOwner;\r\nimport java.awt.datatransfer.DataFlavor;\r\nimport java.awt.datatransfer.Transferable;\r\nimport java.awt.datatransfer.UnsupportedFlavorException;\r\nimport java.io.IOException;\r\nimport java.io.Serializable;\r\nimport java.sql.Date;\r\n\r\n/**\r\n * Classe que representa uma tarefa.\r\n * \r\n * @author Ant?nio Diego\r\n *\r\n */\r\npublic class Tarefa implements Serializable, Transferable, ClipboardOwner {\r\n\tprivate static final long serialVersionUID = -7609111725547109443L;\r\n\tpublic static final DataFlavor SABOR_TAREFA_AN = new DataFlavor(Tarefa.class, null);\r\n\tprivate String conteudo;\r\n\tprivate String titulo;\r\n\tprivate boolean concluida;\r\n\tprivate Date data;\r\n\tprivate Date dataFazer;\r\n\r\n\tpublic Tarefa() {\r\n\t\tthis(\"\",\"\");\r\n\t}\r\n\t\r\n\tpublic Tarefa(String titulo, String conteudo) {\r\n\t\tthis.titulo = titulo;\r\n\t\tthis.conteudo = conteudo;\r\n\t\tthis.concluida = false;\r\n\t}\r\n\r\n\tpublic String getConteudo() {\r\n\t\treturn conteudo;\r\n\t}\r\n\r\n\tpublic String getTitulo() {\r\n\t\treturn titulo;\r\n\t}\r\n\r\n\tpublic void setConteudo(String conteudo) {\r\n\t\tthis.conteudo = conteudo;\r\n\t}\r\n\r\n\tpublic void setTitulo(String titulo) {\r\n\t\tthis.titulo = titulo;\r\n\t}\r\n\r\n\tpublic boolean isConcluida() {\r\n\t\treturn concluida;\r\n\t}\r\n\r\n\tpublic void setConcluida(boolean concluida) {\r\n\t\tthis.concluida = concluida;\r\n\t}\r\n\r\n\t@Override\r\n\tpublic String toString() {\r\n\t\treturn titulo;\r\n\t}\r\n\r\n\t@Override\r\n\tpublic DataFlavor[] getTransferDataFlavors() {\r\n\t\treturn new DataFlavor[] { new DataFlavor(this.getClass(), titulo) };\r\n\t}\r\n\r\n\t@Override\r\n\tpublic boolean isDataFlavorSupported(DataFlavor flavor) {\r\n\t\treturn flavor.isFlavorSerializedObjectType();\r\n\t}\r\n\r\n\t@Override\r\n\tpublic Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {\r\n\t\treturn this;\r\n\t}\r\n\r\n\t@Override\r\n\tpublic void lostOwnership(Clipboard clipboard, Transferable contents) {\r\n\r\n\t}\r\n\r\n\tpublic Date getData() {\r\n\t\treturn data;\r\n\t}\r\n\r\n\tpublic void setData(Date data) {\r\n\t\tthis.data = data;\r\n\t}\r\n\r\n\tpublic Date getDataFazer() {\r\n\t\treturn dataFazer;\r\n\t}\r\n\r\n\tpublic void setDataFazer(Date dataFazer) {\r\n\t\tthis.dataFazer = dataFazer;\r\n\t}\r\n\r\n}\r\n"
+        }
+    ]
+}

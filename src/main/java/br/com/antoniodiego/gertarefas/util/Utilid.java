@@ -5,10 +5,11 @@
  */
 package br.com.antoniodiego.gertarefas.util;
 
-import br.com.antoniodiego.gertarefas.Constantes;
 import br.com.antoniodiego.gertarefas.CriptoUtils;
-import br.com.antoniodiego.gertarefas.telas.principal.JanelaPrincipalMatisse;
-import static br.com.antoniodiego.gertarefas.telas.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
+import br.com.antoniodiego.gertarefas.ui.principal.JanelaPrincipalMatisse;
+
+import static br.com.antoniodiego.gertarefas.ui.principal.paineis.PainelTabelaTarefas.LOG_PAINEL_T;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

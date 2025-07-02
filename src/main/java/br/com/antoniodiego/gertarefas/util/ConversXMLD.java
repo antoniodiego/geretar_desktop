@@ -1,6 +1,5 @@
 package br.com.antoniodiego.gertarefas.util;
 
-import br.com.antoniodiego.gertarefas.Constantes;
 import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;

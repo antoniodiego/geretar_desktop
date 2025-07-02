@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/persist/DAONotifcacao.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751341836284,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751341836284,
+            "name": "Commit-0",
+            "content": "/*\r\n * To change this license header, choose License Headers in Project Properties.\r\n * To change this template file, choose Tools | Templates\r\n * and open the template in the editor.\r\n */\r\npackage br.com.antoniodiego.gertarefas.persist;\r\n\r\nimport br.com.antoniodiego.gertarefas.pojo.Notificacao;\r\nimport br.com.antoniodiego.gertarefas.util.HibernateUtil;\r\nimport java.util.List;\r\nimport org.hibernate.Session;\r\nimport org.hibernate.SessionFactory;\r\n\r\n/**\r\n *\r\n * @author Antônoio Diego <antoniodiegoluz at gmail.com>\r\n */\r\npublic class DAONotifcacao {\r\n\r\n    private HibernateUtil hUtil;\r\n    private SessionFactory sessFact;\r\n\r\n    public DAONotifcacao() {\r\n        hUtil = HibernateUtil.getInstance();\r\n        sessFact = hUtil.getSessionFactory();\r\n    }\r\n\r\n    public List<Notificacao> getAll() {\r\n        Session ses = sessFact.openSession();\r\n        ses.beginTransaction();\r\n        List<Notificacao> n = ses.createQuery(\"select n from Notificacao n\", Notificacao.class).list();\r\n\r\n        try {\r\n            /*\r\n            TODO: Será que é necessario fazer commit mesmo em queries ?\r\n             */\r\n            ses.getTransaction().commit();\r\n        } catch (Exception ex) {\r\n            ses.getTransaction().rollback();\r\n            ses.close();\r\n        }\r\n        return n;\r\n    }\r\n}\r\n"
+        }
+    ]
+}

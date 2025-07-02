@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/br/com/antoniodiego/gertarefas/ui/principal/paineis/PainelAgendamentos.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751340800155,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751340800155,
+            "name": "Commit-0",
+            "content": "/*\n * To change this license header, choose License Headers in Project Properties.\n * To change this template file, choose Tools | Templates\n * and open the template in the editor.\n */\npackage br.com.antoniodiego.gertarefas.ui.principal.paineis;\n\nimport java.awt.GridBagConstraints;\nimport java.awt.GridBagLayout;\nimport javax.swing.JButton;\nimport javax.swing.JPanel;\nimport javax.swing.JScrollPane;\nimport javax.swing.JTable;\n\n/**\n *\n * @author Ant�noio Diego <antoniodiegoluz at gmail.com>\n */\npublic class PainelAgendamentos extends JPanel {\n\n    private JTable tabelaAgendamentos;\n    private JButton btCopiarAmanha;\n\n    public PainelAgendamentos() {\n        GridBagConstraints constPSup = new GridBagConstraints();\n        constPSup.gridx = 0;\n        constPSup.gridy = 0;\n        add(getPainelSup(), constPSup);\n\n        GridBagConstraints constTab = new GridBagConstraints();\n        constTab.gridx = 0;\n        constTab.gridy = 1;\n        add(new JScrollPane(getTabelaAge()), constTab);\n\n        GridBagConstraints constPInf = new GridBagConstraints();\n        constPInf.gridx = 0;\n        constPInf.gridy = 12;\n        add(getPainelInf(), constPInf);\n    }\n\n    private JTable getTabelaAge() {\n        if (tabelaAgendamentos == null) {\n            tabelaAgendamentos = new JTable();\n        }\n\n        return tabelaAgendamentos;\n    }\n\n    private JPanel getPainelSup() {\n        JPanel painelSup = new JPanel(new GridBagLayout());\n\n        return painelSup;\n    }\n\n    private JPanel getPainelInf() {\n        JPanel painelInf = new JPanel(new GridBagLayout());\n\n        btCopiarAmanha = new JButton();\n\n        GridBagConstraints gbcBtCopA = new GridBagConstraints();\n        gbcBtCopA.gridx = 0;\n        gbcBtCopA.gridy = 0;\n\n        painelInf.add(btCopiarAmanha, gbcBtCopA);\n\n        return painelInf;\n\n    }\n}\n"
+        }
+    ]
+}
