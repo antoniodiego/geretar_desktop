@@ -92,6 +92,7 @@ import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
 import br.com.antoniodiego.gertarefas.pojo.TipoVoto;
 import br.com.antoniodiego.gertarefas.pojo.Usuario;
 import br.com.antoniodiego.gertarefas.pojo.Voto;
+import br.com.antoniodiego.gertarefas.service.TarefaService;
 import br.com.antoniodiego.gertarefas.ui.confirmacoes.DialogoConfirmarExcTudo;
 import br.com.antoniodiego.gertarefas.ui.login.TelaLogin;
 import br.com.antoniodiego.gertarefas.ui.modelos.ModeloArvore;
@@ -113,7 +114,7 @@ import net.minidev.json.parser.ParseException;
  *
  * @author Ant�noio Diego <antoniodiegoluz at gmail.com>
  */
-public class JanPrinMatController {
+public class PrincipalController {
 
     private Usuario usuario;
     private DAOGrupos gerg;
@@ -138,8 +139,7 @@ public class JanPrinMatController {
 
     private JanelaPrincipalMatisse view;
     private JTree arvoreTarefas;
-    public static final Logger LOG_CONTR_PRINC = LogManager.
-            getLogger("Controller_Principal");
+    public static final Logger LOG_CONTR_PRINC = LogManager.getLogger("Controller_Principal");
     private AcaoBackup acaoBackup;
     private AcaoExcluirGrupo acaoExG;
     private AcaoRecortar acaoRec;
@@ -178,9 +178,8 @@ public class JanPrinMatController {
             }
         } catch (ClassNotFoundException | InstantiationException
                 | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogoNovaTarView.class.
-                    getName()).log(java.util.logging.Level.SEVERE,
-                            null, ex);
+            java.util.logging.Logger.getLogger(DialogoNovaTarView.class.getName()).log(java.util.logging.Level.SEVERE,
+                    null, ex);
         }
 
         File arquivoProp = new File("propriedades.json");
@@ -219,7 +218,8 @@ public class JanPrinMatController {
 
         EventQueue.invokeLater(() -> {
             // Boas práticas
-            /*Exibe a janela na EDT
+            /*
+             * Exibe a janela na EDT
              */
 
             LOG_CONTR_PRINC.traceEntry();
@@ -231,7 +231,7 @@ public class JanPrinMatController {
     }
 
     public void inicializaSistema() {
-        //Excuta tarefa de inicialização em Thread
+        // Excuta tarefa de inicialização em Thread
         new Thread(new TarefaInicia()).start();
     }
 
@@ -245,126 +245,84 @@ public class JanPrinMatController {
             LOG_CONTR_PRINC.traceEntry();
 
             /*
-             * Faz migração do banco
-             * 
-             */
-            Flyway fw = Flyway.configure().baselineOnMigrate(true).
-                    baselineVersion("0")
-                    .dataSource(HibernateUtil.determinaURIBanco(), "SA", "").
-                    load();
-
-            try {
-                fw.migrate();
-            } catch (FlywayException ex) {
-                if (ex.getCause() instanceof SQLException) {
-                    SQLException excSQL = (SQLException) ex.getCause();
-                    if (excSQL.getCause() instanceof HsqlException) {
-                        HsqlException excHSQL = (HsqlException) excSQL.
-                                getCause();
-                        LOG_CONTR_PRINC.trace(excHSQL.getErrorCode());
-                        LOG_CONTR_PRINC.trace(excHSQL.getLevel());
-                        LOG_CONTR_PRINC.trace(excHSQL.getMessage());
-                        LOG_CONTR_PRINC.trace(excHSQL.getStatementCode());
-                        LOG_CONTR_PRINC.trace(excHSQL.info);
-                    }
-                }
-                LOG_CONTR_PRINC.catching(ex);
-                try {
-                    fw.repair();
-                } catch (FlywayException ex2) {
-
-                }
-            }
-
-            /*
-             * Faz o bootstrap do Hibernate
-             *
-             */
-            HibernateUtil.getInstance().inicia();
-
-            /* Nesse ponto o sist já dev estar inc
-           * A partir daqui já deve ser possível fazer consulta do banco de dados.
-            Seria interessante poder fazer isso mexendo apenas nos models.
-             */
-            carregaTarefas();
-
-            /*
              * Aqui deve ser bom se com com o serv de sinc
-             */ //            LOG_CONTR_PRINC.trace("Inici pro de sincro...");
+             */ // LOG_CONTR_PRINC.trace("Inici pro de sincro...");
             //
-            //            RestTemplate templ = new RestTemplate();
+            // RestTemplate templ = new RestTemplate();
             //
-            //            URI uriInfo = null;
+            // URI uriInfo = null;
             //
-            //            try {
-            //                uriInfo = new URI("http://localhost:8015/sinc/info");
-            //            } catch (URISyntaxException ex) {
-            //                java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            //            }
+            // try {
+            // uriInfo = new URI("http://localhost:8015/sinc/info");
+            // } catch (URISyntaxException ex) {
+            // java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE,
+            // null, ex);
+            // }
             //
-            //            LocalDateTime dataUlSincServ = null;
-            //            try {
-            //                dataUlSincServ = templ.getForObject(uriInfo, LocalDateTime.class);
-            //            } catch (ResourceAccessException ex) {
+            // LocalDateTime dataUlSincServ = null;
+            // try {
+            // dataUlSincServ = templ.getForObject(uriInfo, LocalDateTime.class);
+            // } catch (ResourceAccessException ex) {
             //
-            //                Throwable cause = ex.getCause();
-            //                if (cause instanceof ConnectException) {
-            //                    // Provavelmente o serv está offline
-            //                    // Obs: talvez fosse bom apenas igonorar
-            //                    // JOptionPane.showMessageDialog(view, "Houve uma falha de comunicão com o
-            //                    // servidor");
-            //                    LOG_CONTR_PRINC.info("Houve uma falha de comunicão com o servidor");
-            //                    return;
-            //                }
-            //            }
+            // Throwable cause = ex.getCause();
+            // if (cause instanceof ConnectException) {
+            // // Provavelmente o serv está offline
+            // // Obs: talvez fosse bom apenas igonorar
+            // // JOptionPane.showMessageDialog(view, "Houve uma falha de comunicão com o
+            // // servidor");
+            // LOG_CONTR_PRINC.info("Houve uma falha de comunicão com o servidor");
+            // return;
+            // }
+            // }
             //
-            //            LOG_CONTR_PRINC.debug("Data ul atu rec " + dataUlSincServ);
+            // LOG_CONTR_PRINC.debug("Data ul atu rec " + dataUlSincServ);
             //
-            //            if (dataUlSincServ == null) {
-            //                // Primeiro cl a se con. Enviar dados
+            // if (dataUlSincServ == null) {
+            // // Primeiro cl a se con. Enviar dados
             //
-            //                HttpHeaders head = new HttpHeaders();
-            //                head.add("Accept", MediaType.APPLICATION_XML_VALUE);
-            //                head.setContentType(MediaType.APPLICATION_XML);
+            // HttpHeaders head = new HttpHeaders();
+            // head.add("Accept", MediaType.APPLICATION_XML_VALUE);
+            // head.setContentType(MediaType.APPLICATION_XML);
             //
-            //                RestTemplate reT = new RestTemplate();
-            //                //    GrupoTarefas gr = usuario.getGrupoRaiz();
+            // RestTemplate reT = new RestTemplate();
+            // // GrupoTarefas gr = usuario.getGrupoRaiz();
             //
-            //                List<GrupoTarefas> subG = gr.getSubgrupos();
-            //                LOG_CONTR_PRINC.trace("Qaunt g: " + subG.size());
-            //                GrupoTarefas g1 = subG.get(0);
-            //                LOG_CONTR_PRINC.debug("Envi: " + g1);
-            //                br.com.antoniodiego.gertarefas.pojo.Tarefa tar1 = g1.get(0);
-            //                LocalDate data = tar1.getDataCriacao();
+            // List<GrupoTarefas> subG = gr.getSubgrupos();
+            // LOG_CONTR_PRINC.trace("Qaunt g: " + subG.size());
+            // GrupoTarefas g1 = subG.get(0);
+            // LOG_CONTR_PRINC.debug("Envi: " + g1);
+            // br.com.antoniodiego.gertarefas.pojo.Tarefa tar1 = g1.get(0);
+            // LocalDate data = tar1.getDataCriacao();
             //
-            //                HttpEntity<GrupoTarefas> reB = new HttpEntity<>(g1, head);
+            // HttpEntity<GrupoTarefas> reB = new HttpEntity<>(g1, head);
             //
-            //                URI uriEnviaGrupo = null;
+            // URI uriEnviaGrupo = null;
             //
-            //                try {
-            //                    uriEnviaGrupo = new URI("http://localhost:8015/grupo/");
-            //                } catch (URISyntaxException ex) {
-            //                    java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            //                }
+            // try {
+            // uriEnviaGrupo = new URI("http://localhost:8015/grupo/");
+            // } catch (URISyntaxException ex) {
+            // java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE,
+            // null, ex);
+            // }
             //
-            //                try {
-            //                    LOG_CONTR_PRINC.trace("Fazendo requi...");
-            //                    GrupoTarefas gt = reT.postForObject(uriEnviaGrupo, reB, GrupoTarefas.class);
+            // try {
+            // LOG_CONTR_PRINC.trace("Fazendo requi...");
+            // GrupoTarefas gt = reT.postForObject(uriEnviaGrupo, reB, GrupoTarefas.class);
             //
-            //                    if (gt != null) {
-            //                        LOG_CONTR_PRINC.info("Grupo enviado +");
-            //                    } else {
-            //                        LOG_CONTR_PRINC.error("Falha no envio");
-            //                    }
-            //                } catch (RestClientException ex) {
-            //                    ex.printStackTrace();
+            // if (gt != null) {
+            // LOG_CONTR_PRINC.info("Grupo enviado +");
+            // } else {
+            // LOG_CONTR_PRINC.error("Falha no envio");
+            // }
+            // } catch (RestClientException ex) {
+            // ex.printStackTrace();
             //
-            //                    if (ex instanceof HttpClientErrorException) {
-            //                        HttpClientErrorException hce = (HttpClientErrorException) ex;
-            //                        LOG_CONTR_PRINC.error("Corpo resp: " + hce.getResponseBodyAsString());
-            //                    }
-            //                }
-            //            }
+            // if (ex instanceof HttpClientErrorException) {
+            // HttpClientErrorException hce = (HttpClientErrorException) ex;
+            // LOG_CONTR_PRINC.error("Corpo resp: " + hce.getResponseBodyAsString());
+            // }
+            // }
+            // }
         }
     }
 
@@ -372,24 +330,29 @@ public class JanPrinMatController {
      * Carrega tarefas do banco e exibe na tela
      */
     public void carregaTarefas() {
-        DAOTarefa daoTarefa = new DAOTarefa();
-        List<Tarefa> tarefas = daoTarefa.getByConcluida(false);
+        List<Tarefa> tarefas = carregaTarefasNaoConcluidas();
+        atualizaTabelaTarefas(tarefas);
+    }
 
+    private void atualizaTabelaTarefas(List<Tarefa> tarefas) {
         princ.getPainelTarefas().getModeloTabela().setTarefas(tarefas);
         princ.getPainelTarefas().getModeloTabela().ordena();
-        //  princ.getPainelTarefas().getRs().sort();
-
         LOG_CONTR_PRINC.trace(tarefas.size() + " Tarefas carregadas no"
                 + " modelo da tabela");
     }
 
+    private List<Tarefa> carregaTarefasNaoConcluidas() {
+        TarefaService tarefaService = new TarefaService();
+        return tarefaService.getTarefasNaoConcluidas();
+    }
+
     /**
      *
-     * @param antiga Versão antiga [atual no modelo]
+     * @param antiga     Versão antiga [atual no modelo]
      * @param versaoNova
      */
     public void atualizaTarefa(Tarefa antiga, Tarefa versaoNova) {
-        //Faz tarefa ser recarregada
+        // Faz tarefa ser recarregada
 
         ModeloTabelaTarefasLista modelo = princ.getPainelTarefas()
                 .getModeloTabela();
@@ -404,8 +367,7 @@ public class JanPrinMatController {
     private void configuraIconeBandeja() {
         if (SystemTray.isSupported()) {
             SystemTray st = SystemTray.getSystemTray();
-            ImageIcon imageIcGer = new ImageIcon(JanelaPrincipalMatisse.class.
-                    getResource("/imagens/icone lapis.png"));
+            ImageIcon imageIcGer = new ImageIcon(JanelaPrincipalMatisse.class.getResource("/imagens/icone lapis.png"));
 
             iconeGeretar = new TrayIcon(imageIcGer.getImage(), "Gerenciador de"
                     + " tarefas " + Constantes.VERS);
@@ -454,7 +416,7 @@ public class JanPrinMatController {
                 // TODO: Corrigir exc aqui
                 List<Notificacao> notifPerd = nots.stream()
                         .filter(notif -> (notif.getHoraExibicao() != null
-                        && notif.getHoraExibicao().isBefore(LocalDateTime.now())))
+                                && notif.getHoraExibicao().isBefore(LocalDateTime.now())))
                         .filter(notif -> !notif.isFoiExibida()).collect(Collectors.toList());
 
                 modTabNotif.setNotif(notifPerd);
@@ -501,7 +463,7 @@ public class JanPrinMatController {
                 LOG_CONTR_PRINC.debug("Seleção nula");
                 grupoDaAtu = null;
                 tarefaExibida = null;
-//                atualizaExibicaoTarefa(null);
+                // atualizaExibicaoTarefa(null);
                 acaoEditar.setEnabled(false);
                 return;
             }
@@ -526,13 +488,13 @@ public class JanPrinMatController {
                     // }
                     // this.noGrupo = grupoPai;
                     tarefaExibida = t;
-//                    atualizaExibicaoTarefa(t);
+                    // atualizaExibicaoTarefa(t);
                     acaoEditar.setEnabled(true);
                 } else if (sel instanceof GrupoTarefas) {
                     LOG_CONTR_PRINC.debug("Grupo folha!");
                     // noGrupo = sel;
                     grupoDaAtu = (GrupoTarefas) sel;
-//                    atualizaExibicaoTarefa(null);
+                    // atualizaExibicaoTarefa(null);
                     LOG_CONTR_PRINC.debug("Nome: " + grupoDaAtu);
                 } else {
                     LOG_CONTR_PRINC.debug("N? folha n?o GrupoTarefas nem Tar");
@@ -546,7 +508,7 @@ public class JanPrinMatController {
                     // System.out.println("Sel grupo ramo: " + sel);
 
                     grupoDaAtu = (GrupoTarefas) sel;
-//                    atualizaExibicaoTarefa(null);
+                    // atualizaExibicaoTarefa(null);
                 } else {
                     /*
                      * Neste ponto um nó ramo foi selecionado, mas que não foi um grupo
@@ -558,7 +520,7 @@ public class JanPrinMatController {
                 }
             }
 
-//            atualizaEstadoDosMenusBotoes();
+            // atualizaEstadoDosMenusBotoes();
         }
     };
 
@@ -569,7 +531,7 @@ public class JanPrinMatController {
             Object fi1 = filAlt[0];
             if (fi1 == tarefaExibida) {
                 // Alterada aponta para a mesma que está send exib
-//                atualizaExibicaoTarefa((Tarefa) fi1);
+                // atualizaExibicaoTarefa((Tarefa) fi1);
             }
         }
 
@@ -859,14 +821,14 @@ public class JanPrinMatController {
         modAg.setAg(agen);
     }
 
-//    /**
-//     * Faz a conexao e carregamento dos dados do banco
-//     */
-//    public void inicializa() {
-//        LOG_CONTR_PRINC.traceEntry("Inicando Thread de inic");
-//        Thread th = new Thread(new TarefaInicia());
-//       th.start();
-//    }
+    // /**
+    // * Faz a conexao e carregamento dos dados do banco
+    // */
+    // public void inicializa() {
+    // LOG_CONTR_PRINC.traceEntry("Inicando Thread de inic");
+    // Thread th = new Thread(new TarefaInicia());
+    // th.start();
+    // }
     /**
      * Sincroniza com backend
      */
@@ -891,7 +853,8 @@ public class JanPrinMatController {
             try {
                 uriInfo = new URI("http://localhost:8015/sinc/info");
             } catch (URISyntaxException ex) {
-//                java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                // java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE,
+                // null, ex);
             }
 
             LocalDateTime dataUlSincServ = templ.getForObject(uriInfo, LocalDateTime.class);
@@ -1105,9 +1068,9 @@ public class JanPrinMatController {
                 grupInserir = (GrupoTarefas) sel;
                 // noGrin = noIn;
             } // else if (noIn.equals(noPrinc)) {
-            // System.out.println("Soltando em raiz");
-            // grupInserir = null;
-            // }
+              // System.out.println("Soltando em raiz");
+              // grupInserir = null;
+              // }
             else {
                 System.out.println("Não esta soltand em grupo");
                 return false;
@@ -1218,7 +1181,7 @@ public class JanPrinMatController {
                     Tarefa.TAREFA_FLAVOR) /*
                                            * || support.isDataFlavorSupported(br.diego.gertarefas.core.Tarefa.
                                            * SABOR_TAREFA_AN)
-                     */) {
+                                           */) {
                 podeIm = true;
             } else if (support.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                 podeIm = true;
@@ -1338,7 +1301,7 @@ public class JanPrinMatController {
              * ainda mais eficiente se os gupos cujas tarefas mais prio tive mesmo valor,
              * ficasse no topo os que tivesse mais de uma dela.
              */
- /*
+            /*
              * Os itens considerados maiores ficam no fim da lista e os menores no início,
              * por isso deve ser bom que os de maiores prioridades devem ser considerados
              * menores
@@ -1362,7 +1325,7 @@ public class JanPrinMatController {
                  * valor dele seria corr à tarefa de maior prio que fosse encontrada.
                  */
 
- /*
+                /*
                  * Aqui parece que, se os subgrupos tivessem ordenados esse algo funcionaria
                  * melhor, pois as de maior pri est nos prim grupos
                  */
@@ -1720,7 +1683,7 @@ public class JanPrinMatController {
             grupoRaiz = map.readValue(f, GrupoTarefas.class);
 
         } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(JanPrinMatController.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalController.class.getName()).log(Level.SEVERE, null, ex);
 
             return null;
         }
@@ -1849,14 +1812,15 @@ public class JanPrinMatController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-//            int linhaSel = view.getPainelLista().getTabelaTarefas().getSelectedRow();
-//            if (linhaSel == -1) {
-//                return;
-//            }
-//            int idxMod = view.getPainelLista().getTabelaTarefas().convertRowIndexToModel(linhaSel);
-//            Tarefa tarSel = modeloTab.getTarefas().get(idxMod);
-//            tarSel.setPrioridade(tarSel.getPrioridade() - 1);
-//            ordenadorTabelaLista.sort();
+            // int linhaSel = view.getPainelLista().getTabelaTarefas().getSelectedRow();
+            // if (linhaSel == -1) {
+            // return;
+            // }
+            // int idxMod =
+            // view.getPainelLista().getTabelaTarefas().convertRowIndexToModel(linhaSel);
+            // Tarefa tarSel = modeloTab.getTarefas().get(idxMod);
+            // tarSel.setPrioridade(tarSel.getPrioridade() - 1);
+            // ordenadorTabelaLista.sort();
         }
     }
 
@@ -1868,15 +1832,16 @@ public class JanPrinMatController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-//            int linhaSel = view.getPainelLista().getTabelaTarefas().getSelectedRow();
-//            if (linhaSel == -1) {
-//                return;
-//            }
-//            int idxMod = view.getPainelLista().getTabelaTarefas().convertRowIndexToModel(linhaSel);
-//            Tarefa tarSel = modeloTab.getTarefas().get(idxMod);
-//            tarSel.setPrioridade(tarSel.getPrioridade() + 1);
-//            tarSel.setDataModif(LocalDateTime.now());
-//            ordenadorTabelaLista.sort();
+            // int linhaSel = view.getPainelLista().getTabelaTarefas().getSelectedRow();
+            // if (linhaSel == -1) {
+            // return;
+            // }
+            // int idxMod =
+            // view.getPainelLista().getTabelaTarefas().convertRowIndexToModel(linhaSel);
+            // Tarefa tarSel = modeloTab.getTarefas().get(idxMod);
+            // tarSel.setPrioridade(tarSel.getPrioridade() + 1);
+            // tarSel.setDataModif(LocalDateTime.now());
+            // ordenadorTabelaLista.sort();
         }
     }
 
@@ -1888,9 +1853,9 @@ public class JanPrinMatController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-//            PainelListaTarefas painelLista = view.getPainelLista();
-//            String termo = painelLista.getCampoTextoBusca().getText();
-//            filtraTarefasLPorTit(termo, false);
+            // PainelListaTarefas painelLista = view.getPainelLista();
+            // String termo = painelLista.getCampoTextoBusca().getText();
+            // filtraTarefasLPorTit(termo, false);
         }
     }
 

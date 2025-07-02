@@ -14,7 +14,8 @@ import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 
-import br.com.antoniodiego.gertarefas.controller.JanPrinMatController;
+import br.com.antoniodiego.gertarefas.controller.PrincipalController;
+import net.bytebuddy.description.annotation.AnnotationDescription.Latent;
 
 /**
  * Ponto de entrada do programa
@@ -42,26 +43,8 @@ public class Principal {
 
     public static final void main(String[] args) {
         System.out.println("main");
-
-        LOG_PRINC.traceEntry();
-
-        LOG_PRINC.trace("Configurando loggers...");
         configuraLogger();
-
-        LOG_ARQUIVO.traceEntry();
-        LOG_PRINC.traceEntry();
-        JanPrinMatController contPrinc = new JanPrinMatController();
-
-        contPrinc.instanciaJanelaPrincipal();
-
-        contPrinc.exibeJanelaPrincipal();
-        contPrinc.inicializaSistema();
-
-        if (DESENV == false) {
-            // TODO: Desativar debug
-        }
-
-        LOG_ARQUIVO.traceExit();
+        inicializarSistema();
     }
 
     private static void configuraLogger() {
@@ -71,7 +54,51 @@ public class Principal {
         LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
         Configuration cf = ctx.getConfiguration();
 
-        // LoggerConfig confLogRoot= cf.getLoggerConfig("root");
+        String caminhoArquivoLogger = constroiCaminhoArquivoLog();
+
+        Appender appenderArquivo = constroiFileAppender(caminhoArquivoLogger);
+
+        adicionaAppender(appenderArquivo, cf);
+        appenderArquivo.start();
+
+        // System.out.println("Level Root "+ confLogRoot.getLevel());
+        System.out.println("Atualizando loggers...");
+
+        // confLogRoot.setLevel(Level.ERROR);
+        ctx.updateLoggers();
+
+        // System.out.println("Level Root "+ confLogRoot.getLevel());
+        LOG_ARQUIVO.debug("Loggers configurados");
+        LOG_PRINC.debug("Loggers configurados");
+    }
+
+    private static void adicionaAppender(Appender appender, Configuration confLogGered) {
+        LoggerConfig confLogArquivo = confLogGered.getLoggerConfig("saida_para_arquivo");
+        confLogArquivo.setLevel(Level.TRACE);
+        confLogArquivo.addAppender(appender, Level.TRACE, null);
+
+        LoggerConfig confLogPrincipal = confLogGered.getLoggerConfig("principal");
+        confLogPrincipal.addAppender(appender, Level.TRACE, null);
+    }
+
+    private static Layout<String> constroiLayout() {
+        return PatternLayout.newBuilder()
+                .withPattern("%d{HH:mm:ss} %-5level %logger{36} %class{36} %L %M %m%n").build();
+    }
+
+    private static FileAppender constroiFileAppender(String caminhoArquivoLogger) {
+        return FileAppender.newBuilder().withName("arquivo").withFileName(caminhoArquivoLogger.toString())
+                .withAppend(true)
+                .withLayout(constroiLayout())
+                .build();
+    }
+
+    /**
+     * Constroi o caminho do arquivo de log
+     */
+    private static String constroiCaminhoArquivoLog() {
+        // TODO: Implementar a construção do caminho do arquivo de log
+          // LoggerConfig confLogRoot= cf.getLoggerConfig("root");
         // System.out.println("Level Root "+ confLogRoot.getLevel());
         // Caminho arquivo
         StringBuilder caminhoArquivoLogger = new StringBuilder("logs/");
@@ -94,32 +121,24 @@ public class Principal {
         caminhoArquivoLogger.append(".log");
 
         System.out.println("Caminho arquivo: " + caminhoArquivoLogger.toString());
-
-        Layout<String> la = PatternLayout.newBuilder()
-                .withPattern("%d{HH:mm:ss} %-5level %logger{36} %class{36} %L %M %m%n").build();
-
-        Appender arqu = FileAppender.newBuilder().withName("arquivo").withFileName(caminhoArquivoLogger.toString())
-                .withAppend(true)
-                .withLayout(la)
-                .build();
-
-        arqu.start();
-        LoggerConfig confLogArquivo = cf.getLoggerConfig("saida_para_arquivo");
-        confLogArquivo.setLevel(Level.TRACE);
-        confLogArquivo.addAppender(arqu, Level.TRACE, null);
-
-        LoggerConfig confLogGered = cf.getLoggerConfig("principal");
-        confLogGered.addAppender(arqu, Level.TRACE, null);
-
-        // System.out.println("Level Root "+ confLogRoot.getLevel());
-        System.out.println("Atualizando loggers...");
-
-        // confLogRoot.setLevel(Level.ERROR);
-        ctx.updateLoggers();
-
-        // System.out.println("Level Root "+ confLogRoot.getLevel());
-        LOG_ARQUIVO.debug("Loggers configurados");
-        LOG_PRINC.debug("Loggers configurados");
+        return caminhoArquivoLogger.toString();
     }
 
+    /**
+     * Inicializa o sistema
+     */
+    private static void inicializarSistema() {
+        PrincipalController contPrinc = new PrincipalController();
+
+        contPrinc.instanciaJanelaPrincipal();
+
+        contPrinc.exibeJanelaPrincipal();
+        contPrinc.inicializaSistema();
+    }
+
+    private void verificaModoDesenvolvimento() {
+        if (DESENV == false) {
+            // TODO: Desativar debug
+        }
+    }
 }

@@ -268,6 +268,7 @@ public class PainelTabelaTarefas extends javax.swing.JPanel {
         filtraTarefasLPorTit(termo, !checkResolvidas.isSelected());
     }// GEN-LAST:event_btBuscarActionPerformed
 
+    
     /**
      *
      * @param termo

@@ -199,4 +199,13 @@ public class TarefaService {
         DAOTarefa daoT = new DAOTarefa();
         deslocaTarefasBaixo(daoT.getMaiorPosicao(), posicaoCima);
     }
+
+    /**
+     * Retorna todas as tarefas não concluídas
+     * @return
+     */
+    public List<Tarefa> getTarefasNaoConcluidas() {
+        DAOTarefa daoT = new DAOTarefa();
+        return daoT.getByConcluida(false);
+    }
 }

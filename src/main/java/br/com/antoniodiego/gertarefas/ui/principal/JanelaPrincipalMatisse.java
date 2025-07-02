@@ -1,6 +1,6 @@
 package br.com.antoniodiego.gertarefas.ui.principal;
 
-import br.com.antoniodiego.gertarefas.controller.JanPrinMatController;
+import br.com.antoniodiego.gertarefas.controller.PrincipalController;
 import br.com.antoniodiego.gertarefas.persist.DAOTarefa;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.ui.dialogos.editartarefa.DialogoEditarTarefa;
@@ -249,7 +249,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void btNovaTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovaTarefaActionPerformed
-        JanPrinMatController.LOG_CONTR_PRINC.trace("Item nova tar");
+        PrincipalController.LOG_CONTR_PRINC.trace("Item nova tar");
 
         DialogoNovaTarView dialogoNovaTar = new DialogoNovaTarView(this,
                 painelTabelaTarefas1.getModeloTabela());
@@ -276,7 +276,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     }//GEN-LAST:event_miExcluirTarefaActionPerformed
 
     private void itemNovaTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNovaTarefaActionPerformed
-        JanPrinMatController.LOG_CONTR_PRINC.trace("Item nova tar");
+        PrincipalController.LOG_CONTR_PRINC.trace("Item nova tar");
 
         DialogoNovaTarView dialogoNovaTar = new DialogoNovaTarView(this, 
                 painelTabelaTarefas1.getModeloTabela());
@@ -345,13 +345,13 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
         });
     }
 
-    private JanPrinMatController controller;
+    private PrincipalController controller;
 
-    public JanPrinMatController getController() {
+    public PrincipalController getController() {
         return controller;
     }
 
-    public void setController(JanPrinMatController controller) {
+    public void setController(PrincipalController controller) {
         this.controller = controller;
     }
 
