@@ -14,12 +14,12 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
@@ -52,28 +52,23 @@ import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.TransferHandler;
-import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
-import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import javax.swing.tree.TreePath;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.flywaydb.core.Flyway;
-import org.flywaydb.core.api.FlywayException;
-import org.hsqldb.HsqlException;
 import org.springframework.web.client.RestTemplate;
 import org.w3c.dom.DOMException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import br.com.antoniodiego.gertarefas.exportacao_backup.TransfXMLT;
 import br.com.antoniodiego.gertarefas.model.ModeloTabAgend;
@@ -105,8 +100,6 @@ import br.com.antoniodiego.gertarefas.ui.principal.paineis.PainelListaTarefas;
 import br.com.antoniodiego.gertarefas.util.Constantes;
 import br.com.antoniodiego.gertarefas.util.ConversXML;
 import br.com.antoniodiego.gertarefas.util.ConversXMLD;
-import br.com.antoniodiego.gertarefas.util.HibernateUtil;
-import java.io.FileReader;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
@@ -379,30 +372,7 @@ public class PrincipalController {
     }
 
     private void configuraIconeBandeja() {
-        if (SystemTray.isSupported()) {
-            SystemTray st = SystemTray.getSystemTray();
-            ImageIcon imageIcGer = new ImageIcon(JanelaPrincipalMatisse.class.getResource("/imagens/icone lapis.png"));
-
-            iconeGeretar = new TrayIcon(imageIcGer.getImage(), "Gerenciador de"
-                    + " tarefas " + Constantes.VERS);
-
-            PopupMenu menuPopUp = new PopupMenu();
-            MenuItem sair = new MenuItem("Sair");
-            sair.addActionListener((ActionEvent e) -> {
-                System.exit(0);
-            });
-
-            menuPopUp.add(sair);
-            try {
-                st.add(iconeGeretar);
-            } catch (AWTException ex) {
-                LOG_CONTR_PRINC.catching(ex);
-            }
-
-            iconeGeretar.setPopupMenu(menuPopUp);
-            iconeGeretar.addActionListener(acIconeBand);
-        }
-
+       
     }
 
     /**
@@ -1659,23 +1629,8 @@ public class PrincipalController {
      * @param saida
      */
     // XXX:Perguntar sobrescre
-    private void exportaXMLParaS(OutputStream saida) throws IOException {
-        ObjectMapper map = new XmlMapper();
-        map.registerModule(new JavaTimeModule());
-        map.registerModule(new Hibernate5Module().configure(Hibernate5Module.Feature.FORCE_LAZY_LOADING, true));
-
-        map.writeValue(saida, usuario.getGrupoRaiz());
-
-        // String tarefasComoXML = converteTodasAsTarefasParaXML();
-        // LOG_CONTR_PRINC.debug("XML Gerado trans s: {} ", tarefasComoXML);
-        // OutputStreamWriter writer = new OutputStreamWriter(saida,
-        // proprie.getProperty("encoding-exporta",
-        // "UTF-8"));//"UTF-8");
-        // try ( //saida.write(xml.getBytes());
-        // BufferedWriter ea = new BufferedWriter(writer)) {
-        // ea.write(xml);
-        // ea.flush();
-        // }
+    private void exportaXMLParaS(OutputStream saida) t {
+    
     }
 
     private String converteTodasAsTarefasParaXML() {
