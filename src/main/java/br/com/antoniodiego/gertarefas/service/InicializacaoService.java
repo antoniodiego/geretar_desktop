@@ -17,6 +17,7 @@ public class InicializacaoService {
 
     public void inicializar() {
         fazerMigracaoBanco();
+        fazerBootstrapHibernate();
     }
 
     private void fazerMigracaoBanco() {

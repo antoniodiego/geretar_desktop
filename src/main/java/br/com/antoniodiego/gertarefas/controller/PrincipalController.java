@@ -92,6 +92,7 @@ import br.com.antoniodiego.gertarefas.pojo.TarefaComposta;
 import br.com.antoniodiego.gertarefas.pojo.TipoVoto;
 import br.com.antoniodiego.gertarefas.pojo.Usuario;
 import br.com.antoniodiego.gertarefas.pojo.Voto;
+import br.com.antoniodiego.gertarefas.service.InicializacaoService;
 import br.com.antoniodiego.gertarefas.service.TarefaService;
 import br.com.antoniodiego.gertarefas.ui.confirmacoes.DialogoConfirmarExcTudo;
 import br.com.antoniodiego.gertarefas.ui.login.TelaLogin;
@@ -165,23 +166,12 @@ public class PrincipalController {
 
     public void instanciaJanelaPrincipal() {
         princ = new JanelaPrincipalMatisse();
-
         princ.setController(this);
+        configuraLookAndFeel();
+        carregaPropriedades();
+    }
 
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                System.out.println("LAF: " + info.getName());
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException
-                | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogoNovaTarView.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        }
-
+    private void carregaPropriedades() {
         File arquivoProp = new File("propriedades.json");
 
         if (arquivoProp.exists()) {
@@ -214,6 +204,22 @@ public class PrincipalController {
 
     }
 
+    private void configuraLookAndFeel() {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            System.out.println("LAF: " + info.getName());
+            if ("Nimbus".equals(info.getName())) {
+                try {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                } catch (ClassNotFoundException | InstantiationException
+                        | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+                    java.util.logging.Logger.getLogger(DialogoNovaTarView.class.getName()).log(java.util.logging.Level.SEVERE,
+                            null, ex);
+                }
+                break;
+            }
+        }
+    }
+
     public void exibeJanelaPrincipal() {
 
         EventQueue.invokeLater(() -> {
@@ -230,21 +236,15 @@ public class PrincipalController {
         });
     }
 
+
     public void inicializaSistema() {
         // Excuta tarefa de inicialização em Thread
         new Thread(new TarefaInicia()).start();
     }
 
-    /**
-     * Deve fazer a inicialização do programa
-     */
-    private class TarefaInicia implements Runnable {
-
-        @Override
-        public void run() {
-            LOG_CONTR_PRINC.traceEntry();
-
-            /*
+    private void sincronizaDados() {
+        // TODO: Implementar a sincronização de dados
+          /*
              * Aqui deve ser bom se com com o serv de sinc
              */ // LOG_CONTR_PRINC.trace("Inici pro de sincro...");
             //
@@ -323,6 +323,20 @@ public class PrincipalController {
             // }
             // }
             // }
+    }
+
+    /**
+     * Deve fazer a inicialização do programa
+     */
+    private class TarefaInicia implements Runnable {
+
+        @Override
+        public void run() {
+            LOG_CONTR_PRINC.traceEntry();
+
+            InicializacaoService inicializacaoService = new InicializacaoService();
+            inicializacaoService.inicializar();
+            carregaTarefas();
         }
     }
 
