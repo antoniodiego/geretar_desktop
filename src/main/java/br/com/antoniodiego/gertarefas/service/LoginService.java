@@ -111,9 +111,7 @@ public class LoginService {
         return usuario;
     }
 
-    private boolean mantem;
-    
-    public void fazLogin() {
+    public void fazLogin(boolean mantemSalvo) {
         loginLogger.trace("Iniciando processo de login");
         // Combinação de nome e senha
         // usuario = dialogoLogin.getUsuario();
@@ -125,7 +123,7 @@ public class LoginService {
         }
 
         // db = new BancoDadosTarefas(usuario);
-        if (mantem) {
+        if (mantemSalvo) {
             // Mantém login
             // this.configService.setProperty("manter", "true");
             // this.configService.setProperty("usuario", usuario.getNome());

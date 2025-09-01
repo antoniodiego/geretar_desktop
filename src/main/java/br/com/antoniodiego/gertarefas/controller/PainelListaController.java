@@ -43,6 +43,7 @@ public class PainelListaController {
     private TableRowSorter ordenadorTabelaLista;
     private Tarefa tarefaExibida;
 
+    private AdicCam acaoAdic;
     /**
      * Nesse método as tarefas são carregadas do banco
      */
@@ -81,6 +82,18 @@ public class PainelListaController {
 
     public ModeloTabelaTarefasLista getModeloTab() {
         return modeloTab;
+    }
+
+       private class AdicCam extends AbstractAction {
+
+        public AdicCam() {
+            super("Adicionar");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            modeloTabelaTarefa.novaCoordenada();
+        }
     }
 
     private class AcaoVotProc extends AbstractAction {

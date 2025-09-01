@@ -47,24 +47,14 @@ import br.com.antoniodiego.gertarefas.ui.principal.JanelaPrincipalMatisse;
  */
 public class PrincipalController {
 
-    private Usuario usuario;
-
-   
-   
-
-    
+    private Usuario usuario;    
 
     private JanelaPrincipalMatisse view;
     private JTree arvoreTarefas;
     public static final Logger LOG_CONTR_PRINC = LogManager.getLogger("Controller_Principal");
-    
-   
-
-    private AdicCam acaoAdic;
-
+    private JButton botaAdd;
     private JButton botaRem;
-    
-    private AcaoExcluirTudo acaoExT;
+  
 
     private AcaoAtalho acaoCriAt;
 
@@ -204,6 +194,9 @@ public class PrincipalController {
         confPainNotif();
     }
 
+    private void confPainelAg() {
+      
+    }
 
     private void confPainelTarefasLista() {
         /*
@@ -249,37 +242,12 @@ public class PrincipalController {
     }
 
 
-
-    private class AdicCam extends AbstractAction {
-
-        public AdicCam() {
-            super("Adicionar");
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            modeloTabela.novaCoordenada();
-        }
-    }
-
-   
-
-    // Fim ações//
- 
-
-  
-
     /**
      * Exibe a tela de login
      */
     private void permiss\u00e3oECarrega() {
         dialogoLogin.setVisible(true);
     }
-
-
-    
-   
-
    
 
     private void fazMigraçãoBanco() {

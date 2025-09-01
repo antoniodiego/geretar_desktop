@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import br.com.antoniodiego.gertarefas.service.LoginService;
 
+/**
+ * Controlador da tela de login
+ */
 public class TelaLoginController {
      /**
      *

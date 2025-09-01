@@ -22,7 +22,8 @@ public class GerenciamentoService {
     private BackupService backupService;
     private LoginService loginService;
     private Consumer<String> consumer;
-
+  
+    private AcaoExcluirTudo acaoExT;
     private JComponent view;
     
     private DialogoConfirmarExcTudo dialogoConf; // = new DialogoConfirmarExcTudo(view);
