@@ -4,31 +4,25 @@ import java.time.LocalDateTime;
 
 import javax.swing.AbstractAction;
 
+import br.com.antoniodiego.gertarefas.pojo.Tarefa;
 import br.com.antoniodiego.gertarefas.pojo.TipoVoto;
 import br.com.antoniodiego.gertarefas.pojo.Voto;
-import javafx.event.ActionEvent;
+import java.awt.event.*;
 
 public class VotoService {
+
     
-    private class AcaoVotProc extends AbstractAction {
-
-        public AcaoVotProc() {
-            super("Proclastinei");
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (tarefaExibida != null) {
-                Voto votoPro = new Voto(TipoVoto.Proclastinei);
-                tarefaExibida.getVotos().add(votoPro);
-                tarefaExibida.aumentaPrio();
-                ordenadorTabelaLista.sort();
-                daoUsuario.flush();
-            }
+    public void adicionaVotoProclastinacao(Tarefa t) {
+        if (t != null) {
+            Voto votoPro = new Voto(TipoVoto.Proclastinei);
+            t.getVotos().add(votoPro);
+            t.aumentaPrio();
+          //  ordenadorTabelaLista.sort();
+            
         }
     }
 
-      private class AcaoVotoLembrei extends AbstractAction {
+    private class AcaoVotoLembrei extends AbstractAction {
 
         public AcaoVotoLembrei() {
             super("Lembrei");
@@ -36,9 +30,11 @@ public class VotoService {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            tarefaExibida.aumentaPrio();
-            tarefaExibida.setDataModif(LocalDateTime.now());
-            ordenadorTabelaLista.sort();
+            // tarefaExibida.aumentaPrio();
+            // tarefaExibida.setDataModif(LocalDateTime.now());
+            // ordenadorTabelaLista.sort();
+
+            // TODO
         }
     }
 

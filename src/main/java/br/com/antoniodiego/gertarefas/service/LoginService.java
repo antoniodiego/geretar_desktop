@@ -26,19 +26,19 @@ public class LoginService {
             // Sess?o salva
             loginLogger.trace("Manter estava em prop!");
 
-            String nomeUsuarioSalvo = propriedadeService.getConfig("usuario","");
-            String hash = propriedadeService.getConfig("hash","");
+            String nomeUsuarioSalvo = propriedadeService.getConfig("usuario", "");
+            String hash = propriedadeService.getConfig("hash", "");
 
             usuario = daoUsuario.receUPorH(nomeUsuarioSalvo, hash);
 
-         //   daoUsuario.setUsu(usuario);
+            // daoUsuario.setUsu(usuario);
 
-           // exibeGrupos();
+            // exibeGrupos();
         } else if (propriedadeService.getConfig("exibirLogin", "false").equalsIgnoreCase("true")) {
             // N?o tem sess?o e atividao login no in?cio.
             loginLogger.trace("Exibindo tela login");
             // dialogoLogin.setModal(true);
-           // permissaoECarrega();
+            // permissaoECarrega();
         } else {
             // N?o tem sess?o e nem atividao login no in?cio.
             loginLogger.trace("dir carr");
@@ -47,7 +47,7 @@ public class LoginService {
             // OBS: anal load e get e refresh
             loginLogger.trace("Procurando usu pad");
             Usuario padr\u00e3o = daoUsuario.receU(Constantes.NOME_USR_PADR, Constantes.SENHA_PADR.toCharArray());
-            loginLogger .trace("Busca conc");
+            loginLogger.trace("Busca conc");
 
             // Salva usu?rio pad?ro se n?o existir
             if (padr\u00e3o == null) {
@@ -95,7 +95,7 @@ public class LoginService {
 
         // preencheATabela();
 
-       // this.gerg.setUsu(usuario);
+        // this.gerg.setUsu(usuario);
 
         DAOTarefa daoT = new DAOTarefa();
         Long maiorId = daoT.getMaiorIDPers();
@@ -111,10 +111,12 @@ public class LoginService {
         return usuario;
     }
 
+    private boolean mantem;
+    
     public void fazLogin() {
         loginLogger.trace("Iniciando processo de login");
         // Combinação de nome e senha
-     //   usuario = dialogoLogin.getUsuario();
+        // usuario = dialogoLogin.getUsuario();
 
         // Não permite login se não tem usuário
         if (daoUsuario.receUPorH(usuario.getNome(), usuario.getEmb()) == null) {
@@ -122,26 +124,26 @@ public class LoginService {
             return;
         }
 
-      
-
         // db = new BancoDadosTarefas(usuario);
         if (mantem) {
             // Mantém login
-            this.proprie.setProperty("manter", "true");
-            proprie.setProperty("usuario", usuario.getNome());
-            proprie.setProperty("hash", usuario.getEmb());
-            gravaProp();
+            // this.configService.setProperty("manter", "true");
+            // this.configService.setProperty("usuario", usuario.getNome());
+            // this.configService.setProperty("hash", usuario.getEmb());
+            // gravaProp();
         } else {
-            this.proprie.setProperty("manter", "false");
-            proprie.setProperty("hash", "");
-            gravaProp();
+            // this.configService.setProperty("manter", "false");
+            // this.configService.setProperty("hash", "");
+            // gravaProp();
         }
 
         // dialogoLogin.limpa();
         // dialogoLogin.dispose();
 
         loginLogger.trace("Exibindo grupos...");
-        exibeGrupos();
+
+        // TODO:noif
+        // exibeGrupos();
 
         loginLogger.trace("Saindo do processo de login");
     }

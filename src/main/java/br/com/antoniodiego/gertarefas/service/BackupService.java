@@ -13,5 +13,7 @@ public class BackupService {
         // TODO: Implementar
     }
 
-    
+    public void fazBackupB() {
+        // TODO: Implementar
+    }
 }

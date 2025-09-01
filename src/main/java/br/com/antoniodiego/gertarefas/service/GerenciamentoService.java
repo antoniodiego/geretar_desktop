@@ -5,9 +5,10 @@ import java.util.function.Consumer;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
+import javax.swing.JComponent;
 
-import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import br.com.antoniodiego.gertarefas.ui.confirmacoes.DialogoConfirmarExcTudo;
 import java.awt.event.*;
@@ -22,6 +23,17 @@ public class GerenciamentoService {
     private LoginService loginService;
     private Consumer<String> consumer;
 
+    private JComponent view;
+    
+    private DialogoConfirmarExcTudo dialogoConf; // = new DialogoConfirmarExcTudo(view);
+    public GerenciamentoService(JComponent v, Consumer<String> cons) {
+        this.view = v;
+        this.consumer = cons;
+        this.backupService = new BackupService();
+        this.loginService = new LoginService();
+
+        this.dialogoConf = new DialogoConfirmarExcTudo(null);
+    }
     /**
      *
      */
@@ -34,7 +46,7 @@ public class GerenciamentoService {
         @Override
         public void actionPerformed(ActionEvent e) {
             // TODO: Executar sql bakup com execupdate
-            daoUsuario.fazBackupB();
+           backupService.fazBackupB();
         }
 
     }
@@ -47,7 +59,7 @@ public class GerenciamentoService {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            DialogoConfirmarExcTudo dialogoConf = new DialogoConfirmarExcTudo(view);
+            DialogoConfirmarExcTudo dialogoCon; //new DialogoConfirmarExcTudo(view);
 
             dialogoConf.setVisible(true);
 
@@ -76,13 +88,9 @@ public class GerenciamentoService {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                // TODO: Reinicicar
-                loginService.carregaUsuarioEDados();
-                // TODO: Atualizar tab. rec usu
-            } catch (SQLException ex) {
-                logerGer.error("Erro ao reiniciar banco", ex);
-            }
+            // TODO: Reinicicar
+            loginService.carregaUsuarioEDados();
+            // TODO: Atualizar tab. rec usu
             System.out.println("Reiniciou banco!");
             // TODO: Exib JOpP
         }

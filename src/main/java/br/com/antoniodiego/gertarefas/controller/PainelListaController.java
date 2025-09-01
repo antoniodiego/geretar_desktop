@@ -17,6 +17,8 @@ import br.com.antoniodiego.gertarefas.model.ModeloTabAgend;
 import br.com.antoniodiego.gertarefas.model.ModeloTabelaTarefasLista;
 import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
+import br.com.antoniodiego.gertarefas.pojo.TipoVoto;
+import br.com.antoniodiego.gertarefas.pojo.Voto;
 import br.com.antoniodiego.gertarefas.service.LoginService;
 import br.com.antoniodiego.gertarefas.ui.modelos.ModeloTabelaTarefa;
 import br.com.antoniodiego.gertarefas.ui.principal.paineis.PainelListaTarefas;
@@ -39,6 +41,7 @@ public class PainelListaController {
     private ModeloTabelaTarefa modeloTabelaTarefa;
 
     private TableRowSorter ordenadorTabelaLista;
+    private Tarefa tarefaExibida;
 
     /**
      * Nesse método as tarefas são carregadas do banco
@@ -78,6 +81,24 @@ public class PainelListaController {
 
     public ModeloTabelaTarefasLista getModeloTab() {
         return modeloTab;
+    }
+
+    private class AcaoVotProc extends AbstractAction {
+
+        public AcaoVotProc() {
+            super("Proclastinei");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (tarefaExibida != null) {
+                Voto votoPro = new Voto(TipoVoto.Proclastinei);
+                tarefaExibida.getVotos().add(votoPro);
+                tarefaExibida.aumentaPrio();
+                ordenadorTabelaLista.sort();
+
+            }
+        }
     }
 
     private class AcaoAumentaPrio extends AbstractAction {
@@ -192,8 +213,6 @@ public class PainelListaController {
 
         ordenadorTabelaLista.sort();
     }
-
-    
 
     public TableRowSorter getOrdenadorTabelaLista() {
         return ordenadorTabelaLista;

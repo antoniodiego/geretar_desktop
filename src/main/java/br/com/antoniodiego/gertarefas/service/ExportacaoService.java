@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
@@ -15,14 +18,25 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import br.com.antoniodiego.gertarefas.controller.PrincipalController;
 import br.com.antoniodiego.gertarefas.pojo.GrupoTarefas;
 import br.com.antoniodiego.gertarefas.pojo.Tarefa;
+import br.com.antoniodiego.gertarefas.ui.modelos.ModeloArvore;
 import br.com.antoniodiego.gertarefas.util.ConversXMLD;
 
 public class ExportacaoService {
-    
+
+    private Logger logExpo = LoggerFactory.getLogger("exportacao");
+    private PropriedadesService proprie = new PropriedadesService();
+    private LoginService usuarioService = new LoginService();
+private ModeloArvore modeloArvore;
+
+    ExportacaoService(ModeloArvore modeloArvore) {
+        this.modeloArvore = modeloArvore;
+    }
+
     private String converteTodasAsTarefasParaXML() {
         ConversXMLD c = new ConversXMLD();
-        c.setCharsetSaida(proprie.getProperty("encoding-exporta", "UTF-8"));
-        String xml = c.geraXML(usuario.getGrupoRaiz().getSubgrupos(), usuario.getGrupoRaiz().getTarefas());
+        c.setCharsetSaida(proprie.getConfig("encoding-exporta", "UTF-8"));
+        String xml = c.geraXML(usuarioService.getUsuario().getGrupoRaiz().getSubgrupos(),
+                usuarioService.getUsuario().getGrupoRaiz().getTarefas());
 
         return xml;
     }
@@ -49,17 +63,17 @@ public class ExportacaoService {
     private void salvaDadosLidosUsandoDOM(File ar) {
         List<Object> gt = importaXMLComDOM(ar);
 
-        LOG_CONTR_PRINC.debug("Adicionando no usu {} itens lidos...", gt.size());
+        logExpo.debug("Adicionando no usu {} itens lidos...", gt.size());
 
         gt.forEach((Object o) -> {
             if (o instanceof GrupoTarefas) {
                 GrupoTarefas gl = (GrupoTarefas) o;
                 // Add para alterar pai
-                modeloArv.insere(usuario.getGrupoRaiz(), gl);
+                modeloArvore.insere(usuarioService.getUsuario().getGrupoRaiz(), gl);
             } else if (o instanceof Tarefa) {
                 System.out.println("Taref enc im");
                 // Add de GrupT para alterar pai
-                modeloArv.insere(usuario.getGrupoRaiz(), o);
+                modeloArvore.insere(usuarioService.getUsuario().getGrupoRaiz(), o);
             }
         });
     }
@@ -71,14 +85,14 @@ public class ExportacaoService {
      */
     private List<Object> importaXMLComDOM(File f) {
         ConversXMLD cx = new ConversXMLD();
-        cx.setCharsetEntrada(proprie.getProperty("encoding-importacao", "UTF-8"));
+        cx.setCharsetEntrada(proprie.getConfig("encoding-importacao", "UTF-8"));
         FileInputStream en = null;
         try {
-            en = new FileInputStream(arquivoEs);
+            en = new FileInputStream(f);
         } catch (FileNotFoundException ex) {
-            LOG_CONTR_PRINC.catching(ex);
+            logExpo.error("Arquivo não encontrado", ex);
         }
-        System.out.println("Interpretando...");
+        logExpo.info("Interpretando...");
         List<Object> gt = cx.leGrupoETars(en);
         return gt;
     }
