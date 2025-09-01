@@ -1,4 +1,4 @@
-package br.com.antoniodiego.gertarefas.ui.sobre_2;
+package br.com.antoniodiego.gertarefas.ui;
 
 import java.awt.Frame;
 import javax.swing.JDialog;
@@ -10,14 +10,14 @@ import br.com.antoniodiego.gertarefas.util.Constantes;
  *
  * @author Ant?nio Diego
  */
-public class TelaSobre extends JDialog {
+public class TelaSobreV2 extends JDialog {
 
     /**
      *
      */
     private static final long serialVersionUID = 1L;
 
-    public TelaSobre(Frame pai) {
+    public TelaSobreV2(Frame pai) {
         super(pai);
         constroi();
     }

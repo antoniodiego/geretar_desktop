@@ -15,6 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.com.antoniodiego.gertarefas.util.Utilid;
+import javafx.event.ActionEvent;
+
+import javax.swing.AbstractAction;
 import javax.swing.JTable;
 import net.minidev.json.JSONObject;
 
@@ -29,8 +32,24 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
      */
     public JanelaPrincipalMatisse() {
         initComponents();
+         configuraLookAndFeel();
     }
 
+      private void configuraLookAndFeel() {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            System.out.println("LAF: " + info.getName());
+            if ("Nimbus".equals(info.getName())) {
+                try {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                } catch (ClassNotFoundException | InstantiationException
+                        | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+                    java.util.logging.Logger.getLogger(DialogoNovaTarView.class.getName()).log(java.util.logging.Level.SEVERE,
+                            null, ex);
+                }
+                break;
+            }
+        }
+    }
     public PainelTabelaTarefas getPainelTarefas() {
         return painelTabelaTarefas1;
     }
@@ -350,6 +369,7 @@ public class JanelaPrincipalMatisse extends javax.swing.JFrame {
     public PrincipalController getController() {
         return controller;
     }
+    
 
     public void setController(PrincipalController controller) {
         this.controller = controller;

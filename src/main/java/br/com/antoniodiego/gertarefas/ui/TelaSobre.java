@@ -1,4 +1,4 @@
-package br.com.antoniodiego.gertarefas.ui.sobre;
+package br.com.antoniodiego.gertarefas.ui;
 
 import java.awt.Frame;
 

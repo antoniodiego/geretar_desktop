@@ -26,6 +26,11 @@ public class DAOGrupos {
         fabS = hu.getSessionFactory();
     }
 
+    public DAOGrupos() {
+        hu = new HibernateUtil();
+        fabS = hu.getSessionFactory();
+    }
+    
 //    /**
 //     * Lista todos os grupos do banco
 //     *
@@ -108,7 +113,7 @@ public class DAOGrupos {
         }
     }
 
-    public void atuG(GrupoTarefas g) {
+    public void atualiza(GrupoTarefas g) {
         try (Session s = fabS.openSession()) {
             s.beginTransaction();
             s.update(g);
